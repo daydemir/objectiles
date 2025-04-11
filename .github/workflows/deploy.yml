@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main] # or change to your branch name if not main
   workflow_dispatch:
 
 jobs:
@@ -23,18 +23,12 @@ jobs:
           echo "Looking for .mp4 files..."
           find . -type f -name "*.mp4" -exec ls -lh {} \;
 
-      - name: 📂 Check dist/ folder exists and list contents
-        run: |
-          if [ -d "./dist" ]; then
-            echo "✅ dist/ folder found. Listing contents:"
-            ls -al ./dist
-          else
-            echo "⚠️ dist/ folder NOT found!"
-          fi
+      - name: 📂 List root directory contents
+        run: ls -al
 
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # or '.' if you're deploying from the repo root
+          publish_dir: . # Deploy current directory
           publish_branch: gh-pages
