@@ -10,16 +10,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout with LFS
+      - name: Checkout with Git LFS
         uses: actions/checkout@v3
         with:
           lfs: true
 
-      - name: List LFS files (debug)
+      - name: 🧠 List LFS tracked files
         run: git lfs ls-files
 
-      - name: Deploy to GitHub Pages
+      - name: 🔍 Check for .mp4 files on disk
+        run: |
+          echo "Looking for .mp4 files..."
+          find . -type f -name "*.mp4" -exec ls -lh {} \;
+
+      - name: 📂 Check dist/ folder exists and list contents
+        run: |
+          if [ -d "./dist" ]; then
+            echo "✅ dist/ folder found. Listing contents:"
+            ls -al ./dist
+          else
+            echo "⚠️ dist/ folder NOT found!"
+          fi
+
+      - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # change this to your actual output directory if needed
+          publish_dir: ./dist # or '.' if you're deploying from the repo root
+          publish_branch: gh-pages
