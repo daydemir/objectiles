@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main] # or your default branch
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -15,11 +15,11 @@ jobs:
         with:
           lfs: true
 
-      - name: Fetch LFS files
-        run: git lfs pull
+      - name: List LFS files (debug)
+        run: git lfs ls-files
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: . # change this to your actual output directory if needed
