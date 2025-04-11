@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Menu</title>
+    <style>
+        body, html {
+            margin: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+         }
+
+        .container {
+            position: absolute;
+            width: 1920px;
+            height: 1080px;
+            left: 50%;
+            top: 50%;
+            transform-origin: center;
+        }
+
+        .button {
+            position: absolute;
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .fade-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 6s ease-in-out;
+        }
+
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            z-index: 1000;
+            box-shadow: 0 8px 8px rgba(0, 0, 0, 0.514); /* Add this line for drop shadow */
+        }
+
+        .popup.show {
+            display: block;
+        }
+
+        .popup img {
+            max-width: 600px;
+            height: auto;
+            cursor: pointer; /* Indicates image is clickable */
+            border: none; /* Make sure there's no border */
+       }
+
+    </style>
+</head>
+<body>
+
+    <!-- Video with Embedded Audio -->
+
+    <div class="container">
+      <video autoplay loop muted>
+        <source src="hotel/animation-hotel-background.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+        <img src="hotel/button-counter.png" class="button"
+         style="top: 492px; left: -10px; width: 220px; height: auto;"
+         onclick="showPopup('imagePopupPushstick')">
+        <img src="hotel/button-triangle.png" class="button"
+         style="top: 380px; left: 240px; width: 200px; height: auto;"
+         onclick="showPopup('imagePopupPushstick')">
+        <img src="hotel/button-firebox.png" class="button"
+         style="top: 620px; left: 510px; width: 170px; height: auto;"
+         onclick="showPopup('imagePopupPushstick')">
+        <img src="hotel/button-sink.png" class="button"
+         style="top: 700px; left: -10px; width: 100px; height: auto;"
+         onclick="showPopup('imagePopupPushstick')">
+        <img src="hotel/button-skylight.png" class="button"
+          style="top: 700px; left: 1480px; width: 400px; height: auto;"
+          onclick="showPopup('imagePopupPushstick')">
+    </div>
+
+    <div class="fade-overlay" id="fadeOverlay"></div>
+
+    <script>
+        const scale = () => {
+            const c = document.querySelector('.container');
+            const w = innerWidth / 1920;
+            const h = innerHeight / 1080;
+            c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
+        };
+        onload = onresize = scale;
+
+        function fadeToScene(url) {
+            let overlay = document.getElementById('fadeOverlay');
+            overlay.style.opacity = '1';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 2</title>
+    <style>
+
+        body {
+            cursor: url('cursor-small.png'), auto;
+        }
+
+
+         /* Clickable Buttons */
+        .clickable {
+            position: absolute;
+            cursor: pointer;
+            opacity: 1;
+            transition: opacity 0.3s, transform 0.3s;
+            width: 8%;
+            height: auto;
+        }
+
+        body {
+            text-align: center;
+            background: url('opening-1.png') no-repeat center center fixed;
+            background-size: cover;
+            background-attachment: fixed; /* Keeps the background fixed while scrolling */
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Make sure the body takes full height */
+        }
+
+        h1 {
+            margin-top: 50px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Initially hide the modal */
+            position: fixed;
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+        }
+
+        .modal-content {
+            margin: 15% auto;
+            padding: 20px;
+            width: 80%; /* Adjust the modal width */
+        }
+
+        /* Next button for modal */
+        .next-btn {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    
+    <h1></h1>
+ 
+
+    <img src="button-marble2.png" class="clickable" 
+            style="top: 70%; left: 21%; width: 140px; height: auto;"
+            onclick="showModal(0)">
+    
+    <!-- Modal for text -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+        <h2 id="modal-title"></h2>
+        <p id="modal-text"></p>
+        <button class="next-btn" onclick="nextModal()">&#62;</button>
+        </div>
+    </div>
+
+    <script>
+        // Modal (text) related JavaScript:
+        const modalTexts = [
+            ["On April 5 there will be an Objectile Loosening Ceremony.", "Do you need something there?", "Click on the model to visit the site."],
+            ["You touch the second button.", "A hidden door appears.", "Do you step inside?"],
+            ["The third button glows.", "You feel lighter.", "The world starts to shift around you..."]
+        ];
+        let currentStep = 0;
+        let currentTextArray = [];
+
+        // Show modal when button is clicked
+        function showModal(buttonIndex) {
+            currentStep = 0;
+            currentTextArray = modalTexts[buttonIndex];
+            updateModal();
+            document.getElementById('myModal').style.display = 'block'; // Show the modal
+        }
+
+        // Update the modal content
+        function updateModal() {
+            document.getElementById('modal-text').innerText = currentTextArray[currentStep];
+        }
+
+        // Go to the next step or close the modal
+        function nextModal() {
+            currentStep++;
+            if (currentStep < currentTextArray.length) {
+                updateModal();
+            } else {
+                document.getElementById('myModal').style.display = 'none'; // Hide the modal
+            }
+        }
+
+        // Array of background images in a specific order
+        const backgrounds = [
+            'opening-1.png',
+            'opening-2.png',
+            'opening-3.png',
+        ];
+
+        let currentIndex = 0; // Start from the first image
+
+        function changeBackground() {
+        if (currentIndex < backgrounds.length - 1) {
+            currentIndex++; // Move to the next background
+            document.body.style.background = `url('${backgrounds[currentIndex]}') no-repeat center center fixed`;
+            document.body.style.backgroundSize = "cover"; // Ensure full coverage
+            document.body.style.backgroundAttachment = "fixed"; // Keep the background fixed while scrolling
+        }
+}
+
+
+        // Add event listener to change background on click
+        document.body.addEventListener('click', changeBackground);
+    </script>
+
+</body>
+</html>
