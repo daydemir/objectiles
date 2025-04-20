@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main] # or your default branch
+    branches: [main] # or change to your branch name if not main
   workflow_dispatch:
 
 jobs:
@@ -10,16 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout with LFS
+      - name: Checkout with Git LFS
         uses: actions/checkout@v3
         with:
           lfs: true
 
-      - name: Fetch LFS files
-        run: git lfs pull
+      - name: 🧠 List LFS tracked files
+        run: git lfs ls-files
 
-      - name: Deploy to GitHub Pages
+      - name: 🔍 Check for .mp4 files on disk
+        run: |
+          echo "Looking for .mp4 files..."
+          find . -type f -name "*.mp4" -exec ls -lh {} \;
+
+      - name: 📂 List root directory contents
+        run: ls -al
+
+      - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: . # Deploy current directory
+          publish_branch: gh-pages
