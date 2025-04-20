@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Decon</title>
+    <link rel="stylesheet" href="main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        .container {
+                background: url('decon/decon-background.png') 100% 100%;
+            }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+    </div>
+
+    <div class="fade-overlay" id="fadeOverlay"></div>
+
+    <script>
+        const scale = () => {
+            const c = document.querySelector('.container');
+            const w = innerWidth / 1920;
+            const h = innerHeight / 1080;
+            c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
+        };
+        onload = onresize = scale;
+
+        function fadeToScene(url) {
+            let overlay = document.getElementById('fadeOverlay');
+            overlay.style.opacity = '1';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <title>Domestic Interactive</title>
+  <link rel="stylesheet" href="main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+    .container {
+        background: url('domestic/domestic-background.png') 100% 100%;
+    }
+
+    .fade-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .clickable:hover {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+
+  </style>
+</head>
+
+<body style="margin:0;overflow:hidden">
+  
+    <div class="container">
+
+        <img src="domestic/mash-button.png" class="button" 
+         style="top: 408px; left: 1000px; width: 200px; height: auto;"
+         onclick="fadeToScene('mash.html')">
+
+    </div>
+
+    <script>
+        const scale = () => {
+            const c = document.querySelector('.container');
+            const w = innerWidth / 1920;
+            const h = innerHeight / 1080;
+            c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
+        };
+        onload = onresize = scale;
+    </script>
+
+
+  <!-- Modal for text -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <h2 id="modal-title"></h2>
+      <p id="modal-text">This is the beginning of your journey.</p>
+      <button class="next-btn" onclick="nextModal()">&#62;</button>
+    </div>
+  </div>
+
+  <div id="fadeOverlay" class="fade-overlay"></div>
+
+  <script>
+    // Modal (text) related JavaScript:
+    const modalTexts = [
+      ["On April 5 there will be an Objectile Deconstruction Party.", "Do you need something there?"],
+      ["You touch the second button.", "A hidden door appears.", "Do you step inside?"],
+      ["The third button glows.", "You feel lighter.", "The world starts to shift around you..."]
+    ];
+    let currentStep = 0;
+    let currentTextArray = [];
+
+    function showModal(buttonIndex) {
+      currentStep = 0;
+      currentTextArray = modalTexts[buttonIndex];
+      updateModal();
+      document.getElementById('myModal').style.display = 'block';
+    }
+    function nextModal() {
+      currentStep++;
+      if (currentStep < currentTextArray.length) {
+        updateModal();
+      } else {
+        document.getElementById('myModal').style.display = 'none';
+      }
+    }
+    function updateModal() {
+      document.getElementById('modal-text').innerText = currentTextArray[currentStep];
+    }
+
+
+    // Page navigation
+    function goToPage(page) {
+      window.location.href = page;
+    }
+
+
+    function fadeToScene(url) {
+  const overlay = document.getElementById('fadeOverlay');
+  overlay.classList.add('show');
+
+  setTimeout(() => {
+    window.location.href = url;
+  }, 3000); // Match the 3s transition duration in CSS
+}
+
+    // Popup (image) related JavaScript:
+    // Use this function to open a popup given its ID.
+    function showPopup(popupId) {
+      var popup = document.getElementById(popupId);
+      popup.classList.toggle('show');
+    }
+
+    function closePopup(event) {
+  event.target.closest('.popup').classList.remove('show');
+  
+    // If the clicked popup is 'imagePopuppushstick', redirect to a new page
+    if (event.target.closest('.popup').id === 'imagePopuppushstick') {
+        window.location.href = 'page-pushstick2.html'; // Replace 'newPage.html' with the actual URL of your new page
+    }   
+}
+
+
+  </script>
+</body>
+</html>

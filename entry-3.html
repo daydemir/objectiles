@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Entry 3</title>
+    <link rel="stylesheet" href="main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+    </style>
+</head>
+<body>
+
+    <video id="animation-entry-3" autoplay muted>
+        <source src="entry-3/animation-entry-3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+    <div class="fade-overlay" id="fadeOverlay"></div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+          const video = document.getElementById('animation-entry-3');
+    
+          if (video) {
+            video.addEventListener('ended', () => {
+              console.log("Video ended. Redirecting...");
+              window.location.href = 'entry-marble.html'; 
+            });
+          } else {
+            console.error("Video element not found.");
+          }
+        });
+      </script>
+
+</body>
+</html>
