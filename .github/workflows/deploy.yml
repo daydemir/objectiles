@@ -15,17 +15,6 @@ jobs:
         with:
           lfs: true
 
-      - name: 🧠 List LFS tracked files
-        run: git lfs ls-files
-
-      - name: 🔍 Check for .mp4 files on disk
-        run: |
-          echo "Looking for .mp4 files..."
-          find . -type f -name "*.mp4" -exec ls -lh {} \;
-
-      - name: 📂 List root directory contents
-        run: ls -al
-
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
