@@ -18,41 +18,9 @@
 
     }
 
-    #imagePopup1 img {
-      max-width: 500px; /* Image size for popup 1 */
-      height: auto;
-      box-shadow: 0px 0px 15px rgba(188, 188, 188, 0.7); /* Custom drop shadow for popup 1 */
-    }
-
 
   </style>
 </head>
-
-
-<body onclick="goFullscreenOnce()" style="cursor: pointer;">
-  <div id="content">Click anywhere to enter fullscreen</div>
-
-  <script>
-    let hasEnteredFullscreen = false;
-
-    function goFullscreenOnce() {
-      if (hasEnteredFullscreen) return;
-      hasEnteredFullscreen = true;
-
-      const elem = document.documentElement;
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) {
-        elem.msRequestFullscreen();
-      }
-
-      // Optional: hide message
-      document.getElementById("content").style.display = "none";
-    }
-  </script>
-</body>
 
 
 
@@ -78,6 +46,7 @@
          style="top: 950px; left: 50px; width: 100px; height: auto;"
          onclick="fadeToScene('hallway-interactive.html')">
 
+
          <img src="all/button-next.png" class="button" 
          style="top: 950px; left: 1750px; width: 100px; height: auto;"
          onclick="fadeToScene('walk-interactive.html')">
@@ -91,6 +60,9 @@
     <div class="fade-overlay" id="fadeOverlay"></div>
 
     <script>
+
+
+
         const scale = () => {
             const c = document.querySelector('.container');
             const w = innerWidth / 1920;
@@ -99,9 +71,17 @@
         };
         onload = onresize = scale;
 
+
+
+
+
     function goToPage(page) {
       window.location.href = page;
     }
+
+
+
+
 
     function fadeToScene(url) {
             let overlay = document.getElementById('fadeOverlay');
@@ -110,10 +90,18 @@
                 window.location.href = url;
             }, 3000);
 
+
+
+            
     setTimeout(() => {
       window.location.href = url;
         }, 3000); // Match the transition duration in CSS
     }
+
+
+
+
+
     function showPopup(popupId) {
       var popup = document.getElementById(popupId);
       popup.classList.toggle('show');
@@ -122,7 +110,9 @@
   function closePopup(popupElement) {
     popupElement.classList.remove('show');
   
-}
+    }
+
+
 
   // 🔥 Fade out intro overlay with JS
   window.addEventListener('DOMContentLoaded', () => {
