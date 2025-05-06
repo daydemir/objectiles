@@ -1,139 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+  <<<<<<< HEAD <meta charset="UTF-8">
     <title>Hotel Interactive</title>
     <link rel="stylesheet" href="main.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+      .container {
+
+        background: url('hotel/bgd-hotel.png') 100% 100%;
+      }
 
 
+      .popup {
+        position: absolute;
+        transition: opacity 0s;
+        display: none;
+        background-color: rgba(0, 0, 0, 0.13);
+      }
 
-.container {
-      
-      background: url('hotel/bgd-hotel.png') 100% 100%;
-  }
+      .popup.show {
+        display: block;
+      }
 
-
-        .popup {
-            position: absolute;
-            transition: opacity 0s;
-            display: none;
-            background-color: rgba(0, 0, 0, 0.13);
-        }
-
-        .popup.show {
-            display: block;
-        }
-
-        #PopupSkylight {
-            top: 200px;
-            left: 1300px;
-}
-
-
+      #PopupSkylight {
+        top: 200px;
+        left: 1300px;
+      }
     </style>
 </head>
+
 <body style="margin:0;overflow:hidden">
 
-      <div id="intro" class="intro-overlay">
-        <video autoplay muted playsinline id="introVideo">
-          <source src="hotel/animation-hotel-background2.mp4" type="video/mp4">
-        </video>
-      </div>
+  <div id="intro" class="intro-overlay">
+    <video autoplay muted playsinline id="introVideo">
+      <source src="hotel/animation-hotel-background2.mp4" type="video/mp4">
+    </video>
 
-     <div class="container">
 
-        <img src="all/button-target.png" class="button"
-         style="top: 492px; left: -10px; width: 220px; height: auto;"
-         onclick="showPopup('PopupCounter')">
-        <img src="all/button-target.png" class="button"
-         style="top: 380px; left: 240px; width: 200px; height: auto;"
-         onclick="showPopup('PopupTriangle')">
-        <img src="all/button-target.png" class="button"
-         style="top: 620px; left: 510px; width: 170px; height: auto;"
-         onclick="showPopup('imagePopupPushstick')">
-        <img src="hotel/button-.png" class="button"
-         style="top: 700px; left: -10px; width: 100px; height: auto;"
-         onclick="showPopup('PopupSink')">
-        <img src="hotel/button-.png" class="button"
-          style="top: 700px; left: 1480px; width: 400px; height: auto;"
-          onclick="showPopup('PopupSkylight')">
+    <img src="hotel/button-target.png" class="button" style="top: 492px; left: -10px; width: 220px; height: auto;"
+      onclick="popup.showImage({
+           images: 'hotel/popup-counter.png',
+           name: 'counter',
+           fullscreen: false,
+           tintBackground: true,
+           takeOverScreen: true,
+           fade: false
+         })">
+    <img src="hotel/button-target.png" class="button" style="top: 380px; left: 240px; width: 200px; height: auto;"
+      onclick="popup.showImage({
+           images: 'hotel/popup-triangle.png',
+           name: 'triangle',
+           fullscreen: false,
+           tintBackground: true,
+           takeOverScreen: true,
+           fade: false
+         })">
+    <img src="hotel/button-target.png" class="button" style="top: 620px; left: 510px; width: 170px; height: auto;"
+      onclick="popup.showImage({
+           images: 'hotel/popup-pushstick.png',
+           name: 'pushstick',
+           fullscreen: false,
+           tintBackground: true,
+           takeOverScreen: true,
+           fade: false
+         })">
+    <img src="hotel/button-target.png" class="button" style="top: 700px; left: -10px; width: 100px; height: auto;"
+      onclick="popup.showImage({
+           images: 'hotel/popup-sink.png',
+           name: 'sink',
+           fullscreen: false,
+           tintBackground: true,
+           takeOverScreen: true,
+           fade: false
+         })">
+    <img src="hotel/button-target.png" class="button" style="top: 700px; left: 1480px; width: 400px; height: auto;"
+      onclick="popup.showImage({
+            images: 'hotel/popup-skylight.png',
+            name: 'skylight',
+            fullscreen: false,
+            tintBackground: true,
+            takeOverScreen: true,
+            fade: false
+          })">
 
-          <img src="all/button-back.png" class="button" 
-          style="top: 950px; left: 50px; width: 100px; height: auto;"
-          onclick="fadeToScene('rfo-interactive.html')">
- 
-          <img src="all/button-next.png" class="button" 
-          style="top: 950px; left: 1750px; width: 100px; height: auto;"
-          onclick="fadeToScene('ceremony-designer-interactive.html')">
+    <img src="all/button-back.png" class="button" style="top: 950px; left: 50px; width: 100px; height: auto;"
+      onclick="fadeToScene('rfo-interactive.html')">
 
-    </div>
+    <img src="all/button-next.png" class="button" style="top: 950px; left: 1750px; width: 100px; height: auto;"
+      onclick="fadeToScene('ceremony-designer-interactive.html')">
+  </div>
 
-    <div id="PopupCounter" class="popup" style="z-index: 1000;">
-        <img src="hotel/popup-counter.png" id="popupImage">
-    </div>
+  <div class="fade-overlay" id="fadeOverlay"></div>
 
-    <div id="PopupTriangle" class="popup" style="z-index: 1000;">
-        <img src="hotel/popup-triangle.png" id="popupImage">
-    </div>
+  <script>
+    const scale = () => {
+      const c = document.querySelector('.container');
+      const w = innerWidth / 1920;
+      const h = innerHeight / 1080;
+      c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
+    };
+    onload = onresize = scale;
 
-    <div id="PopupSink" class="popup" style="z-index: 1000;">
-        <img src="hotel/popup-sink.png" id="popupImage">
-    </div>
-
-    <div id="PopupSkylight" class="popup" style="z-index: 1000;">
-        <img src="hotel/popup-skylight.png" id="popupImage">
-    </div>
-
-    <div class="fade-overlay" id="fadeOverlay"></div>
-
-    <script>
-        const scale = () => {
-            const c = document.querySelector('.container');
-            const w = innerWidth / 1920;
-            const h = innerHeight / 1080;
-            c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
-        };
-        onload = onresize = scale;
-
-        function fadeToScene(url) {
-            let overlay = document.getElementById('fadeOverlay');
-            overlay.style.opacity = '1';
-            setTimeout(() => {
-                window.location.href = url;
-            }, 3000);
-        }
+    function fadeToScene(url) {
+      let overlay = document.getElementById('fadeOverlay');
+      overlay.style.opacity = '1';
+      setTimeout(() => {
+        window.location.href = url;
+      }, 3000);
+    }
 
     setTimeout(() => {
       window.location.href = url;
-        }, 3000); // Match the transition duration in CSS
+    }, 3000); // Match the transition duration in CSS
 
-
-        function showPopup(popupId) {
+    function showPopup(popupId) {
       var popup = document.getElementById(popupId);
       popup.classList.toggle('show');
     }
 
-  function closePopup(popupElement) {
-    popupElement.classList.remove('show');
-  }
+    function closePopup(popupElement) {
+      popupElement.classList.remove('show');
+    }
 
-      // 🔥 Fade out intro overlay with JS
-      window.addEventListener('DOMContentLoaded', () => {
+    // 🔥 Fade out intro overlay with JS
+    window.addEventListener('DOMContentLoaded', () => {
       const introOverlay = document.getElementById('intro');
       const video = introOverlay.querySelector('video');
 
-    video.addEventListener('ended', () => {
-      introOverlay.classList.add('fade-out');
-      setTimeout(() => {
-        introOverlay.remove();
-      }, 1000); // match fade duration
+
+      video.addEventListener('ended', () => {
+        introOverlay.classList.add('fade-out');
+        setTimeout(() => {
+          introOverlay.remove();
+        }, 1000); // match fade duration
+      });
+
     });
+  </script>
 
-});
-    </script>
-
+  <script src="video-utils.js"></script>
 </body>
+
 </html>

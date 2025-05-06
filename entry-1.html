@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Entry 1</title>
-    <link rel="stylesheet" href="main.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
 
-    </style>
+<head>
+  <title>Entry 1</title>
+  <link rel="stylesheet" href="main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="video-utils.js"></script>
+  <script src="fade.js"></script>
+  <style>
+
+  </style>
 </head>
+
 <body>
 
   <body>
@@ -17,22 +21,35 @@
       Your browser does not support the video tag.
     </video>
 
-    <div class="fade-overlay" id="fadeOverlay"></div>
 
     <script>
       const video = document.getElementById('animation-entry-1');
-  
+
       function startVideo() {
         video.play();
         document.removeEventListener('click', startVideo);
       }
-  
+
       document.addEventListener('click', startVideo);
-  
+
+      video.addEventListener('ended', () => {
+        window.location.href = 'entry-2.html';
+      });
+
+      function startVideo() {
+        video.play();
+        document.removeEventListener('click', startVideo);
+      }
+
+      document.addEventListener('click', startVideo);
+
       video.addEventListener('ended', () => {
         window.location.href = 'entry-3.html';
       });
     </script>
 
-</body>
+    <script src="video-utils.js"></script>
+    <script src="fade.js"></script>
+  </body>
+
 </html>

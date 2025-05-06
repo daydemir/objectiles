@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Hallway Interactive</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="1-src/main.css">
+  <link rel="stylesheet" href="1-src/popup.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
+  <script src="1-src/popup.js"></script>
+  <script src="1-src/fade.js"></script>
 
+  <script src="1-src/layout.js"></script>
+  <style>
     .container {
       background: url('hallway/bgd-hallway.png') 100% 100%;
     }
@@ -17,7 +22,8 @@
     }
 
     #imagePopup1 img {
-      max-width: 500px; /* Image size for popup 1 */
+      max-width: 500px;
+      /* Image size for popup 1 */
       height: auto;
     }
 
@@ -40,153 +46,77 @@
       max-height: 100%;
       object-fit: contain;
     }
-
   </style>
 </head>
 
 <body style="margin:0;overflow:hidden">
 
-  <div id="slideshowOverlay" class="slideshow-overlay">
-    <img id="slideshowImage" src=""> 
+  <div class="container">
+
+    <img src="hallway/button-pushstick.png" class="button" style="top: 785px; left: 350px; width: 160px; height: auto;"
+      onclick="popup.showImage({images: 'hallway/animation-pushstick.gif', name: 'pushstick', fullscreen: true, tintBackground: false, takeOverScreen: true})">
+
+    <img src="hallway/button-pushstick.png" class="button" style="top: 785px; left: 750px; width: 160px; height: auto;"
+      onclick="popup.showImage({images: 'hallway/animation-pushstick-2.gif', name: 'pushstick2', fullscreen: true, tintBackground: false, takeOverScreen: true})">
+
+    <img src="hallway/button-stair.png" class="button" style="top: 825px; left: 840px; width: 395px; height: auto;"
+      onclick="popup.showImage({images: 'hallway/animation-pushstick-3.gif', name: 'stair', fullscreen: true, tintBackground: false, takeOverScreen: true})">
+
+    <img src="all/button-back.png" class="button" style="top: 950px; left: 50px; width: 100px; height: auto;"
+      onclick="fadeToScene('character.html')">
+
+    <img src="all/button-next.png" class="button" style="top: 950px; left: 1750px; width: 100px; height: auto;"
+      onclick="fadeToScene('workplace-interactive.html')">
+
   </div>
-  
-    <div class="container">
-
-        <img src="hallway/button-pushstick.png" class="button" 
-         style="top: 785px; left: 350px; width: 160px; height: auto;"
-         onclick="showPopup('PopupPushstick')">
-
-         <img src="hallway/button-pushstick.png" class="button" 
-         style="top: 785px; left: 750px; width: 160px; height: auto;"
-         onclick="showPopup('PopupPushstick2')">
-
-         <img src="hallway/button-stair.png" class="button" 
-         style="top: 825px; left: 840px; width: 395px; height: auto;"
-         onclick="showPopup('PopupStair')">
-
-         <img src="all/button-back.png" class="button" 
-         style="top: 950px; left: 50px; width: 100px; height: auto;"
-         onclick="fadeToScene('character.html')">
-
-         <img src="all/button-next.png" class="button" 
-         style="top: 950px; left: 1750px; width: 100px; height: auto;"
-         onclick="fadeToScene('workplace-interactive.html')">
-
-    </div>
 
 
 
-    <div id="PopupPushstick" class="popup" onclick="closePopup(this)">
-      <img src="hallway/animation-pushstick.gif" id="popupImage">
-    </div>
-
-    <div id="PopupPushstick2" class="popup" onclick="closePopup(this)">
-      <img src="hallway/animation-pushstick-2.gif" id="popupImage">
-    </div>
-
-    <div id="PopupStair" class="popup" onclick="closePopup(this)">
-      <img src="hallway/animation-pushstick-3.gif" id="popupImage">
-    </div>
-
-    <div class="fade-overlay" id="fadeOverlay"></div>
 
 
 
-    <script>
 
-    const scale = () => {
-            const c = document.querySelector('.container');
-            const w = innerWidth / 1920;
-            const h = innerHeight / 1080;
-            c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
-        };
+  <script>
 
+    // SLIDESHOW
 
-    onload = onresize = scale;
-
-
-
-  // FADE TO NEXT SCENE
-  function fadeToScene(url) {
-  let overlay = document.getElementById('fadeOverlay');
-
-  // Fade in the overlay
-  overlay.style.opacity = '1';
-
-  // Fade out music
-  let fadeInterval = setInterval(() => {
-    if (music.volume > 0.05) {
-      music.volume -= 0.05;
-    } else {
-      music.volume = 0;
-      music.pause();
-      clearInterval(fadeInterval);
-    }
-  }, 100); // Adjust fade speed here (100ms step)
-
-  // Navigate after the overlay transition
-  setTimeout(() => {
-    window.location.href = url;
-  }, 1000); // Match this to your overlay fade duration
-}
-
-
-
-  // POPUPS
-    function showPopup(popupId) {
-      var popup = document.getElementById(popupId);
-      popup.classList.toggle('show');
-    }
-
-
-    function closePopup(popupElement) {
-      popupElement.classList.remove('show');
-  
-    }
-  
-
-
-  // SLIDESHOW
-
-  const slideshowImages = [
-    'hallway/text1.png',
-    'hallway/text2.png',
-  ];
-
-
-
-  let slideIndex = 0;
-  const slideshowOverlay = document.getElementById('slideshowOverlay');
-  const slideshowImage = document.getElementById('slideshowImage');
-
-
-
-  // SHOW FIRST IMAGE
-  slideshowImage.src = slideshowImages[slideIndex];
-
-
-
-  slideshowOverlay.addEventListener('click', () => {
-    slideIndex++;
-    if (slideIndex < slideshowImages.length) {
-      slideshowImage.src = slideshowImages[slideIndex];
-    } else {
-      // ONCE ALL IMAGES ARE SHOWN REMOVE OVERLAY
-      slideshowOverlay.style.display = 'none';
-    }
-
-  });
+    const slideshowImages = [
+      'hallway/text1.png',
+      'hallway/text2.png',
+    ];
 
     // BACKGROUND MUSIC
     var music = new Audio('0-music/compdata-r0.mp3');
     music.loop = true;
-    function startMusic() {
-      music.play();
-      document.removeEventListener('click', startMusic);
-    }
-    document.addEventListener('click', startMusic);
+    let musicStarted = false;
 
-    
+    function startMusic() {
+      if (!musicStarted) {
+        music.play();
+        musicStarted = true;
+        console.log('Music started');
+      }
+    }
+
+    // Global click handler using capture phase
+    // This will catch ALL clicks on the page, even in popups that use stopPropagation()
+    document.addEventListener('click', function (e) {
+      startMusic();
+      console.log('Click detected (capture phase)');
+    }, true); // true = use capture phase
+
+
+    // Show popup on load
+    window.addEventListener('DOMContentLoaded', function () {
+      popup.showImage({
+        images: slideshowImages,  // array of images
+        name: 'slides',          // popup name
+        fullscreen: false,       // fullscreen (false = with margins)
+        tintBackground: true,    // tintBackground
+        takeOverScreen: true     // takeOverScreen
+      });
+    });
   </script>
 </body>
+
 </html>

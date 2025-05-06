@@ -1,71 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Office Interactive</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="1-src/main.css">
+  <link rel="stylesheet" href="1-src/popup.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
+  <script src="1-src/popup.js"></script>
+  <script src="1-src/fade.js"></script>
 
+  <script src="1-src/layout.js"></script>
+  <style>
     .container {
-        background: url('office/bgd-office.png') 100% 100%;
+      background: url('office/bgd-office.png') 100% 100%;
     }
 
     .fade-overlay.show {
       opacity: 1;
       pointer-events: auto;
     }
-
-    .clickable:hover {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .popup {
-      box-shadow: 0 8px 8px rgba(0, 0, 0, 0.514);
-    }
-    
-    .popup img {
-      max-width: 600px;
-    }
-    
-
   </style>
 </head>
 
 <body style="margin:0;overflow:hidden">
 
-    <div id="intro" class="intro-overlay">
-      <video autoplay muted playsinline id="introVideo">
-        <source src="office/animation-office.mp4" type="video/mp4">
-      </video>
-    </div>
-  
+  <script src="1-src/video.js"></script>
+  <script>
+    showIntroVideo('office/animation-office.mp4', 1000, true, true, true, true);
+  </script>
+
   <div class="container">
 
-    <img src="office/button-poster.png" class="button"
-    style="top: 250px; left: 1200px; width: 80px; height: auto;"
-    onclick="showPopup('PopupPoster')">
-    
-   <img src="office/button-rfo1.png" class="button"
-       style="top: 300px; left: 1350px; width: 120px; height: auto;" 
-       onclick="showPopup('PopupPushstick')">
+    <img src="office/button-poster.png" class="button" style="top: 250px; left: 1200px; width: 80px; height: auto;"
+      onclick="popup.showImage({
+      images: 'office/popup-poster.jpg',
+      name: 'poster',
+      fullscreen: false,
+      tintBackground: true,
+      takeOverScreen: true,
+      fade: false
+    })">
 
-    <img src="office/button-rfo3.png" class="button" 
-    style="top: 160px; left: 220px; width: 160px; height: auto;"
-      onclick="showPopup('PopupRFO')">
+    <img src="office/button-rfo1.png" class="button" style="top: 300px; left: 1350px; width: 120px; height: auto;"
+      onclick="popup.showImage({
+         images: 'office/popup-pushstick.jpg',
+         name: 'pushstick',
+         fullscreen: false,
+         tintBackground: true,
+         takeOverScreen: true,
+         fade: false
+       })">
 
-      <img src="office/button-cctv.png" class="button" 
-      style="top: 160px; left: 220px; width: 160px; height: auto;"
-        onclick="showPopup('PopupRFO')">
+    <img src="office/button-rfo3.png" class="button" style="top: 160px; left: 220px; width: 160px; height: auto;"
+      onclick="popup.showImage({
+        images: 'office/popup-image3.jpg',
+        name: 'rfo',
+        fullscreen: false,
+        tintBackground: true,
+        takeOverScreen: true,
+        fade: false
+      })">
 
-        <img src="all/button-back.png" class="button" 
-        style="top: 950px; left: 50px; width: 100px; height: auto;"
-        onclick="fadeToScene('designer.html')">
+    <img src="office/button-cctv.png" class="button" style="top: 660px; left: 480px; width: 160px; height: auto;"
+      onclick="popup.showImage({
+        images: 'office/popup-image3.jpg',
+        name: 'cctv',
+        fullscreen: false,
+        tintBackground: true,
+        takeOverScreen: true,
+        fade: false
+    })">
 
-        <img src="all/button-next.png" class="button" 
-        style="top: 950px; left: 1750px; width: 100px; height: auto;"
-        onclick="fadeToScene('RFO-interactive.html')">
+    <img src="office/button-cctv2.png" class="button" style="top: 660px; left: 680px; width: 160px; height: auto;"
+      onclick="popup.showImage({
+          images: 'office/popup-image3.jpg',
+          name: 'cctv2',
+          fullscreen: false,
+          tintBackground: true,
+          takeOverScreen: true,
+          fade: false
+        })">
+
+    <img src="all/button-back.png" class="button" style="top: 950px; left: 50px; width: 100px; height: auto;"
+      onclick="fadeToScene('designer.html')">
+
+    <img src="all/button-next.png" class="button" style="top: 950px; left: 1750px; width: 100px; height: auto;"
+      onclick="fadeToScene('RFO-interactive.html')">
 
   </div>
 
@@ -73,87 +94,65 @@
   <div class="fade-overlay" id="fadeOverlay"></div>
 
 
-<div id="PopupRFO" class="popup" style="z-index: 1000;">
-  <img src="office/popup-image3.jpg" id="popupImage">
-</div>
+  <div id="PopupRFO" class="popup" style="z-index: 1000;">
+    <img src="office/popup-image3.jpg" id="popupImage">
+  </div>
 
 
-<!-- For fixed size -->
-    <script>
-        const scale = () => {
-            const c = document.querySelector('.container');
-            const w = innerWidth / 1920;
-            const h = innerHeight / 1080;
-            c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
-        };
-        onload = onresize = scale;
+  <!-- For fixed size -->
+  <script>
 
 
-  document.addEventListener('DOMContentLoaded', () => {
-  const popupImage = document.getElementById('popupImage');
-  popupImage.addEventListener('click', () => {
+    document.addEventListener('DOMContentLoaded', () => {
+      const popupImage = document.getElementById('popupImage');
+      popupImage.addEventListener('click', () => {
 
-  });
-});
+      });
+    });
 
-    </script>
+  </script>
 
 
-<div id="fadeOverlay" class="fade-overlay"></div>
 
   <script>
 
-  function showPopup(id) {
-    document.getElementById(id).classList.add('show');
-  }
-
-  function hidePopup(id) {
-    document.getElementById(id).classList.remove('show');
-  }
+    function fadeToScene(url) {
+      const overlay = document.getElementById('fadeOverlay');
 
 
-    // Page navigation
-    function goToPage(page) {
-      window.location.href = page;
+
+
+      setTimeout(() => {
+        window.location.href = url;
+      }, 1000); // match the transition duration
     }
 
 
-    function fadeToScene(url) {
-  const overlay = document.getElementById('fadeOverlay');
-
-
-
-
-  setTimeout(() => {
-    window.location.href = url;
-  }, 1000); // match the transition duration
-}
-
-
-function showPopup(popupId) {
+    function showPopup(popupId) {
       var popup = document.getElementById(popupId);
       popup.classList.toggle('show');
     }
 
     function closePopup(popupElement) {
       popupElement.classList.remove('show');
-}
+    }
 
     // 🔥 Fade out intro overlay with JS
     window.addEventListener('DOMContentLoaded', () => {
       const introOverlay = document.getElementById('intro');
       const video = introOverlay.querySelector('video');
 
-    video.addEventListener('ended', () => {
-      introOverlay.classList.add('fade-out');
-      setTimeout(() => {
-        introOverlay.remove();
-      }, 1000); // match fade duration
+      video.addEventListener('ended', () => {
+        introOverlay.classList.add('fade-out');
+        setTimeout(() => {
+          introOverlay.remove();
+        }, 1000); // match fade duration
+      });
+
     });
 
-  });
-  
 
   </script>
 </body>
+
 </html>

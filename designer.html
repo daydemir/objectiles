@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Office Intro</title>
-    <link rel="stylesheet" href="main.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
 
-    </style>
+<head>
+  <title>Office Intro</title>
+  <link rel="stylesheet" href="1-src/main.css">
+  <link rel="stylesheet" href="1-src/popup.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="1-src/fade.js"></script>
+  <script src="1-src/video.js"></script>
+  <script src="1-src/popup.js"></script>
+  <script src="1-src/layout.js"></script>
+  <style>
+
+  </style>
 </head>
+
 <body>
 
     <video id="animation-office-intro" autoplay muted>
@@ -16,22 +23,11 @@
         Your browser does not support the video tag.
       </video>
 
-    <div class="fade-overlay" id="fadeOverlay"></div>
 
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-          const video = document.getElementById('animation-office-intro');
-    
-          if (video) {
-            video.addEventListener('ended', () => {
-              console.log("Video ended. Redirecting...");
-              window.location.href = 'office-interactive.html'; 
-            });
-          } else {
-            console.error("Video element not found.");
-          }
-        });
-      </script>
+  <script>
+    showIntroVideo('designer/animation-designer.mp4', 1000, true, true, true, true, 'office-interactive.html');
+  </script>
 
 </body>
+
 </html>
