@@ -36,12 +36,13 @@
     <div class="fade-overlay" id="fadeOverlay"></div>
 
     <script>
-        const scale = () => {
-            const c = document.querySelector('.container');
-            const w = innerWidth / 1920;
-            const h = innerHeight / 1080;
-            c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
-        };
+const scale = () => {
+    const c = document.querySelector('.container');
+    const w = innerWidth / 1920;
+    const h = innerHeight / 1080;
+    const scaleFactor = Math.max(w, h);
+    c.style.transform = `translate(-50%, -50%) scale(${scaleFactor})`;
+};
         onload = onresize = scale;
 
     function goToPage(page) {

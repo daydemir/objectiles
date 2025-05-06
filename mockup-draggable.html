@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Mockup</title>
+  <link rel="stylesheet" href="main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+    .container {
+        background: url('mockup/bgd-mockup.png') 100% 100%;
+    }
+
+  </style>
+</head>
+
+<body style="margin:0;overflow:hidden">
+  
+    <div class="container">
+
+        <img src="all/button-next.png" class="button" 
+        style="top: 950px; left: 1750px; width: 100px; height: auto;"
+        onclick="fadeToScene('search-interactive.html')">
+
+        <img src="all/button-back.png" class="button" 
+        style="top: 950px; left: 50px; width: 100px; height: auto;"
+        onclick="fadeToScene('search-interactive.html')">
+
+        <img src="mockup/button-skylight.png" class="draggable-button" 
+        style="top: 750px; left: 850px; width: 600px; height: auto;">
+
+        <img src="mockup/button-sink.png" class="draggable-button" 
+        style="top: 900px; left: 150px; width: 150px; height: auto;">
+
+        <img src="mockup/button-firebox.png" class="draggable-button" 
+        style="top: 800px; left: 250px; width: 200px; height: auto;">
+  
+    </div>
+
+    <script>
+  // Responsive container scaling
+  const scale = () => {
+    const c = document.querySelector('.container');
+    const w = innerWidth / 1920;
+    const h = innerHeight / 1080;
+    c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
+  };
+  onload = onresize = scale;
+
+  function goToPage(page) {
+    window.location.href = page;
+  }
+
+  function fadeToScene(url) {
+    let overlay = document.getElementById('fadeOverlay');
+    if (overlay) {
+      overlay.style.opacity = '1';
+    }
+    setTimeout(() => {
+      window.location.href = url;
+    }, 3000); // Match transition duration
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    // 👋 Intro fade (skip if you're not using intro video)
+    const introOverlay = document.getElementById('intro');
+    if (introOverlay) {
+      const video = introOverlay.querySelector('video');
+      video.addEventListener('ended', () => {
+        introOverlay.classList.add('fade-out');
+        setTimeout(() => {
+          introOverlay.remove();
+        }, 1000); // Match fade duration
+      });
+    }
+
+
+
+
+    let backgroundClickEnabled = true;
+
+function makeDraggable(element) {
+  let isDragging = false;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  element.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    backgroundClickEnabled = false; // prevent background switch while dragging
+    offsetX = e.clientX - element.offsetLeft;
+    offsetY = e.clientY - element.offsetTop;
+    element.style.zIndex = 1000;
+
+    const onMouseMove = (e) => {
+      if (!isDragging) return;
+      element.style.left = `${e.clientX - offsetX}px`;
+      element.style.top = `${e.clientY - offsetY}px`;
+    };
+
+    const onMouseUp = () => {
+      isDragging = false;
+      element.style.zIndex = '';
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      setTimeout(() => backgroundClickEnabled = true, 50); // small delay to re-enable background click
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+}
+
+// Change background only if not dragging
+document.body.addEventListener('click', () => {
+  if (backgroundClickEnabled) {
+    changeBackground();
+  }
+});
+
+    
+
+    document.querySelectorAll('.draggable-button').forEach(makeDraggable);
+
+
+    // Click to change background — only if not dragging
+    document.body.addEventListener('click', (e) => {
+      if (!isDragging) {
+        changeBackground();
+      }
+    });
+  });
+  </script>
+</body>
+</html>

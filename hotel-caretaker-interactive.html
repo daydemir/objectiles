@@ -8,9 +8,19 @@
   <style>
 
     .container {
+      
         background: url('hotel-caretaker/bgd-hotel-caretaker.png') 100% 100%;
     }
 
+    .popup {
+    background-color: rgba(255, 255, 255, 0);
+  }
+
+    .popup img {
+      max-width: 1920px;
+      height: auto;
+
+    }
 
   </style>
 </head>
@@ -19,7 +29,7 @@
 
     <div id="intro" class="intro-overlay">
       <video autoplay muted playsinline id="introVideo">
-        <source src="hotel-caretaker/animation-hotel-caretaker.mp4" type="video/mp4">
+        <source src="hotel-caretaker/animation-hotel-caretaker1.mp4" type="video/mp4">
       </video>
     </div>
   
@@ -31,6 +41,16 @@
          <img src="all/button-next.png" class="button" 
          style="top: 950px; left: 1750px; width: 100px; height: auto;"
          onclick="fadeToScene('hotel-caretaker-care-interactive.html')">
+
+         <img src="hotel-caretaker/button-showinfo.png" class="button" 
+         style="top: 125px; left: 1550px; width: 200px; height: auto;"
+         onclick="showPopup('PopupShowInfo')">
+
+
+    </div>
+
+    <div id="PopupShowInfo" class="popup" onclick="closePopup(this)">
+      <img src="hotel-caretaker/overlay.png" id="popupImage">
     </div>
 
     <div class="fade-overlay" id="fadeOverlay"></div>

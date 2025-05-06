@@ -11,6 +11,11 @@
         background: url('inventory/bgd-inventory.png') 100% 100%;
     }
 
+    .popup img {
+      max-width: 1920px;
+      height: auto;
+    }
+
 
   </style>
 </head>
@@ -31,7 +36,18 @@
          <img src="all/button-next.png" class="button" 
          style="top: 950px; left: 1750px; width: 100px; height: auto;"
          onclick="fadeToScene('hotel-caretaker-interactive.html')">
+
+         <img src="inventory/button-inventory.png" class="button"
+         style="top: 900px; left: 1350px; width: 120px; height: auto;" 
+         onclick="showPopup('PopupInventory')">
+
+
     </div>
+
+    <div id="PopupInventory" class="popup" onclick="closePopup(this)">
+      <img src="inventory/inventory.png" id="popupImage">
+    </div>
+
 
     <div class="fade-overlay" id="fadeOverlay"></div>
 

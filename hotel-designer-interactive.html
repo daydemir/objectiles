@@ -8,9 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
 
-        .popup img {
-            max-width: 600px;
-       }
+        .popup {
+            position: absolute;
+            transition: opacity 0s;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.13);
+        }
+
+        .popup.show {
+            display: block;
+        }
+
+        #PopupSkylight {
+            top: 200px;
+            left: 1300px;
+}
+
 
     </style>
 </head>
@@ -45,7 +58,7 @@
  
           <img src="all/button-next.png" class="button" 
           style="top: 950px; left: 1750px; width: 100px; height: auto;"
-          onclick="fadeToScene('decon-interior-interactive.html')">
+          onclick="fadeToScene('search-interactive.html')">
     </div>
 
     <div id="PopupCounter" class="popup" style="z-index: 1000;">
@@ -67,6 +80,8 @@
     <div class="fade-overlay" id="fadeOverlay"></div>
 
     <script>
+
+        
         const scale = () => {
             const c = document.querySelector('.container');
             const w = innerWidth / 1920;
@@ -91,6 +106,8 @@
   function closePopup(popupElement) {
     popupElement.classList.remove('show');
   }
+
+  
 
     </script>
 
