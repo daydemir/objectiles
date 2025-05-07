@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <title>Character</title>
+    <link rel="stylesheet" href="1-src/main.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character</title>
-    <link rel="stylesheet" href="main.css">
+    <script src="1-src/fade.js"></script>
+
+    <script src="1-src/layout.js"></script>
     <style>
 
     </style>
 </head>
+
 <body>
 
     <!-- Video with Embedded Audio -->
@@ -18,39 +23,15 @@
     </video>
 
     <div class="container">
-        <img src="character/character-1.png" class="button"
-         style="top: 500px; left: 100px; width: 400px; height: auto;"
+        <img src="character/character-1.png" class="button" style="top: 500px; left: 100px; width: 400px; height: auto;"
             onclick="fadeToScene('walk-interactive.html')">
-        <img src="character/character-2.png" class="button"
-         style="top: 500px; left: 800px; width: 400px; height: auto;"
+        <img src="character/character-2.png" class="button" style="top: 500px; left: 800px; width: 400px; height: auto;"
             onclick="fadeToScene('caretaker.html')">
         <img src="character/character-3.png" class="button"
-         style="top: 500px; left: 1400px; width: 400px; height: auto;"
-            onclick="fadeToScene('designer.html')">
-        <img src="character/trash.png" class="button"
-            style="top: 100px; left: 1800px; width: 80px; height: auto;"
-               onclick="fadeToScene('guardian-interactive.html')">
+            style="top: 500px; left: 1400px; width: 400px; height: auto;" onclick="fadeToScene('designer.html')">
+        <img src="character/trash.png" class="button" style="top: 100px; left: 1800px; width: 80px; height: auto;"
+            onclick="fadeToScene('guardian-interactive.html')">
     </div>
-
-    <div class="fade-overlay" id="fadeOverlay"></div>
-
-    <script>
-        const scale = () => {
-            const c = document.querySelector('.container');
-            const w = innerWidth / 1920;
-            const h = innerHeight / 1080;
-            c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
-        };
-        onload = onresize = scale;
-
-        function fadeToScene(url) {
-            let overlay = document.getElementById('fadeOverlay');
-            overlay.style.opacity = '1';
-            setTimeout(() => {
-                window.location.href = url;
-            }, 3000);
-        }
-    </script>
-
 </body>
+
 </html>

@@ -1,37 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Hotel Animation</title>
-    <link rel="stylesheet" href="main.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
 
-    </style>
+<head>
+  <title>Hotel Animation</title>
+  <link rel="stylesheet" href="1-src/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script src="1-src/fade.js"></script>
+  <style>
+
+  </style>
 </head>
+
 <body>
 
-    <video id="animation-entry-4" autoplay muted>
-        <source src="entry-4/animation-entry-4.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-    <div class="fade-overlay" id="fadeOverlay"></div>
-
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-          const video = document.getElementById('animation-entry-4');
-    
-          if (video) {
-            video.addEventListener('ended', () => {
-              console.log("Video ended. Redirecting...");
-              window.location.href = 'character.html'; 
-            });
-          } else {
-            console.error("Video element not found.");
-          }
-        });
-      </script>
+  <script src="1-src/video.js"></script>
+  <script>
+    showIntroVideo('entry-4/animation-entry-4.mp4', 1000, true, true, true, true, 'character.html');
+  </script>
 
 </body>
+
 </html>

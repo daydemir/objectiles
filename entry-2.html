@@ -1,170 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Entry 2</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="1-src/main.css">
+  <link rel="stylesheet" href="1-src/popup.css">
+  <script src="1-src/popup.js"></script>
+  <script src="1-src/fade.js"></script>
+  <script src="1-src/layout.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-
     .container {
-        background: url('entry-2/bgd-entry-2.png') 100% 100%;
+      background: url('entry-2/bgd-entry-2.png') 100% 100%;
     }
-
-    .fade-overlay.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .clickable:hover {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .popup {
-      box-shadow: 0 8px 8px rgba(0, 0, 0, 0.514);
-    }
-    
-    .popup img {
-      max-width: 600px;
-    }
-    
-
   </style>
 </head>
 
 <body style="margin:0;overflow:hidden">
-  
+
   <div class="container">
 
-    <img src="entry-2/button-0.png" class="button"
-    style="top: 600px; left: 200px; width: 80px; height: auto;"
-    onclick="showModal(0)">
+    <img src="entry-2/button-0.png" class="button" style="top: 600px; left: 200px; width: 80px; height: auto;" onclick="popup.showText({
+  texts: ['A PIECE OF DRYWALL FROM A MINE IN MICHIGAN'],
+  name: 'popup-drywall',
+  tintBackground: false,
+  takeOverScreen: true,
+  style: 'top: 600px; left: 300px; width: 80px; height: auto;'
+})">
 
-   <img src="entry-2/button-1.png" class="button"
-    style="top: 500px; left: 830px; width: 300px; height: auto;" 
-    onclick="showModal(1)">
+    <img src="entry-2/button-1.png" class="button" style="top: 500px; left: 830px; width: 300px; height: auto;" onclick="popup.showText({
+  texts: ['A CERAMIC TILE FROM A CLAY PIT, THAT WAS THEN FIRED AT HIGH TEMP IN A FACTORY'],
+  name: 'popup-tile',
+  tintBackground: false,
+  takeOverScreen: true,
+  style: 'top: 500px; left: 830px; width: 500px; height: auto;'
+})">
 
-    <img src="entry-2/button-2.png" class="button"
-    style="top: 730px; left: 1430px; width: 300px; height: auto;" 
-    onclick="showModal(2)">
+    <img src="entry-2/button-2.png" class="button" style="top: 730px; left: 1430px; width: 300px; height: auto;"
+      onclick="popup.showText({
+  texts: ['A PIECE OF MARBLE, SHIPPED BY BOAT FROM ITALY'],
+  name: 'popup-marble',
+  tintBackground: false,
+  takeOverScreen: true,
+  style: 'top: 730px; left: 1430px; width: 300px; height: auto;'
+})">
 
-    <img src="all/button-back.png" class="button" 
-    style="top: 950px; left: 50px; width: 100px; height: auto;"
-    onclick="fadeToScene('entry-1.html')">
+    <img src="all/button-back.png" class="button" style="top: 950px; left: 50px; width: 100px; height: auto;"
+      onclick="fadeToScene('entry-1.html')">
 
-    <img src="all/button-next.png" class="button" 
-    style="top: 950px; left: 1750px; width: 100px; height: auto;"
-    onclick="fadeToScene('entry-3.html')">
-
-  </div>
-
-
-
-<!-- For fixed size -->
-    <script>
-        const scale = () => {
-            const c = document.querySelector('.container');
-            const w = innerWidth / 1920;
-            const h = innerHeight / 1080;
-            c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
-        };
-        onload = onresize = scale;
-
-
-  document.addEventListener('DOMContentLoaded', () => {
-  const popupImage = document.getElementById('popupImage');
-  popupImage.addEventListener('click', () => {
-
-  });
-});
-
-    </script>
-
-
-<div id="fadeOverlay" class="fade-overlay"></div>
-
-  <!-- Modal for text -->
-  <div id="myModal" class="modal">
-    <div class="modal-content">
-      <h2 id="modal-title"></h2>
-      <p id="modal-text">This is the beginning of your journey.</p>
-    </div>
+    <img src="all/button-next.png" class="button" style="top: 950px; left: 1750px; width: 100px; height: auto;"
+      onclick="fadeToScene('entry-3.html')">
 
   </div>
+
+
 
   <script>
 
-  function showPopup(id) {
-    document.getElementById(id).classList.add('show');
-  }
-
-  function hidePopup(id) {
-    document.getElementById(id).classList.remove('show');
-  }
-
-    // Modal (text) related JavaScript:
-    const modalTexts = [
-      ["A PIECE OF DRYWALL FROM A MINE IN MICHIGAN"],
-      ["A CERAMIC TILE FROM A CLAY PIT, THAT WAS THEN FIRED AT HIGH TEMP IN A FACTORY"],
-      ["A PIECE OF MARBLE, SHIPPED BY BOAT FROM ITALY"],
-    ];
-    let currentStep = 0;
-    let currentTextArray = [];
-
-    const modalPositions = [
-      { top: '600px', left: '300px' }, // position for modal(0)
-      { top: '500px', left: '830px' },   // position for modal(1)
-      { top: '730px', left: '1430px' } 
-    ];
-
-    function showModal(buttonIndex) {
-  currentStep = 0;
-  currentTextArray = modalTexts[buttonIndex];
-  updateModal();
-
-  const modal = document.getElementById('myModal');
-  const modalContent = modal.querySelector('.modal-content');
-
-  // Set position
-  const pos = modalPositions[buttonIndex];
-  modalContent.style.top = pos.top;
-  modalContent.style.left = pos.left;
-
-  // Apply special class for modal(2)
-  if (buttonIndex === 2) {
-    modal.classList.add('alt-style');
-  } else {
-    modal.classList.remove('alt-style');
-  }
-
-  modal.style.display = 'block';
-}
-
-function nextModal() {
-  currentStep++;
-  if (currentStep < currentTextArray.length) {
-    updateModal();
-  } else {
-    document.getElementById('myModal').style.display = 'none';
-
-    // 👇 Hide the popup image ONLY if we're on modal(2)
-    if (currentTextArray === modalTexts[2]) {
-      hidePopup('PopupRFO');
-    }
-  }
-}
-
-    function updateModal() {
-      document.getElementById('modal-text').innerText = currentTextArray[currentStep];
-    }
 
     document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('myModal').addEventListener('click', nextModal);
-    popupImage.addEventListener('click', () => {
-      showModal(2); // just show the modal without hiding the image
-});
-  });
+      const popupImage = document.getElementById('popupImage');
+      popupImage.addEventListener('click', () => {
+
+      });
+    });
 
     // Background music
     var music = new Audio('computer-data.mp3');
@@ -175,24 +75,7 @@ function nextModal() {
     }
     document.addEventListener('click', startMusic);
 
-    // Page navigation
-    function goToPage(page) {
-      window.location.href = page;
-    }
-
-    function fadeToScene(url) {
-  const overlay = document.getElementById('fadeOverlay');
-
-  // Force reflow before adding class
-  overlay.offsetHeight; // this does nothing visually, but it triggers a reflow
-
-  overlay.classList.add('show');
-
-  setTimeout(() => {
-    window.location.href = url;
-  }, 1000); // match the transition duration
-}
-
   </script>
 </body>
+
 </html>

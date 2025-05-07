@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Image Slideshow</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="1-src/main.css">
+  <link rel="stylesheet" href="1-src/popup.css">
+  <script src="1-src/popup.js"></script>
+  <script src="1-src/fade.js"></script>
   <style>
-    body, html {
+    body,
+    html {
       background: url('entry-2/bgd-entry-2.png') no-repeat center center;
     }
 
@@ -30,64 +35,61 @@
     }
   </style>
 </head>
-<body>
 
-<div id="slideshow" class="slideshow">
-  <img id="slideImage">
-</div>
+<body style="margin:0;overflow:hidden">
 
-<img src="entry-2/button-0.png" class="button"
-style="top: 600px; left: 200px; width: 80px; height: auto;"
-onclick="showModal(0)">
+  <div class="container">
+    <div id="slideshow" class="slideshow">
+      <img id="slideImage">
+    </div>
 
-<img src="entry-2/button-1.png" class="button"
-style="top: 500px; left: 830px; width: 300px; height: auto;" 
-onclick="showModal(1)">
+    <img src="entry-2/button-0.png" class="button" style="top: 600px; left: 200px; width: 80px; height: auto;"
+      onclick="popup.showText({texts: ['A PIECE OF DRYWALL FROM A MINE IN MICHIGAN'], name: 'drywall', tintBackground: false, takeOverScreen: true, style: 'top: 600px; left: 300px; width: 80px; height: auto;'})">
 
-<img src="entry-2/button-2.png" class="button"
-style="top: 730px; left: 1430px; width: 300px; height: auto;" 
-onclick="showModal(2)">
+    <img src="entry-2/button-1.png" class="button" style="top: 500px; left: 830px; width: 300px; height: auto;"
+      onclick="popup.showText({texts: ['A CERAMIC TILE FROM A CLAY PIT, THAT WAS THEN FIRED AT HIGH TEMP IN A FACTORY'], name: 'tile', tintBackground: false, takeOverScreen: true, style: 'top: 500px; left: 830px; width: 300px; height: auto;'})">
 
-<img src="all/button-back.png" class="button" 
-style="top: 950px; left: 50px; width: 100px; height: auto;"
-onclick="fadeToScene('entry-1.html')">
+    <img src="entry-2/button-2.png" class="button" style="top: 730px; left: 1430px; width: 300px; height: auto;"
+      onclick="popup.showText({texts: ['A PIECE OF MARBLE, SHIPPED BY BOAT FROM ITALY'], name: 'marble', tintBackground: false, takeOverScreen: true, style: 'top: 730px; left: 1430px; width: 300px; height: auto;'})">
 
-<img src="all/button-next.png" class="button" 
-style="top: 950px; left: 1750px; width: 100px; height: auto;"
-onclick="fadeToScene('entry-3.html')">
 
-</div>
+    <img src="all/button-back.png" class="button" style="top: 950px; left: 50px; width: 100px; height: auto;"
+      onclick="fadeToScene('entry-1.html')">
 
-<script>
-const images = ['entry-2/text1.png', 'entry-2/text2.png'];
-let currentIndex = 0;
+    <img src="all/button-next.png" class="button" style="top: 950px; left: 1750px; width: 100px; height: auto;"
+      onclick="fadeToScene('entry-3.html')">
 
-const slideImage = document.getElementById('slideImage');
-const slideshow = document.getElementById('slideshow');
+  </div>
 
-slideImage.src = images[currentIndex]; // show the first image on load
+  <script>
+    const images = ['entry-2/text1.png', 'entry-2/text2.png'];
+    let currentIndex = 0;
 
-slideshow.addEventListener('click', () => {
-  currentIndex++;
-  if (currentIndex < images.length) {
-    slideImage.src = images[currentIndex];
-  } else {
-    slideshow.classList.add('hidden'); // hide slideshow after last image
-  }
+    const slideImage = document.getElementById('slideImage');
+    const slideshow = document.getElementById('slideshow');
 
+    slideImage.src = images[currentIndex]; // show the first image on load
+
+    slideshow.addEventListener('click', () => {
+      currentIndex++;
+      if (currentIndex < images.length) {
+        slideImage.src = images[currentIndex];
+      } else {
+        slideshow.classList.add('hidden'); // hide slideshow after last image
+      }
 
       // Background music
       var music = new Audio('0-music/oklou-loaded.mp3');
-    music.loop = true;
-    function startMusic() {
-      music.play();
-      document.removeEventListener('click', startMusic);
-    }
-    document.addEventListener('click', startMusic);
+      music.loop = true;
+      function startMusic() {
+        music.play();
+        document.removeEventListener('click', startMusic);
+      }
+      document.addEventListener('click', startMusic);
 
-    
-});
-</script>
 
+    });
+  </script>
 </body>
+
 </html>

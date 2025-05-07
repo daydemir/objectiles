@@ -1,165 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Hallway Interactive</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="1-src/main.css">
+  <link rel="stylesheet" href="1-src/popup.css">
+  <script src="1-src/fade.js"></script>
+  <script src="1-src/popup.js"></script>
+  <script src="1-src/layout.js"></script>
+  <script src="1-src/video.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-
     .container {
       background: url('hotel-caretaker/hotel-caretaker-slide10.png') 100% 100%;
       z-index: 0;
     }
 
-
-    .slideshow-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      cursor: url('all/cursor-saw.png'), auto;
+    .popup {
+      cursor: url('all/cursor-saw.png'), auto !important;
     }
-
-    .slideshow-overlay img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-
   </style>
 </head>
 
-<div id="fadeOverlay" style="
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: black;
-  opacity: 0;
-  transition: opacity 1s ease;
-  pointer-events: none;
-  z-index: 9998;
-"></div>
+<body>
+  <div class="container">
 
-<body style="margin:0;overflow:hidden">
+    <img src="all/button-back.png" class="button" style="top: 950px; left: 50px; width: 100px; height: auto;"
+      onclick="fadeToScene('hotel-caretaker-interactive.html')">
 
-  <div id="slideshowOverlay" class="slideshow-overlay">
-    <img id="slideshowImage" src=""> 
+    <img src="all/button-next.png" class="button" style="top: 950px; left: 1750px; width: 100px; height: auto;"
+      onclick="fadeToScene('hotel-caretaker-final.html')">
+
   </div>
-  
-    <div class="container">
-
-         <img src="all/button-back.png" class="button" 
-         style="top: 950px; left: 50px; width: 100px; height: auto;"
-         onclick="fadeToScene('hotel-caretaker-interactive.html')">
-
-         <img src="all/button-next.png" class="button" 
-         style="top: 950px; left: 1750px; width: 100px; height: auto;"
-         onclick="fadeToScene('hotel-caretaker-final.html')">
-
-    </div>
 
 
-    <script>
+  <script>
 
-    const scale = () => {
-            const c = document.querySelector('.container');
-            const w = innerWidth / 1920;
-            const h = innerHeight / 1080;
-            c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
-        };
-
-
-    onload = onresize = scale;
-
-
-
-  // FADE TO NEXT SCENE
-  function fadeToScene(url) {
-  let overlay = document.getElementById('fadeOverlay');
-
-  // Fade in the overlay
-  overlay.style.opacity = '1';
-
-  // Fade out music
-  let fadeInterval = setInterval(() => {
-    if (music.volume > 0.05) {
-      music.volume -= 0.05;
-    } else {
-      music.volume = 0;
-      music.pause();
-      clearInterval(fadeInterval);
-    }
-  }, 100); // Adjust fade speed here (100ms step)
-
-  // Navigate after the overlay transition
-  setTimeout(() => {
-    window.location.href = url;
-  }, 1000); // Match this to your overlay fade duration
-}
+    const slideshowImages = [
+      'hotel-caretaker/hotel-caretaker-slide1.png',
+      'hotel-caretaker/hotel-caretaker-slide2.png',
+      'hotel-caretaker/hotel-caretaker-slide3.png',
+      'hotel-caretaker/hotel-caretaker-slide4.png',
+      'hotel-caretaker/hotel-caretaker-slide5.png',
+      'hotel-caretaker/hotel-caretaker-slide6.png',
+      'hotel-caretaker/hotel-caretaker-slide7.png',
+      'hotel-caretaker/hotel-caretaker-slide8.png',
+      'hotel-caretaker/hotel-caretaker-slide9.png',
+    ];
 
 
-
-  // POPUPS
-    function showPopup(popupId) {
-      var popup = document.getElementById(popupId);
-      popup.classList.toggle('show');
-    }
-
-
-    function closePopup(popupElement) {
-      popupElement.classList.remove('show');
-  
-    }
-  
-
-
-  // SLIDESHOW
-
-  const slideshowImages = [
-    'hotel-caretaker/hotel-caretaker-slide1.png',
-    'hotel-caretaker/hotel-caretaker-slide2.png',
-    'hotel-caretaker/hotel-caretaker-slide3.png',
-    'hotel-caretaker/hotel-caretaker-slide4.png',
-    'hotel-caretaker/hotel-caretaker-slide5.png',
-    'hotel-caretaker/hotel-caretaker-slide6.png',
-    'hotel-caretaker/hotel-caretaker-slide7.png',
-    'hotel-caretaker/hotel-caretaker-slide8.png',
-    'hotel-caretaker/hotel-caretaker-slide9.png',
-  ];
-
-
-
-
-  let slideIndex = 0;
-  const slideshowOverlay = document.getElementById('slideshowOverlay');
-  const slideshowImage = document.getElementById('slideshowImage');
-
-
-
-  // SHOW FIRST IMAGE
-  slideshowImage.src = slideshowImages[slideIndex];
-
-
-
-  slideshowOverlay.addEventListener('click', () => {
-    slideIndex++;
-    if (slideIndex < slideshowImages.length) {
-      slideshowImage.src = slideshowImages[slideIndex];
-    } else {
-      // ONCE ALL IMAGES ARE SHOWN REMOVE OVERLAY
-      slideshowOverlay.style.display = 'none';
-    }
-
-  });
-
-
-    
+    window.addEventListener('DOMContentLoaded', function () {
+      popup.showImage({
+        images: slideshowImages,
+        name: 'hotel-caretaker-slides',
+        fullscreen: true,
+        tintBackground: true,
+        takeOverScreen: true,
+        fade: false,
+      });
+    });
   </script>
 </body>
+
 </html>
