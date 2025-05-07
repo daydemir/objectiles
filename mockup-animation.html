@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mockup Animation</title>
+    <link rel="stylesheet" href="main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+    </style>
+</head>
+<body>
+    <video id="animation-mockup" autoplay muted>
+        <source src="mockup/animation-mockup.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+    <div class="fade-overlay" id="fadeOverlay"></div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+          const video = document.getElementById('animation-mockup');
+    
+          if (video) {
+            video.addEventListener('ended', () => {
+              console.log("Video ended. Redirecting...");
+              window.location.href = 'mockup-draggable.html'; 
+            });
+          } else {
+            console.error("Video element not found.");
+          }
+        });
+      </script>
+
+</body>
+</html>

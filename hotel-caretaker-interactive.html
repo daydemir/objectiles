@@ -29,18 +29,18 @@
 
     <div id="intro" class="intro-overlay">
       <video autoplay muted playsinline id="introVideo">
-        <source src="hotel-caretaker/animation-hotel-caretaker1.mp4" type="video/mp4">
+        <source src="hotel-caretaker/animation-hotel-caretaker2.mp4" type="video/mp4">
       </video>
     </div>
   
     <div class="container">
          <img src="all/button-back.png" class="button" 
          style="top: 950px; left: 50px; width: 100px; height: auto;"
-         onclick="fadeToScene('inventory-interactive.html')">
+         onclick="fadeToScene('ceremony-caretaker-slides.html')">
 
          <img src="all/button-next.png" class="button" 
          style="top: 950px; left: 1750px; width: 100px; height: auto;"
-         onclick="fadeToScene('hotel-caretaker-care-interactive.html')">
+         onclick="fadeToScene('hotel-caretaker-slides.html')">
 
          <img src="hotel-caretaker/button-showinfo.png" class="button" 
          style="top: 125px; left: 1550px; width: 200px; height: auto;"
@@ -63,10 +63,6 @@
             c.style.transform = `translate(-50%, -50%) scale(${Math.max(w, h)})`;
         };
         onload = onresize = scale;
-
-    function goToPage(page) {
-      window.location.href = page;
-    }
 
     function fadeToScene(url) {
             let overlay = document.getElementById('fadeOverlay');

@@ -34,6 +34,12 @@
 </head>
 
 <body style="margin:0;overflow:hidden">
+
+    <div id="intro" class="intro-overlay">
+      <video autoplay muted playsinline id="introVideo">
+        <source src="office/animation-office.mp4" type="video/mp4">
+      </video>
+    </div>
   
   <div class="container">
 
@@ -53,15 +59,19 @@
       style="top: 160px; left: 220px; width: 160px; height: auto;"
         onclick="showPopup('PopupRFO')">
 
-      <img src="all/button-back.png" class="button" 
-      style="top: 950px; left: 50px; width: 100px; height: auto;"
-      onclick="fadeToScene('character.html')">
+        <img src="all/button-back.png" class="button" 
+        style="top: 950px; left: 50px; width: 100px; height: auto;"
+        onclick="fadeToScene('designer.html')">
 
-      <img src="all/button-next.png" class="button" 
-      style="top: 950px; left: 1750px; width: 100px; height: auto;"
-      onclick="fadeToScene('RFO-interactive.html')">
+        <img src="all/button-next.png" class="button" 
+        style="top: 950px; left: 1750px; width: 100px; height: auto;"
+        onclick="fadeToScene('RFO-interactive.html')">
 
   </div>
+
+
+  <div class="fade-overlay" id="fadeOverlay"></div>
+
 
 <div id="PopupRFO" class="popup" style="z-index: 1000;">
   <img src="office/popup-image3.jpg" id="popupImage">
@@ -91,15 +101,6 @@
 
 <div id="fadeOverlay" class="fade-overlay"></div>
 
-  <!-- Modal for text -->
-  <div id="myModal" class="modal">
-    <div class="modal-content">
-      <h2 id="modal-title"></h2>
-      <p id="modal-text">This is the beginning of your journey.</p>
-    </div>
-
-  </div>
-
   <script>
 
   function showPopup(id) {
@@ -122,15 +123,36 @@
 
 
 
-  // Force reflow before adding class
-  overlay.offsetHeight; // this does nothing visually, but it triggers a reflow
-
-  overlay.classList.add('show');
 
   setTimeout(() => {
     window.location.href = url;
   }, 1000); // match the transition duration
 }
+
+
+function showPopup(popupId) {
+      var popup = document.getElementById(popupId);
+      popup.classList.toggle('show');
+    }
+
+    function closePopup(popupElement) {
+      popupElement.classList.remove('show');
+}
+
+    // 🔥 Fade out intro overlay with JS
+    window.addEventListener('DOMContentLoaded', () => {
+      const introOverlay = document.getElementById('intro');
+      const video = introOverlay.querySelector('video');
+
+    video.addEventListener('ended', () => {
+      introOverlay.classList.add('fade-out');
+      setTimeout(() => {
+        introOverlay.remove();
+      }, 1000); // match fade duration
+    });
+
+  });
+  
 
   </script>
 </body>

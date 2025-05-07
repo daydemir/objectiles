@@ -8,6 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
 
+
+
+.container {
+      
+      background: url('hotel/bgd-hotel.png') 100% 100%;
+  }
+
+
         .popup {
             position: absolute;
             transition: opacity 0s;
@@ -27,28 +35,29 @@
 
     </style>
 </head>
-<body>
+<body style="margin:0;overflow:hidden">
 
-    <div class="container">
-
-        <video autoplay loop muted>
-        <source src="hotel/animation-hotel-background.mp4" type="video/mp4">
-        Your browser does not support the video tag.
+      <div id="intro" class="intro-overlay">
+        <video autoplay muted playsinline id="introVideo">
+          <source src="hotel/animation-hotel-background2.mp4" type="video/mp4">
         </video>
+      </div>
 
-        <img src="hotel/button-counter.png" class="button"
+     <div class="container">
+
+        <img src="all/button-target.png" class="button"
          style="top: 492px; left: -10px; width: 220px; height: auto;"
          onclick="showPopup('PopupCounter')">
-        <img src="hotel/button-triangle.png" class="button"
+        <img src="all/button-target.png" class="button"
          style="top: 380px; left: 240px; width: 200px; height: auto;"
          onclick="showPopup('PopupTriangle')">
-        <img src="hotel/button-firebox.png" class="button"
+        <img src="all/button-target.png" class="button"
          style="top: 620px; left: 510px; width: 170px; height: auto;"
          onclick="showPopup('imagePopupPushstick')">
-        <img src="hotel/button-sink.png" class="button"
+        <img src="hotel/button-.png" class="button"
          style="top: 700px; left: -10px; width: 100px; height: auto;"
          onclick="showPopup('PopupSink')">
-        <img src="hotel/button-skylight.png" class="button"
+        <img src="hotel/button-.png" class="button"
           style="top: 700px; left: 1480px; width: 400px; height: auto;"
           onclick="showPopup('PopupSkylight')">
 
@@ -58,7 +67,8 @@
  
           <img src="all/button-next.png" class="button" 
           style="top: 950px; left: 1750px; width: 100px; height: auto;"
-          onclick="fadeToScene('search-interactive.html')">
+          onclick="fadeToScene('ceremony-designer-interactive.html')">
+
     </div>
 
     <div id="PopupCounter" class="popup" style="z-index: 1000;">
@@ -80,8 +90,6 @@
     <div class="fade-overlay" id="fadeOverlay"></div>
 
     <script>
-
-        
         const scale = () => {
             const c = document.querySelector('.container');
             const w = innerWidth / 1920;
@@ -98,6 +106,11 @@
             }, 3000);
         }
 
+    setTimeout(() => {
+      window.location.href = url;
+        }, 3000); // Match the transition duration in CSS
+
+
         function showPopup(popupId) {
       var popup = document.getElementById(popupId);
       popup.classList.toggle('show');
@@ -107,8 +120,19 @@
     popupElement.classList.remove('show');
   }
 
-  
+      // 🔥 Fade out intro overlay with JS
+      window.addEventListener('DOMContentLoaded', () => {
+      const introOverlay = document.getElementById('intro');
+      const video = introOverlay.querySelector('video');
 
+    video.addEventListener('ended', () => {
+      introOverlay.classList.add('fade-out');
+      setTimeout(() => {
+        introOverlay.remove();
+      }, 1000); // match fade duration
+    });
+
+});
     </script>
 
 </body>
