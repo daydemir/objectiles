@@ -9,23 +9,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="1-src/popup.js"></script>
   <script src="1-src/fade.js"></script>
-
+  <script src="1-src/video.js"></script>
   <script src="1-src/layout.js"></script>
   <style>
     .container {
       background: url('office/bgd-office.png') 100% 100%;
     }
-
-    .fade-overlay.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
   </style>
 </head>
 
-<body style="margin:0;overflow:hidden">
-
-  <script src="1-src/video.js"></script>
+<body>
   <script>
     showIntroVideo('office/animation-office.mp4', 1000, true, true, true, true);
   </script>
@@ -90,69 +83,6 @@
 
   </div>
 
-
-  <div class="fade-overlay" id="fadeOverlay"></div>
-
-
-  <div id="PopupRFO" class="popup" style="z-index: 1000;">
-    <img src="office/popup-image3.jpg" id="popupImage">
-  </div>
-
-
-  <!-- For fixed size -->
-  <script>
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const popupImage = document.getElementById('popupImage');
-      popupImage.addEventListener('click', () => {
-
-      });
-    });
-
-  </script>
-
-
-
-  <script>
-
-    function fadeToScene(url) {
-      const overlay = document.getElementById('fadeOverlay');
-
-
-
-
-      setTimeout(() => {
-        window.location.href = url;
-      }, 1000); // match the transition duration
-    }
-
-
-    function showPopup(popupId) {
-      var popup = document.getElementById(popupId);
-      popup.classList.toggle('show');
-    }
-
-    function closePopup(popupElement) {
-      popupElement.classList.remove('show');
-    }
-
-    // 🔥 Fade out intro overlay with JS
-    window.addEventListener('DOMContentLoaded', () => {
-      const introOverlay = document.getElementById('intro');
-      const video = introOverlay.querySelector('video');
-
-      video.addEventListener('ended', () => {
-        introOverlay.classList.add('fade-out');
-        setTimeout(() => {
-          introOverlay.remove();
-        }, 1000); // match fade duration
-      });
-
-    });
-
-
-  </script>
 </body>
 
 </html>

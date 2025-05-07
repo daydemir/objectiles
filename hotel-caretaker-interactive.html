@@ -15,25 +15,14 @@
     .container {
       background: url('hotel-caretaker/bgd-hotel-caretaker.png') 100% 100%;
     }
-
-    .popup {
-      background-color: rgba(255, 255, 255, 0);
-    }
-
-    .popup img {
-      max-width: 1920px;
-      height: auto;
-    }
   </style>
 </head>
 
 <body>
 
-  <div id="intro" class="intro-overlay">
-    <video autoplay muted playsinline id="introVideo">
-      <source src="hotel-caretaker/animation-hotel-caretaker2.mp4" type="video/mp4">
-    </video>
-  </div>
+  <script>
+    showIntroVideo('hotel-caretaker/animation-hotel-caretaker2.mp4', 1000, true, true, true, true);
+  </script>
 
   <div class="container">
     <img src="all/button-back.png" class="button" style="top: 950px; left: 50px; width: 100px; height: auto;"
@@ -54,50 +43,6 @@
 
 
   </div>
-
-
-
-  <script src="fade.js"></script>
-  <script>
-
-    function fadeToScene(url) {
-      let overlay = document.getElementById('fadeOverlay');
-      overlay.style.opacity = '1';
-      setTimeout(() => {
-        window.location.href = url;
-      }, 3000);
-
-      setTimeout(() => {
-        window.location.href = url;
-      }, 3000); // Match the transition duration in CSS
-    }
-    function showPopup(popupId) {
-      var popup = document.getElementById(popupId);
-      popup.classList.toggle('show');
-    }
-
-    function closePopup(popupElement) {
-      popupElement.classList.remove('show');
-    }
-
-    // 🔥 Fade out intro overlay with JS
-    window.addEventListener('DOMContentLoaded', () => {
-      const introOverlay = document.getElementById('intro');
-      const video = introOverlay.querySelector('video');
-
-      video.addEventListener('ended', () => {
-        introOverlay.classList.add('fade-out');
-        setTimeout(() => {
-          introOverlay.remove();
-        }, 1000); // match fade duration
-      });
-
-    });
-
-  </script>
-  <script src="fade.js"></script>
-  <script src="video-utils.js"></script>
-  <script src="fade.js"></script>
 </body>
 
 </html>

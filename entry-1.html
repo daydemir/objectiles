@@ -3,53 +3,22 @@
 
 <head>
   <title>Entry 1</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="1-src/main.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="video-utils.js"></script>
-  <script src="fade.js"></script>
+
+  <script src="1-src/fade.js"></script>
   <style>
 
   </style>
 </head>
 
 <body>
+  <script src="1-src/video.js"></script>
+  <script>
+    showIntroVideo('entry-1/animation-entry-2.mp4', 1000, false, false, true, true, 'entry-3.html');
+  </script>
 
-  <body>
-    <video id="animation-entry-1" autoplay>
-      <source src="entry-1/animation-entry-2.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-
-
-    <script>
-      const video = document.getElementById('animation-entry-1');
-
-      function startVideo() {
-        video.play();
-        document.removeEventListener('click', startVideo);
-      }
-
-      document.addEventListener('click', startVideo);
-
-      video.addEventListener('ended', () => {
-        window.location.href = 'entry-2.html';
-      });
-
-      function startVideo() {
-        video.play();
-        document.removeEventListener('click', startVideo);
-      }
-
-      document.addEventListener('click', startVideo);
-
-      video.addEventListener('ended', () => {
-        window.location.href = 'entry-3.html';
-      });
-    </script>
-
-    <script src="video-utils.js"></script>
-    <script src="fade.js"></script>
-  </body>
+</body>
 
 </html>
