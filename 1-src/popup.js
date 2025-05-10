@@ -405,9 +405,11 @@ function showImagePopup(imagePath, { tintBackground = true, takeOverScreen = tru
       popupEl.style.display = 'flex';
       popupEl.style.alignItems = 'center';
       popupEl.style.justifyContent = 'center';
+      popupEl.style.background = 'transparent'; // Ensure transparent background
       // Create a padded, dark container for the image
       const container = document.createElement('div');
       container.className = 'popup-inner';
+      container.style.background = 'transparent'; // Ensure transparent background
       const img = document.createElement('img');
       img.src = currentImageSrc;
       img.id = 'popupImage'; // Add ID for easier reference

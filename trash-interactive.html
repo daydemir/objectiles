@@ -1,0 +1,58 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Hallway Interactive</title>
+  <link rel="stylesheet" href="1-src/main.css">
+  <link rel="stylesheet" href="1-src/popup.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="1-src/fade.js"></script>
+  <script src="1-src/popup.js"></script>
+  <script src="1-src/layout.js"></script>
+  <script src="1-src/video.js"></script>
+  <style>
+    .container {
+      background: url('trash/bgd-trash1.png') 100% 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div class="container">
+
+    <img src="hallway/button-pushstick.png" class="button" style="top: 785px; left: 350px; width: 160px; height: auto;"
+      onclick="popup.showImage({
+        images: 'trash/animation-steps-4.gif',
+        name: 'pushstick',
+        fullscreen: true,
+        tintBackground: false,
+        takeOverScreen: true,
+        fade: true
+      })">
+
+    <img src="hallway/button-stair.png" class="button" style="top: 825px; left: 840px; width: 395px; height: auto;"
+      onclick="popup.showImage({
+        images: 'trash/animation-steps.gif',
+        name: 'stair',
+        fullscreen: true,
+        tintBackground: false,
+        takeOverScreen: true,
+        fade: true
+      })">
+
+    <img src="all/button-back.png" class="button" style="top: 950px; left: 50px; width: 100px; height: auto;"
+      onclick="fadeToScene('character.html')">
+
+    <img src="all/button-next.png" class="button" style="top: 950px; left: 1750px; width: 100px; height: auto;"
+      onclick="fadeToScene('livingroom-interactive.html')">
+
+  </div>
+
+
+
+</body>
+
+</html>
