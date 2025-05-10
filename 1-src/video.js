@@ -13,6 +13,52 @@
  * @param {boolean} [skippable=true] - Whether the video is skippable by click
  * @param {string|null} [destinationHref=null] - If set, redirects to this URL when the video ends
  */
+function createSharedVideoElement({
+  src,
+  fadeDuration = 1000,
+  autoplay = true,
+  muted = true,
+  playsinline = true,
+  skippable = true,
+  onFadeOut = null
+} = {}) {
+  if (!src) {
+    console.error('createSharedVideoElement: src is required');
+    return null;
+  }
+  // Create video element
+  const videoElement = document.createElement('video');
+  videoElement.autoplay = autoplay;
+  videoElement.muted = muted;
+  videoElement.playsInline = playsinline;
+  videoElement.setAttribute('playsinline', '');
+  videoElement.setAttribute('webkit-playsinline', '');
+  videoElement.setAttribute('muted', '');
+  // Hide scrubber/controls unless explicitly requested
+  videoElement.controls = false;
+  // Source
+  const source = document.createElement('source');
+  source.src = src;
+  source.type = 'video/mp4';
+  videoElement.appendChild(source);
+  // Fade out on end
+  videoElement.addEventListener('ended', () => {
+    if (onFadeOut) {
+      onFadeOut(videoElement, fadeDuration);
+    }
+  });
+  // Skippable by click (triggers fade out)
+  if (skippable) {
+    videoElement.style.cursor = 'pointer';
+    videoElement.addEventListener('click', () => {
+      if (onFadeOut) {
+        onFadeOut(videoElement, fadeDuration);
+      }
+    });
+  }
+  return videoElement;
+}
+
 function showIntroVideo(video, fadeDuration = 1000, autoplay = true, muted = true, playsinline = true, skippable = true, destinationHref = null) {
   // Validate required parameter
   if (!video) {
@@ -83,5 +129,6 @@ function showIntroVideo(video, fadeDuration = 1000, autoplay = true, muted = tru
 
 // Export for backward compatibility
 window.videoUtils = {
-  showIntroVideo
+  showIntroVideo,
+  createSharedVideoElement
 };

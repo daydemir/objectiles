@@ -7,7 +7,9 @@ let currentTextArray = null;
 let currentTextStep = 0;
 let currentImageArray = null;
 let currentImageStep = 0;
-let popupMode = null; // 'text' or 'image'
+let popupMode = null; // 'text', 'image', or 'video'
+let currentVideoArray = null;
+let currentVideoStep = 0;
 
 // Track multiple popups by id
 const popups = {};
@@ -53,6 +55,8 @@ function hideOverlay() {
 }
 
 // Hide the modal popup
+let _onDismiss = null;
+
 function hide() {
   if (popupEl) {
     popupEl.classList.remove('show');
@@ -64,7 +68,13 @@ function hide() {
   currentTextStep = 0;
   currentImageArray = null;
   currentImageStep = 0;
+  currentVideoArray = null;
+  currentVideoStep = 0;
   popupMode = null;
+  if (typeof _onDismiss === 'function') {
+    try { _onDismiss(); } catch (e) { console.error('[popup] onDismiss error', e); }
+    _onDismiss = null;
+  }
 }
 
 /**
@@ -82,7 +92,7 @@ function hide() {
  * @param {string=} opts.style - Optional inline style string for popup container (e.g. 'top: 730px; left: 0px; width: 440px; height: auto;')
  * @param {string=} opts.popupName - Optional unique name for this popup. Prevents duplicate popups with the same name.
  */
-function showTextPopup({ tintBackground = true, takeOverScreen = true, style = null, popupName = null, fade = false } = {}) {
+function showTextPopup({ tintBackground = true, takeOverScreen = true, style = null, popupName = null, fade = false, onDismiss = null } = {}) {
   if (takeOverScreen) {
     // Old modal behavior (single popup, overlay)
     if (!popupEl || !currentTextArray) return;
@@ -234,11 +244,13 @@ function showTextPopup({ tintBackground = true, takeOverScreen = true, style = n
           setTimeout(() => {
             popupDiv.remove();
             delete popups[popupId];
+            if (typeof onDismiss === 'function') onDismiss();
             console.log('[popup] dismissed non-modal popup', popupId);
           }, 3000);
         } else {
           popupDiv.remove();
           delete popups[popupId];
+          if (typeof onDismiss === 'function') onDismiss();
           console.log('[popup] dismissed non-modal popup', popupId);
         }
       }
@@ -266,6 +278,308 @@ function dismissPopup(id) {
 }
 
 /**
+ * Show a video popup.
+ * @param {string|string[]} videoPath - Single video path or array of video paths for slideshow
+ * @param {Object} opts
+ * @param {boolean} opts.tintBackground - Whether to show a background overlay
+ * @param {boolean} opts.takeOverScreen - Whether the popup takes over the screen (modal)
+ * @param {boolean} opts.fullscreen - Whether the video should fill the container without margins
+ * @param {string=} opts.style - Optional inline style string for popup container
+ * @param {string=} opts.popupName - Optional unique name for this popup. Prevents duplicate popups with the same name.
+ * @param {function=} opts.onDismiss - Optional callback function to call when the popup is dismissed.
+ */
+function showVideoPopup(videoPath, { tintBackground = true, takeOverScreen = true, fullscreen = false, style = null, popupName = null, fade = false, onDismiss = null } = {}) {
+  if (takeOverScreen) {
+    if (!popupEl) return;
+    popupEl.innerHTML = '';
+    popupEl.className = fullscreen ? 'popup shared-popup show fullscreen' : 'popup shared-popup show';
+    if (fade) {
+      popupEl.style.transition = 'opacity 3s';
+      popupEl.style.opacity = '0';
+      setTimeout(() => { popupEl.style.opacity = '1'; }, 10);
+    } else {
+      popupEl.style.transition = '';
+      popupEl.style.opacity = '';
+    }
+    // Handle video path (single string or array)
+    const isSlideshow = Array.isArray(currentVideoArray) && currentVideoArray.length > 0;
+    const currentVideoSrc = isSlideshow ? currentVideoArray[currentVideoStep] : videoPath;
+    if (tintBackground) {
+      showOverlay();
+      popupEl.style.display = 'flex';
+      popupEl.style.alignItems = 'center';
+      popupEl.style.justifyContent = 'center';
+      const video = window.videoUtils.createSharedVideoElement({
+        src: currentVideoSrc,
+        fadeDuration: fade ? 3000 : 0,
+        autoplay: true,
+        muted: true,
+        playsinline: true,
+        skippable: true,
+        onFadeOut: (videoEl, fadeDuration) => {
+          popupEl.style.transition = fadeDuration ? `opacity ${fadeDuration}ms` : '';
+          popupEl.style.opacity = '0';
+          setTimeout(() => {
+            hide();
+            if (typeof onDismiss === 'function') onDismiss();
+          }, fadeDuration || 0);
+        }
+      });
+      video.id = 'popupVideo';
+      // Apply fullscreen mode if requested
+      if (fullscreen) {
+        video.style.maxWidth = '100vw';
+        video.style.maxHeight = '100vh';
+        video.style.margin = '0';
+        video.style.padding = '0';
+        video.style.objectFit = 'cover';
+      } else {
+        video.style.maxWidth = '80vw';
+        video.style.maxHeight = '80vh';
+        video.style.margin = '20px';
+        video.style.padding = '10px';
+        video.style.objectFit = 'contain';
+      }
+      popupEl.appendChild(video);
+      if (isSlideshow) {
+        popupEl.onclick = function (e) {
+          e.stopPropagation();
+          if (currentVideoStep < currentVideoArray.length - 1) {
+            currentVideoStep++;
+            document.getElementById('popupVideo').src = currentVideoArray[currentVideoStep];
+          } else {
+            if (fade) {
+              popupEl.style.transition = 'opacity 3s';
+              popupEl.style.opacity = '0';
+              setTimeout(() => {
+                hide();
+                if (typeof onDismiss === 'function') onDismiss();
+              }, 3000);
+            } else {
+              hide();
+              if (typeof onDismiss === 'function') onDismiss();
+            }
+          }
+        };
+        video.onclick = function (e) {
+          e.stopPropagation();
+          if (currentVideoStep < currentVideoArray.length - 1) {
+            currentVideoStep++;
+            document.getElementById('popupVideo').src = currentVideoArray[currentVideoStep];
+          } else {
+            if (fade) {
+              popupEl.style.transition = 'opacity 3s';
+              popupEl.style.opacity = '0';
+              setTimeout(() => {
+                hide();
+                if (typeof onDismiss === 'function') onDismiss();
+              }, 3000);
+            } else {
+              hide();
+              if (typeof onDismiss === 'function') onDismiss();
+            }
+          }
+        };
+      } else {
+        if (takeOverScreen) {
+          popupEl.onclick = function (e) {
+            e.stopPropagation();
+            if (fade) {
+              popupEl.style.transition = 'opacity 3s';
+              popupEl.style.opacity = '0';
+              setTimeout(() => {
+                hide();
+                if (typeof onDismiss === 'function') onDismiss();
+              }, 3000);
+            } else {
+              hide();
+              if (typeof onDismiss === 'function') onDismiss();
+            }
+          };
+          video.onclick = function (e) {
+            e.stopPropagation();
+            if (fade) {
+              popupEl.style.transition = 'opacity 3s';
+              popupEl.style.opacity = '0';
+              setTimeout(() => {
+                hide();
+                if (typeof onDismiss === 'function') onDismiss();
+              }, 3000);
+            } else {
+              hide();
+              if (typeof onDismiss === 'function') onDismiss();
+            }
+          };
+        } else {
+          popupEl.onclick = null;
+          video.onclick = function (e) {
+            e.stopPropagation();
+            if (fade) {
+              popupEl.style.transition = 'opacity 3s';
+              popupEl.style.opacity = '0';
+              setTimeout(() => {
+                hide();
+                if (typeof onDismiss === 'function') onDismiss();
+              }, 3000);
+            } else {
+              hide();
+              if (typeof onDismiss === 'function') onDismiss();
+            }
+          };
+        }
+      }
+    } else {
+      hideOverlay();
+      popupEl.style.display = 'flex';
+      popupEl.style.alignItems = 'center';
+      popupEl.style.justifyContent = 'center';
+      popupEl.style.background = 'transparent';
+      const container = document.createElement('div');
+      container.className = 'popup-inner';
+      container.style.background = 'transparent';
+      const video = window.videoUtils.createSharedVideoElement({
+        src: currentVideoSrc,
+        fadeDuration: fade ? 3000 : 0,
+        autoplay: true,
+        muted: true,
+        playsinline: true,
+        skippable: true,
+        onFadeOut: (videoEl, fadeDuration) => {
+          popupEl.style.transition = fadeDuration ? `opacity ${fadeDuration}ms` : '';
+          popupEl.style.opacity = '0';
+          setTimeout(() => {
+            hide();
+            if (typeof onDismiss === 'function') onDismiss();
+          }, fadeDuration || 0);
+        }
+      });
+      video.id = 'popupVideo';
+      if (fullscreen) {
+        video.style.maxWidth = '100%';
+        video.style.maxHeight = '100%';
+        video.style.margin = '0';
+        video.style.padding = '0';
+        video.style.objectFit = 'cover';
+        container.style.padding = '0';
+      } else {
+        video.style.maxWidth = '90%';
+        video.style.maxHeight = '90%';
+        video.style.margin = '10px';
+        video.style.objectFit = 'contain';
+      }
+      container.appendChild(video);
+      popupEl.appendChild(container);
+      if (isSlideshow) {
+        container.onclick = function(e) {
+          e.stopPropagation();
+          if (currentVideoStep < currentVideoArray.length - 1) {
+            currentVideoStep++;
+            document.getElementById('popupVideo').src = currentVideoArray[currentVideoStep];
+          } else {
+            if (fade) {
+              popupEl.style.transition = 'opacity 3s';
+              popupEl.style.opacity = '0';
+              setTimeout(() => {
+                hide();
+                if (typeof onDismiss === 'function') onDismiss();
+              }, 3000);
+            } else {
+              hide();
+              if (typeof onDismiss === 'function') onDismiss();
+            }
+          }
+        };
+      } else {
+        if (takeOverScreen) {
+          popupEl.onclick = function (e) {
+            e.stopPropagation();
+            if (fade) {
+              popupEl.style.transition = 'opacity 3s';
+              popupEl.style.opacity = '0';
+              setTimeout(() => {
+                hide();
+                if (typeof onDismiss === 'function') onDismiss();
+              }, 3000);
+            } else {
+              hide();
+              if (typeof onDismiss === 'function') onDismiss();
+            }
+          };
+        }
+      }
+    }
+    return 'modal';
+  } else {
+    // Multiple popups allowed, use popupName as id if provided
+    const popupId = popupName ? `popup-${popupName}` : `popup-${popupIdCounter++}`;
+    if (popups[popupId]) {
+      // Popup with this id already open
+      return popupId;
+    }
+    const popupDiv = document.createElement('div');
+    popupDiv.className = (style ? 'popup show precision-placed' : 'popup show centered');
+    if (style && typeof style === 'string') {
+      popupDiv.setAttribute('style', style);
+    }
+    popupDiv.setAttribute('data-popup-id', popupId);
+    // Multi-step support for non-modal popups
+    const container = document.createElement('div');
+    container.className = 'popup-inner';
+    let step = 0;
+    const arr = currentVideoArray && currentVideoArray.length ? currentVideoArray : [''];
+    const video = window.videoUtils.createSharedVideoElement({
+      src: arr[0],
+      fadeDuration: fade ? 3000 : 0,
+      autoplay: true,
+      muted: true,
+      playsinline: true,
+      skippable: true,
+      onFadeOut: (videoEl, fadeDuration) => {
+        popupDiv.style.transition = fadeDuration ? `opacity ${fadeDuration}ms` : '';
+        popupDiv.style.opacity = '0';
+        setTimeout(() => {
+          popupDiv.remove();
+          delete popups[popupId];
+          if (typeof onDismiss === 'function') onDismiss();
+        }, fadeDuration || 0);
+      }
+    });
+    video.style.maxWidth = '90%';
+    video.style.maxHeight = '90%';
+    video.style.margin = '10px';
+    video.style.objectFit = 'contain';
+    container.appendChild(video);
+    container.setAttribute('tabindex', '0');
+    popupDiv.appendChild(container);
+    document.body.appendChild(popupDiv);
+    popups[popupId] = popupDiv;
+    // Step-through logic
+    container.onclick = function (e) {
+      e.stopPropagation();
+      if (step < arr.length - 1) {
+        step++;
+        video.src = arr[step];
+      } else {
+        if (tintBackground && fade) {
+          popupDiv.style.transition = 'opacity 3s';
+          popupDiv.style.opacity = '0';
+          setTimeout(() => {
+            popupDiv.remove();
+            delete popups[popupId];
+            if (typeof onDismiss === 'function') onDismiss();
+          }, 3000);
+        } else {
+          popupDiv.remove();
+          delete popups[popupId];
+          if (typeof onDismiss === 'function') onDismiss();
+        }
+      }
+    };
+    return popupId;
+  }
+}
+
+/**
  * Show an image popup.
  * @param {string|string[]} imagePath - Single image path or array of image paths for slideshow
  * @param {Object} opts
@@ -275,7 +589,7 @@ function dismissPopup(id) {
  * @param {string=} opts.style - Optional inline style string for popup container
  * @param {string=} opts.popupName - Optional unique name for this popup. Prevents duplicate popups with the same name.
  */
-function showImagePopup(imagePath, { tintBackground = true, takeOverScreen = true, fullscreen = false, style = null, popupName = null, fade = false } = {}) {
+function showImagePopup(imagePath, { tintBackground = true, takeOverScreen = true, fullscreen = false, style = null, popupName = null, fade = false, onDismiss = null } = {}) {
   if (takeOverScreen) {
     // Old modal behavior (single popup, overlay)
     if (!popupEl) return;
@@ -540,21 +854,21 @@ function showImagePopup(imagePath, { tintBackground = true, takeOverScreen = tru
  * @param {boolean} params.takeOverScreen - Whether the popup takes over the screen (modal)
  * @param {string} params.style - Optional inline style string for popup container
  */
-function showText({ texts, name = null, tintBackground = true, takeOverScreen = true, style = null, fade = false }) {
+function showText({ texts, name = null, tintBackground = true, takeOverScreen = true, style = null, fade = false, onDismiss = null }) {
   createPopupElements();
   currentTextArray = Array.isArray(texts) ? texts : [texts];
   currentTextStep = 0;
   popupMode = 'text';
-  
+  _onDismiss = typeof onDismiss === 'function' ? onDismiss : null;
   // Configure options
   const opts = {
     popupName: name,
     tintBackground: tintBackground,
     takeOverScreen: takeOverScreen,
     style: style,
-    fade: fade
+    fade: fade,
+    onDismiss: _onDismiss
   };
-  
   // Show the popup
   if (opts.takeOverScreen === false) {
     // Temporarily store and restore currentTextArray for each popup
@@ -591,6 +905,49 @@ function text(arr) {
 }
 
 /**
+ * Show a video popup with named parameters.
+ * @param {Object} params - The parameters object
+ * @param {string|string[]} params.videos - Single video path or array of video paths for slideshow
+ * @param {string} params.name - Unique name for this popup
+ * @param {boolean} params.fullscreen - Whether the video should fill the container without margins
+ * @param {boolean} params.tintBackground - Whether to show a background overlay
+ * @param {boolean} params.takeOverScreen - Whether the popup takes over the screen (modal)
+ * @param {string} params.style - Optional inline style string for popup container
+ */
+function showVideo({ videos, name = null, fullscreen = false, tintBackground = true, takeOverScreen = true, style = null, fade = false, onDismiss = null }) {
+  createPopupElements();
+  popupMode = 'video';
+  // Handle both single video path and array of video paths
+  if (Array.isArray(videos)) {
+    currentVideoArray = videos;
+    currentVideoStep = 0;
+  } else {
+    currentVideoArray = null;
+    currentVideoStep = 0;
+  }
+  _onDismiss = typeof onDismiss === 'function' ? onDismiss : null;
+  // Configure options
+  const opts = {
+    popupName: name,
+    fullscreen: fullscreen,
+    tintBackground: tintBackground,
+    takeOverScreen: takeOverScreen,
+    style: style,
+    fade: fade,
+    onDismiss: _onDismiss
+  };
+  // Show the popup
+  if (opts.takeOverScreen === false && Array.isArray(videos)) {
+    // For non-modal slideshows, we need special handling
+    console.warn('Video slideshows are not supported in non-modal mode yet');
+    // Use just the first video for now
+    showVideoPopup(videos[0], opts);
+  } else {
+    showVideoPopup(videos, opts);
+  }
+}
+
+/**
  * Show an image popup with named parameters.
  * @param {Object} params - The parameters object
  * @param {string|string[]} params.images - Single image path or array of image paths for slideshow
@@ -600,7 +957,7 @@ function text(arr) {
  * @param {boolean} params.takeOverScreen - Whether the popup takes over the screen (modal)
  * @param {string} params.style - Optional inline style string for popup container
  */
-function showImage({ images, name = null, fullscreen = false, tintBackground = true, takeOverScreen = true, style = null, fade = false }) {
+function showImage({ images, name = null, fullscreen = false, tintBackground = true, takeOverScreen = true, style = null, fade = false, onDismiss = null }) {
   createPopupElements();
   popupMode = 'image';
   
@@ -612,7 +969,7 @@ function showImage({ images, name = null, fullscreen = false, tintBackground = t
     currentImageArray = null;
     currentImageStep = 0;
   }
-  
+  _onDismiss = typeof onDismiss === 'function' ? onDismiss : null;
   // Configure options
   const opts = {
     popupName: name,
@@ -620,9 +977,9 @@ function showImage({ images, name = null, fullscreen = false, tintBackground = t
     tintBackground: tintBackground,
     takeOverScreen: takeOverScreen,
     style: style,
-    fade: fade
+    fade: fade,
+    onDismiss: _onDismiss
   };
-  
   // Show the popup
   if (opts.takeOverScreen === false && Array.isArray(images)) {
     // For non-modal slideshows, we need special handling
@@ -638,5 +995,6 @@ function showImage({ images, name = null, fullscreen = false, tintBackground = t
 window.popup = { 
   dismissPopup,
   showText,
-  showImage
+  showImage,
+  showVideo
 };
