@@ -64,13 +64,14 @@
 .cover-container .text-content {
   width: 80%;
   max-width: 1200px;
+  margin: 0 auto;
   text-align: center;
   font-size: 2.5vw;
   font-family: 'HomeVideo', sans-serif;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 50%;
 }
 
 /* Image styling in cover - fullscreen with aspect fill */

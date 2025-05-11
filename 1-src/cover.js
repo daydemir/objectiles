@@ -104,6 +104,14 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null } 
       
       // Set content
       coverEl.innerHTML = content.html();
+      // Always apply custom style to .text-content after setting content
+      if (style && (style.includes(':') || style.includes(';'))) {
+        const textContent = coverEl.querySelector('.text-content');
+        if (textContent) textContent.style.cssText += style;
+      }
+      // Set initial opacity before fade-in
+      coverEl.style.opacity = 0;
+      overlayEl.style.opacity = 0;
       
       // Show overlay
       overlayEl.style.display = 'block';
@@ -113,11 +121,18 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null } 
         if (typeof content.nextSlide === 'function') {
           content.nextSlide(() => dismiss());
           coverEl.innerHTML = content.html();
+          // Always apply custom style to .text-content after setting content
+          if (style && (style.includes(':') || style.includes(';'))) {
+            const textContent = coverEl.querySelector('.text-content');
+            if (textContent) textContent.style.cssText += style;
+          }
         } else {
           dismiss();
         }
         e.stopPropagation();
       };
+
+
       
       // Set dismiss event listener
       coverEl.addEventListener('dismiss', dismiss);
