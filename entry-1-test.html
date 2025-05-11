@@ -22,7 +22,7 @@
 
   <script>
     showIntroVideo('entry-1/animation-entry-1.2.mp4', 1000, false, false, true, false);
-  
+
 
     // BACKGROUND MUSIC
     var music = new Audio('0-music/compdata-r0.mp3');
@@ -43,8 +43,8 @@
       startMusic();
       console.log('Click detected (capture phase)');
     }, true); // true = use capture phase
-  
-  
+
+
   </script>
 
   <div class="container">
@@ -69,11 +69,8 @@
         fade: true
       })">
 
-    <img src="all/button-back.png" class="button" style="top: 950px; left: 50px; width: 100px; height: auto;"
-      onclick="fadeToScene('character.html')">
-
-    <img src="all/button-next.png" class="button" style="top: 950px; left: 1750px; width: 100px; height: auto;"
-      onclick="fadeToScene('livingroom-interactive.html')">
+    <button class="button button-back" onclick="fadeToScene('character.html')"></button>
+    <button class="button button-next" onclick="fadeToScene('livingroom-interactive.html')"></button>
 
   </div>
 

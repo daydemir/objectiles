@@ -21,11 +21,8 @@
 <body style="margin:0;overflow:hidden">
   <div class="container">
 
-    <img src="all/button-next.png" class="button" style="top: 950px; left: 1750px; width: 100px; height: auto;"
-      onclick="fadeToScene('character.html')">
-
-    <img src="all/button-back.png" class="button" style="top: 950px; left: 50px; width: 100px; height: auto;"
-      onclick="fadeToScene('walk-designer-interactive.html')">
+    <button class="button button-next" onclick="fadeToScene('character.html')"></button>
+    <button class="button button-back" onclick="fadeToScene('walk-designer-interactive.html')"></button>
 
     <img src="mockup/button-skylight.png" class="draggable-button"
       style="top: 750px; left: 850px; width: 600px; height: auto;">
@@ -43,36 +40,45 @@
 
     let backgroundClickEnabled = true;
 
+    // Minimal, robust drag logic for .draggable-button elements
     function makeDraggable(element) {
-      let isDragging = false;
-      let offsetX = 0;
-      let offsetY = 0;
+      let startX, startY, origX, origY;
+      let dragging = false;
 
-      element.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        backgroundClickEnabled = false; // prevent background switch while dragging
-        offsetX = e.clientX - element.offsetLeft;
-        offsetY = e.clientY - element.offsetTop;
+      element.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        dragging = true;
+        backgroundClickEnabled = false;
+        startX = e.clientX;
+        startY = e.clientY;
+        // Parse current left/top from style (strip px)
+        origX = parseInt(element.style.left, 10) || 0;
+        origY = parseInt(element.style.top, 10) || 0;
         element.style.zIndex = 1000;
 
-        const onMouseMove = (e) => {
-          if (!isDragging) return;
-          element.style.left = `${e.clientX - offsetX}px`;
-          element.style.top = `${e.clientY - offsetY}px`;
-        };
+        function onMouseMove(e) {
+          if (!dragging) return;
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+          element.style.left = (origX + dx) + 'px';
+          element.style.top = (origY + dy) + 'px';
+        }
 
-        const onMouseUp = () => {
-          isDragging = false;
+        function onMouseUp() {
+          dragging = false;
           element.style.zIndex = '';
           document.removeEventListener('mousemove', onMouseMove);
           document.removeEventListener('mouseup', onMouseUp);
-          setTimeout(() => backgroundClickEnabled = true, 50); // small delay to re-enable background click
-        };
+          setTimeout(() => backgroundClickEnabled = true, 50);
+        }
 
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
       });
     }
+
+    // Make all .draggable-button elements draggable
+    document.querySelectorAll('.draggable-button').forEach(makeDraggable);
 
     // Change background only if not dragging
     document.body.addEventListener('click', () => {

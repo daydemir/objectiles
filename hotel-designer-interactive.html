@@ -10,7 +10,7 @@
   <script src="1-src/popup.js"></script>
   <script src="1-src/fade.js"></script>
   <script src="1-src/layout.js"></script>
-
+  <script src="1-src/video.js"></script>
   <style>
     .container {
 
@@ -29,21 +29,22 @@
     </video>
 
 
-    <img src="all/button-target.png" class="button" style="top: 492px; left: -10px; width: 220px; height: auto;"
-      onclick="popup.showImage({
-           images: 'hotel/popup-counter.png',
+    <img src="all/button-target.png" class="button" style="top: 492px; left: 500px; width: 220px; height: auto;"
+      onclick="popup.showVideo({
+           videos: 'hotel/animation-hotel-background2.mp4',
            name: 'counter',
-           fullscreen: false,
-           tintBackground: true,
+           fullscreen: true,
+           tintBackground: false,
            takeOverScreen: true,
-           fade: false
+           fade: true,
+           dismissOnEnd: true
          })">
     <img src="all/button-target.png" class="button" style="top: 380px; left: 240px; width: 200px; height: auto;"
       onclick="popup.showImage({
            images: 'hotel/popup-triangle.png',
            name: 'triangle',
            fullscreen: false,
-           tintBackground: true,
+           tintBackground: false,
            takeOverScreen: true,
            fade: false
          })">
@@ -75,11 +76,8 @@
             fade: false
           })">
 
-    <img src="all/button-back.png" class="button" style="top: 950px; left: 50px; width: 100px; height: auto;"
-      onclick="fadeToScene('rfo-interactive.html')">
-
-    <img src="all/button-next.png" class="button" style="top: 950px; left: 1750px; width: 100px; height: auto;"
-      onclick="fadeToScene('ceremony-designer-interactive.html')">
+    <button class="button button-back" onclick="fadeToScene('rfo-interactive.html')"></button>
+    <button class="button button-next" onclick="fadeToScene('ceremony-designer-interactive.html')"></button>
   </div>
 
 </body>
