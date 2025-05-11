@@ -6,9 +6,10 @@
  * @param {boolean} [params.fadeIn=true] - Whether to fade in
  * @param {boolean} [params.fadeOut=true] - Whether to fade out
  * @param {Function} [params.onDismiss=null] - Function to call when dismissed
+ * @param {boolean} [params.dismissOnVideoEnd=false] - Dismiss cover when last video ends (only for video content)
  * @returns {Object} - Cover object with display methods
  */
-function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null } = {}) {
+function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null, dismissOnVideoEnd = false } = {}) {
   // Validate required parameters
   if (!id || typeof id !== 'string') throw new Error('Cover requires a valid id');
   if (!content || typeof content.html !== 'function') throw new Error('Cover requires valid content');
@@ -109,28 +110,68 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null } 
         const textContent = coverEl.querySelector('.text-content');
         if (textContent) textContent.style.cssText += style;
       }
+      // If content supports onLastVideoEnd and dismissOnVideoEnd, wire up dismiss
+      if (typeof content.onLastVideoEnd === 'function' && dismissOnVideoEnd) {
+        console.log('[cover.js] Setting onLastVideoEnd callback, dismissOnVideoEnd:', dismissOnVideoEnd);
+        content.onLastVideoEnd(() => {
+          console.log('[cover.js] onLastVideoEnd callback fired, calling dismiss');
+          dismiss();
+        });
+      }
+      wireVideoEndHandler();
       // Set initial opacity before fade-in
       coverEl.style.opacity = 0;
       overlayEl.style.opacity = 0;
       
       // Show overlay
       overlayEl.style.display = 'block';
+
+      function wireVideoEndHandler() {
+        const videoEl = coverEl.querySelector('video');
+        if (videoEl) {
+          // Remove any previous event listeners to avoid stacking
+          videoEl.onended = null;
+          console.log('[cover.js] Wiring videoEl.onended');
+          videoEl.onended = () => {
+            if (!isVisible) return;
+            console.log('[cover.js] videoEl.onended fired');
+            const dismissedByEnd = content.nextSlide(() => dismiss(), 'ended');
+            if (!dismissedByEnd && isVisible) {
+              coverEl.innerHTML = content.html();
+              if (style && (style.includes(':') || style.includes(';'))) {
+                const textContent = coverEl.querySelector('.text-content');
+                if (textContent) textContent.style.cssText += style;
+              }
+              wireVideoEndHandler();
+              const nextVideoEl = coverEl.querySelector('video');
+              nextVideoEl && nextVideoEl.load();
+              nextVideoEl && nextVideoEl.play();
+            }
+          };
+          videoEl.load();
+          videoEl.play();
+        }
+      }
       
       // Handle clicks
       coverEl.onclick = (e) => {
         if (typeof content.nextSlide === 'function') {
-          content.nextSlide(() => dismiss());
-          coverEl.innerHTML = content.html();
-          // Always apply custom style to .text-content after setting content
-          if (style && (style.includes(':') || style.includes(';'))) {
-            const textContent = coverEl.querySelector('.text-content');
-            if (textContent) textContent.style.cssText += style;
+          const dismissed = content.nextSlide(() => dismiss());
+          if (!dismissed) {
+            coverEl.innerHTML = content.html();
+            // Always apply custom style to .text-content after setting content
+            if (style && (style.includes(':') || style.includes(';'))) {
+              const textContent = coverEl.querySelector('.text-content');
+              if (textContent) textContent.style.cssText += style;
+            }
+            wireVideoEndHandler();
           }
         } else {
           dismiss();
         }
         e.stopPropagation();
       };
+
 
 
       

@@ -6,9 +6,10 @@
  * @param {boolean} [params.fadeIn=true] - Whether to fade in
  * @param {boolean} [params.fadeOut=true] - Whether to fade out
  * @param {Function} [params.onDismiss=null] - Function to call when dismissed
+ * @param {boolean} [params.dismissOnVideoEnd=false] - Dismiss popup when last video ends (only for video content)
  * @returns {Object} - Popup object with display methods
  */
-function popup({ id, content, fadeIn = true, fadeOut = true, onDismiss = null } = {}) {
+function popup({ id, content, fadeIn = true, fadeOut = true, onDismiss = null, dismissOnVideoEnd = false } = {}) {
   // Validate required parameters
   if (!id || typeof id !== 'string') throw new Error('Popup requires a valid id');
   if (!content || typeof content.html !== 'function') throw new Error('Popup requires valid content');
@@ -36,14 +37,14 @@ function popup({ id, content, fadeIn = true, fadeOut = true, onDismiss = null } 
   // Setup dismissal function
   const dismiss = () => {
     if (!isVisible) return;
-    
+
     const completeDismiss = () => {
       popupEl.style.display = 'none';
       overlayEl.style.display = 'none';
       isVisible = false;
       if (typeof onDismiss === 'function') onDismiss();
     };
-    
+
     if (fadeOut) {
       popupEl.style.opacity = 0;
       setTimeout(completeDismiss, 300);
@@ -55,51 +56,65 @@ function popup({ id, content, fadeIn = true, fadeOut = true, onDismiss = null } 
   // Set up initial styles
   popupEl.style.display = 'none';
   popupEl.style.transition = 'opacity 0.3s ease';
-  
+
+  // If content supports onLastVideoEnd and dismissOnVideoEnd, wire up dismiss
+  if (typeof content.onLastVideoEnd === 'function' && dismissOnVideoEnd) {
+    content.onLastVideoEnd(() => dismiss());
+  }
+
   return {
     /**
      * Display as centered popup
      * @param {number} [topMargin=0] - Top margin in pixels
-     * @param {number} [leftMargin=0] - Left margin in pixels
-     * @param {boolean} [tintBackground=true] - Whether to tint the background
-     * @param {boolean} [dismissOnBackgroundClick=true] - Whether to dismiss when background is clicked
-     * @param {string} [style=''] - Additional CSS classes to apply
      * @returns {Object} - This popup object for method chaining
      */
-    showCentered(topMargin = 0, leftMargin = 0, tintBackground = true, dismissOnBackgroundClick = true, style = '') {
+    showCentered({ topMargin, leftMargin, dismissOnBackgroundClick, style } = {}) {
       // Set classes
       popupEl.className = 'popup centered';
       if (style) style.split(' ').forEach(c => popupEl.classList.add(c));
-      
+
       // Set margins
       popupEl.style.marginTop = topMargin ? `${topMargin}px` : '0';
       popupEl.style.marginLeft = leftMargin ? `${leftMargin}px` : '0';
-      
+
       // Set content
-      popupEl.innerHTML = content.html();
-      
+      if (content && content.html && content.html().includes('class="text-content"')) {
+        popupEl.innerHTML = `<div class=\"popup-inner\">${content.html()}</div>`;
+        // Apply custom style string as inline CSS to .text-content if provided
+        if (style && (style.includes(':') || style.includes(';'))) {
+          const textContent = popupEl.querySelector('.text-content');
+          if (textContent) textContent.style.cssText += style;
+        }
+      } else {
+        popupEl.innerHTML = content.html();
+      }
+
       // Setup overlay
-      overlayEl.style.display = tintBackground ? 'block' : 'none';
-      if (tintBackground && dismissOnBackgroundClick) {
+      overlayEl.style.display = 'block';
+      if (dismissOnBackgroundClick) {
         overlayEl.onclick = dismiss;
       } else {
         overlayEl.onclick = null;
       }
-      
+
       // Handle clicks
       popupEl.onclick = (e) => {
         if (typeof content.nextSlide === 'function') {
           content.nextSlide(() => dismiss());
-          popupEl.innerHTML = content.html();
+          if (content && content.html && content.html().includes('class="text-content"')) {
+            popupEl.innerHTML = `<div class=\"popup-inner\">${content.html()}</div>`;
+          } else {
+            popupEl.innerHTML = content.html();
+          }
         } else {
           dismiss();
         }
         e.stopPropagation();
       };
-      
+
       // Set dismiss event listener
       popupEl.addEventListener('dismiss', dismiss);
-      
+
       // Show with fade if enabled
       if (fadeIn) {
         popupEl.style.opacity = 0;
@@ -109,51 +124,63 @@ function popup({ id, content, fadeIn = true, fadeOut = true, onDismiss = null } 
         popupEl.style.opacity = 1;
         popupEl.style.display = 'block';
       }
-      
+
       isVisible = true;
       return this;
     },
 
     /**
      * Display as placed popup with absolute positioning
-     * @param {boolean} [tintBackground=false] - Whether to tint the background
-     * @param {boolean} [dismissOnBackgroundClick=true] - Whether to dismiss when background is clicked
-     * @param {string} [style=''] - Additional CSS classes to apply
+     * @param {Object} options - Options for the popup  
+     * @param {boolean} options.dismissOnBackgroundClick - Whether to dismiss when background is clicked
+     * @param {string} options.style - Additional CSS classes to apply
      * @returns {Object} - This popup object for method chaining
      */
-    showPlaced(tintBackground = false, dismissOnBackgroundClick = true, style = '') {
+    showPlaced({ dismissOnBackgroundClick, style } = {}) {
       // Set classes
       popupEl.className = 'popup placed';
-      if (style) style.split(' ').forEach(c => popupEl.classList.add(c));
-      
+      // Support explicit placement via CSS string or class names
+      if (style && (style.includes(':') || style.includes(';'))) {
+        popupEl.style.cssText += ';' + style;
+      } else if (style) {
+        style.split(' ').forEach(c => popupEl.classList.add(c));
+      }
       // Set position to absolute
       popupEl.style.position = 'absolute';
-      
+
       // Set content
-      popupEl.innerHTML = content.html();
-      
+      if (content && content.html && content.html().includes('class="text-content"')) {
+        popupEl.innerHTML = `<div class=\"popup-inner\">${content.html()}</div>`;
+      } else {
+        popupEl.innerHTML = content.html();
+      }
+
       // Setup overlay
-      overlayEl.style.display = tintBackground ? 'block' : 'none';
-      if (tintBackground && dismissOnBackgroundClick) {
+      overlayEl.style.display = 'block';
+      if (dismissOnBackgroundClick) {
         overlayEl.onclick = dismiss;
       } else {
         overlayEl.onclick = null;
       }
-      
+
       // Handle clicks
       popupEl.onclick = (e) => {
         if (typeof content.nextSlide === 'function') {
           content.nextSlide(() => dismiss());
-          popupEl.innerHTML = content.html();
+          if (content && content.html && content.html().includes('class="text-content"')) {
+            popupEl.innerHTML = `<div class=\"popup-inner\">${content.html()}</div>`;
+          } else {
+            popupEl.innerHTML = content.html();
+          }
         } else {
           dismiss();
         }
         e.stopPropagation();
       };
-      
+
       // Set dismiss event listener
       popupEl.addEventListener('dismiss', dismiss);
-      
+
       // Show with fade if enabled
       if (fadeIn) {
         popupEl.style.opacity = 0;
@@ -163,7 +190,7 @@ function popup({ id, content, fadeIn = true, fadeOut = true, onDismiss = null } 
         popupEl.style.opacity = 1;
         popupEl.style.display = 'block';
       }
-      
+
       isVisible = true;
       return this;
     }
