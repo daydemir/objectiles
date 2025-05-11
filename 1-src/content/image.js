@@ -17,7 +17,7 @@ function image({ images } = {}) {
      * @returns {string} HTML representation of the current image slide
      */
     html: function() {
-      return `<div class="image-container"><img src="${images[currentIndex]}" alt="Slide ${currentIndex + 1}"></div>`;
+      return `<img src="${images[currentIndex]}" alt="Slide ${currentIndex + 1}">`;
     },
 
     /**

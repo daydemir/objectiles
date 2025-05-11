@@ -33,6 +33,7 @@ function popup({ id, content, fadeIn = true, fadeOut = true, dismissOnBackground
   };
   return {
     show() {
+      // Add .popup-text class if content is text (has .text-content)
       popupEl.className = 'popup placed';
       popupEl.style.cssText = '';
       // Split style string into positional (for popupEl) and non-positional (for content)
@@ -56,6 +57,12 @@ function popup({ id, content, fadeIn = true, fadeOut = true, dismissOnBackground
       if (popupStyles) popupEl.style.cssText += popupStyles;
       popupEl.style.position = 'absolute';
       popupEl.innerHTML = content.html();
+      // If this is a text popup, add .popup-text class for container styling
+      if (popupEl.querySelector('.text-content')) {
+        popupEl.classList.add('popup-text');
+      } else {
+        popupEl.classList.remove('popup-text');
+      }
       applyCustomStyle();
       popupEl.style.opacity = fadeIn ? 0 : 1;
       popupEl.style.display = 'block';
