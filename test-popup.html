@@ -152,13 +152,16 @@
               style: 'top: 400px; left: 800px; width: 600px; font-size: 100px;'
             }).show()">
 
-    <img src="all/button-target.png" class="button" style="top: 400px; left: 1000px; width: 150px; height: auto;"
-      onclick="popup({
+    <img id="btn-image-fade" src="all/button-target.png" class="button"
+      style="top: 400px; left: 1000px; width: 150px; height: auto;" onclick="popup({
               id: 'image-fade',
               content: image({ images: ['trash/bgd-trash1.png'] }),
               fadeIn: true,
               fadeOut: true,
-              onDismiss: function() { console.log('Fading image popup dismissed'); },
+              onDismiss: function() { 
+                console.log('Fading image popup dismissed'); 
+                document.getElementById('btn-image-fade').style.display = 'none';
+              },
               dismissOnBackgroundClick: true,
               style: 'top: 400px; left: 1000px; width: 100px; height: auto;'
             }).show()">

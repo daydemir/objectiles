@@ -9,12 +9,14 @@
   <link rel="stylesheet" href="1-src/main.css">
   <link rel="stylesheet" href="1-src/popup.css">
   <link rel="stylesheet" href="1-src/cover.css">
+  <link rel="stylesheet" href="1-src/modal.css">
   <link rel="stylesheet" href="1-src/content/text.css">
   <link rel="stylesheet" href="1-src/content/image.css">
   <link rel="stylesheet" href="1-src/content/video.css">
 
   <!-- Content and display scripts - order matters! -->
   <script src="1-src/popup.js"></script>
+  <script src="1-src/modal.js"></script>
   <script src="1-src/cover.js"></script>
   <script src="1-src/content/text.js"></script>
   <script src="1-src/content/image.js"></script>
@@ -41,64 +43,76 @@
 
     <!-- Row 1: Text Popup Buttons -->
     <img src="all/button-target.png" class="button" style="top: 200px; left: 200px; width: 150px; height: auto;"
-      onclick="popup({
+      onclick="modal({
               id: 'text-basic',
               content: text({ texts: ['This is a basic text popup with all parameters explicitly set.'] }),
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('Basic text popup dismissed'); },
-              dismissOnVideoEnd: false
-            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null, dismissOnBackgroundClick: true, tintBackground: false })">
+              dismissOnBackgroundClick: true,
+              tintBackground: true,
+              style: '',
+            }).show()">
 
     <img src="all/button-target.png" class="button" style="top: 200px; left: 400px; width: 150px; height: auto;"
-      onclick="popup({
+      onclick="modal({
               id: 'text-multi',
               content: text({ texts: ['This is a multi-step text popup.', 'Click to see the next message.', 'Final message in the sequence.'] }),
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('Multi-step text popup dismissed'); },
-              dismissOnVideoEnd: false
-            }).showPlaced({   style: 'top: 300px; left: 400px; width: 300px; font-size: 18px;' , dismissOnBackgroundClick: true})">
+              dismissOnBackgroundClick: true,
+              tintBackground: false,
+              style: 'font-family: Arial, sans-serif; font-weight: bold; color: #323232; font-size: 18px;'
+            }).show()">
 
     <img src="all/button-target.png" class="button" style="top: 200px; left: 600px; width: 150px; height: auto;"
-      onclick="popup({
+      onclick="modal({
               id: 'text-no-tint',
               content: text({ texts: ['This popup has no background tint and fades in and out.'] }),
               fadeIn: true,
               fadeOut: true,
               onDismiss: function() { console.log('No-tint text popup dismissed'); },
-              dismissOnVideoEnd: false
-            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null , tintBackground: false, dismissOnBackgroundClick: true})">
+              dismissOnBackgroundClick: true,
+              tintBackground: false,
+              style: '',
+            }).show()">
 
     <img src="all/button-target.png" class="button" style="top: 200px; left: 800px; width: 150px; height: auto;"
-      onclick="popup({
+      onclick="modal({
               id: 'text-styled',
               content: text({ texts: ['This popup has custom styling applied.'] }),
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('Styled text popup dismissed'); },
-              dismissOnVideoEnd: false
-            }).showCentered({ topMargin: 0, leftMargin: 0,   style: 'color: #ff5733; font-size: 24px; font-family: Arial, sans-serif;' , tintBackground: true, dismissOnBackgroundClick: true})">
+              dismissOnBackgroundClick: true,
+              tintBackground: true,
+              style: 'color: #ff5733; font-size: 24px; font-family: Arial, sans-serif;'
+            }).show()">
 
     <img src="all/button-target.png" class="button" style="top: 200px; left: 1000px; width: 150px; height: auto;"
-      onclick="popup({
+      onclick="modal({
               id: 'text-non-takeover',
               content: text({ texts: ['This is a non-takeover popup that can be displayed alongside other popups.'] }),
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('Non-takeover text popup dismissed'); },
-              dismissOnVideoEnd: false
-            }).showPlaced({ style: 'top: 300px; left: 1000px; width: 250px;' , dismissOnBackgroundClick: false})">
+              dismissOnBackgroundClick: false,
+              tintBackground: false,
+              style: null,
+            }).show()">
 
     <img src="all/button-target.png" class="button" style="top: 200px; left: 1200px; width: 150px; height: auto;"
-      onclick="popup({
+      onclick="modal({
               id: 'text-fade',
               content: text({ texts: ['This popup fades in and out.', 'It also has multiple steps.', 'This is the final message.'] }),
               fadeIn: true,
               fadeOut: true,
               onDismiss: function() { console.log('Fading text popup dismissed'); },
-              dismissOnVideoEnd: false,
-            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null , dismissOnBackgroundClick: true, tintBackground: false})">
+              dismissOnBackgroundClick: true,
+              tintBackground: false,
+              style: '',
+            }).show()">
 
 
 
@@ -127,54 +141,64 @@
 
     <!-- Row 2: Image Popup Buttons -->
     <img src="all/button-target.png" class="button" style="top: 400px; left: 200px; width: 150px; height: auto;"
-      onclick="popup({
+      onclick="modal({
               id: 'image-basic',
               content: image({ images: ['trash/bgd-trash1.png'] }),
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('Basic image popup dismissed'); },
-              dismissOnVideoEnd: false,
-            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null })">
+              dismissOnBackgroundClick: true,
+              tintBackground: false,
+              style: '',
+            }).show()">
 
     <img src="all/button-target.png" class="button" style="top: 400px; left: 400px; width: 150px; height: auto;"
-      onclick="popup({
+      onclick="modal({
               id: 'image-multi',
               content: image({ images: ['trash/bgd-trash1.png', 'hotel/popup-triangle.png', 'hotel/popup-pushstick.png'] }),
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('Multi-image popup dismissed'); },
-              dismissOnVideoEnd: false,
-            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null })">
+              dismissOnBackgroundClick: true,
+              tintBackground: false,
+              style: '',
+            }).show()">
 
     <img src="all/button-target.png" class="button" style="top: 400px; left: 600px; width: 150px; height: auto;"
-      onclick="popup({
+      onclick="modal({
               id: 'image-tint',
               content: image({ images: ['trash/bgd-trash1.png'] }),
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('tint image popup dismissed'); },
-              dismissOnVideoEnd: false,
-            }).showCentered({ topMargin: 0, leftMargin: 0, style: null, tintBackground: true, dismissOnBackgroundClick: true })">
+              dismissOnBackgroundClick: true,
+              tintBackground: true,
+              style: '',
+            }).show()">
 
     <img src="all/button-target.png" class="button" style="top: 400px; left: 800px; width: 150px; height: auto;"
-      onclick="popup({
+      onclick="modal({
               id: 'image-no-tint',
               content: image({ images: ['trash/bgd-trash1.png'] }),
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('No-tint image popup dismissed'); },
-              dismissOnVideoEnd: false,
-            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null})">
+              dismissOnBackgroundClick: true,
+              tintBackground: false,
+              style: '',
+            }).show()">
 
     <img src="all/button-target.png" class="button" style="top: 400px; left: 1000px; width: 150px; height: auto;"
-      onclick="popup({
+      onclick="modal({
               id: 'image-fade',
               content: image({ images: ['trash/bgd-trash1.png'] }),
               fadeIn: true,
               fadeOut: true,
               onDismiss: function() { console.log('Fading image popup dismissed'); },
-              dismissOnVideoEnd: false,
-            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null })">
+              dismissOnBackgroundClick: true,
+              tintBackground: false,
+              style: '',
+            }).show()">
 
     <button class="button button-back" onclick="fadeToScene('rfo-interactive.html')"></button>
     <button class="button button-next" onclick="fadeToScene('ceremony-designer-interactive.html')"></button>

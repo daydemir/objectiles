@@ -177,13 +177,16 @@
               dismissOnVideoEnd: false
             }).showCover()">
 
-    <img src="all/button-target.png" class="button" style="top: 600px; left: 1200px; width: 150px; height: auto;"
-      onclick="cover({
+    <img id="btn-video-auto-dismiss-cover" src="all/button-target.png" class="button"
+      style="top: 600px; left: 1200px; width: 150px; height: auto;" onclick="cover({
               id: 'video-auto-dismiss-cover',
               content: video({ videos: ['test.mp4', 'test2.mp4', 'test3.mp4'], loop: false, autoplay: true }),
               fadeIn: true,
-              fadeOut: true,
-              onDismiss: function() { console.log('Auto-dismiss video cover dismissed'); },
+              fadeOut: false,
+              onDismiss: function() { 
+                console.log('Auto-dismiss video cover dismissed'); 
+                document.getElementById('btn-video-auto-dismiss-cover').style.display = 'none';
+              },
               dismissOnVideoEnd: true
             }).showCover()">
 
