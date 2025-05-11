@@ -28,16 +28,39 @@
       Your browser does not support the video tag.
     </video>
 
-
-    <img src="all/button-target.png" class="button" style="top: 492px; left: -10px; width: 220px; height: auto;"
-      onclick="popup.showImage({
+    <!-- example of on dismiss action shaking the image then hiding it -->
+    <img id="counter-btn" src="all/button-target.png" class="button"
+      style="top: 492px; left: -10px; width: 220px; height: auto;" onclick="popup.showImage({
            images: 'hotel/popup-counter.png',
            name: 'counter',
            fullscreen: false,
            tintBackground: true,
            takeOverScreen: true,
-           fade: false
+           fade: false,
+           onDismiss: function() {
+            var btn = document.getElementById('counter-btn');
+            if (!btn) return;
+            btn.style.transition = 'none';
+            btn.style.transform = 'translateX(0)';
+            let shakes = 0;
+            let shakeInterval = setInterval(function() {
+              btn.style.transform = 'translateX(' + (shakes % 2 === 0 ? '-16px' : '16px') + ')';
+              shakes++;
+              if (shakes > 7) {
+                clearInterval(shakeInterval);
+                btn.style.transition = 'transform 2s, opacity 0.4s';
+                btn.style.transform = 'translateX(0)';
+                btn.style.opacity = '0';
+                btn.addEventListener('transitionend', function handler() {
+                  btn.style.display = 'none';
+                  btn.removeEventListener('transitionend', handler);
+                });
+              }
+            }, 40);
+          }
          })">
+
+
     <img src="all/button-target.png" class="button" style="top: 380px; left: 240px; width: 200px; height: auto;"
       onclick="popup.showImage({
            images: 'hotel/popup-triangle.png',

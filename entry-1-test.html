@@ -21,7 +21,7 @@
 <body>
 
   <script>
-    // showIntroVideo('entry-1/animation-entry-1.2.mp4', 1000, false, false, true, false);
+    showIntroVideo('entry-1/animation-entry-1.2.mp4', 1000, false, false, true, false);
 
 
     // BACKGROUND MUSIC
@@ -49,7 +49,7 @@
 
   <div class="container">
 
-    <!-- an example of a video popup and an animation + button hide that runs when the popup dismisses, u -->
+    <!-- example of a video popup-->
     <img id="pushstick-btn" src="hallway/button-pushstick.png" class="button"
       style="top: 785px; left: 350px; width: 160px; height: auto;" onclick="popup.showVideo({
         videos: 'entry-1/animation-entry-1.2.mp4',
@@ -57,28 +57,7 @@
         fullscreen: true,
         tintBackground: false,
         takeOverScreen: true,
-        fade: true,
-        onDismiss: function() {
-          var btn = document.getElementById('pushstick-btn');
-          if (!btn) return;
-          btn.style.transition = 'none';
-          btn.style.transform = 'translateX(0)';
-          let shakes = 0;
-          let shakeInterval = setInterval(function() {
-            btn.style.transform = 'translateX(' + (shakes % 2 === 0 ? '-16px' : '16px') + ')';
-            shakes++;
-            if (shakes > 7) {
-              clearInterval(shakeInterval);
-              btn.style.transition = 'transform 2s, opacity 0.4s';
-              btn.style.transform = 'translateX(0)';
-              btn.style.opacity = '0';
-              btn.addEventListener('transitionend', function handler() {
-                btn.style.display = 'none';
-                btn.removeEventListener('transitionend', handler);
-              });
-            }
-          }, 40);
-        }
+        fade: true
       })">
 
     <!--
