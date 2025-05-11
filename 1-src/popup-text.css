@@ -16,6 +16,16 @@
   box-shadow: none;
 }
 
+/* No-tint text container styles */
+.text-content.no-tint-container {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+  margin: auto;
+}
+
 /* Text popup inner container */
 .popup-inner {
   background: rgba(0, 0, 0, 0.6);

@@ -37,126 +37,260 @@
       Your browser does not support the video tag.
     </video>
 
+    <!-- Row 1: Text Popup Buttons -->
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 200px; width: 150px; height: auto;"
+      onclick="popup('text-basic')
+            .text('This is a basic text popup with all parameters explicitly set.')
+            .settings({
+              position: 'center',
+              style: null,
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('Basic text popup dismissed'); }
+            })
+            .show()">
 
-    <img src="all/button-target.png" class="button" style="top: 492px; left: -10px; width: 220px; height: auto;"
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 400px; width: 150px; height: auto;"
+      onclick="popup('text-multi')
+            .text(['This is a multi-step text popup.', 'Click to see the next message.', 'Final message in the sequence.'])
+            .settings({
+              position: 'placed',
+              style: 'top: 300px; left: 400px; width: 300px; font-size: 18px;',
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('Multi-step text popup dismissed'); }
+            })
+            .show()">
+
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 600px; width: 150px; height: auto;"
+      onclick="popup('text-no-tint')
+            .text('This popup has no background tint and fades in and out.')
+            .settings({
+              position: 'center',
+              style: null,
+              tintBackground: false,
+              fadeIn: true,
+              fadeOut: true,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('No-tint text popup dismissed'); }
+            })
+            .show()">
+
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 800px; width: 150px; height: auto;"
+      onclick="popup('text-styled')
+            .text('This popup has custom styling applied.')
+            .settings({
+              position: 'center',
+              style: 'color: #ff5733; font-size: 24px; text-align: center; font-family: Arial, sans-serif;',
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('Styled text popup dismissed'); }
+            })
+            .show()">
+
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 1000px; width: 150px; height: auto;"
+      onclick="popup('text-non-takeover')
+            .text('This is a non-takeover popup that can be displayed alongside other popups.')
+            .settings({
+              position: 'placed',
+              style: 'top: 300px; left: 1000px; width: 250px; background: rgba(0,0,0,0.8);',
+              tintBackground: false,
+              fadeIn: false,
+              fadeOut: false,
+              dismissOnBackgroundClick: false,
+              onDismiss: function() { console.log('Non-takeover text popup dismissed'); }
+            })
+            .show()">
+
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 1200px; width: 150px; height: auto;"
+      onclick="popup('text-fade')
+            .text(['This popup fades in and out.', 'It also has multiple steps.', 'Click to advance to the next message.'])
+            .settings({
+              position: 'center',
+              style: null,
+              tintBackground: true,
+              fadeIn: true,
+              fadeOut: true,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('Fading text popup dismissed'); }
+            })
+            .show()">
+
+    <!-- Row 2: Image Popup Buttons -->
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 200px; width: 150px; height: auto;"
       onclick="popup('counter')
             .image('hotel/popup-counter.png')
             .settings({
-              center: true,
+              position: 'center',
+              style: null,
               tintBackground: true,
               fadeIn: false,
-              fadeOut: false
+              fadeOut: false,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('Counter image popup dismissed'); }
             })
             .show()">
-    <img src="all/button-target.png" class="button" style="top: 380px; left: 240px; width: 200px; height: auto;"
+
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 400px; width: 150px; height: auto;"
       onclick="popup('triangle')
             .image('hotel/popup-triangle.png')
             .settings({
               center: true,
+              style: null,
               tintBackground: true,
               fadeIn: false,
-              fadeOut: false
+              fadeOut: false,
+              dismissOnBackgroundClick: true,
+              fullscreen: false,
+              onDismiss: function() { console.log('Triangle image popup dismissed'); }
             })
             .show()">
-    <img src="all/button-target.png" class="button" style="top: 620px; left: 510px; width: 170px; height: auto;"
+
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 600px; width: 150px; height: auto;"
       onclick="popup('pushstick')
             .image('hotel/popup-pushstick.png')
             .settings({
               center: true,
+              style: null,
               tintBackground: true,
               fadeIn: false,
-              fadeOut: false
+              fadeOut: false,
+              dismissOnBackgroundClick: true,
+              fullscreen: false,
+              onDismiss: function() { console.log('Pushstick image popup dismissed'); }
             })
             .show()">
-    <img src="all/button-target.png" class="button" style="top: 700px; left: -10px; width: 100px; height: auto;"
+
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 800px; width: 150px; height: auto;"
       onclick="popup('sink')
             .image('hotel/popup-sink.png')
             .settings({
-              center: true,
+              position: 'center',
+              style: null,
               tintBackground: true,
               fadeIn: false,
-              fadeOut: false
+              fadeOut: false,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('Sink image popup dismissed'); }
             })
             .show()">
-    <img src="all/button-target.png" class="button" style="top: 700px; left: 1480px; width: 400px; height: auto;"
+
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 1000px; width: 150px; height: auto;"
       onclick="popup('skylight')
             .image('hotel/popup-skylight.png')
             .settings({
-              center: true,
+              position: 'center',
+              style: null,
               tintBackground: true,
               fadeIn: false,
-              fadeOut: false
+              fadeOut: false,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('Skylight image popup dismissed'); }
             })
             .show()">
 
-    <!-- Text popup buttons with unique parameter combinations -->
-    <img src="all/button-target.png" class="button" style="top: 200px; left: 700px; width: 150px; height: auto;"
-      onclick="popup('text-basic')
-            .text('This is a basic text popup with default parameters.')
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 1200px; width: 150px; height: auto;"
+      onclick="popup('multi-image-fullscreen')
+            .image(['hotel/popup-counter.png', 'hotel/popup-triangle.png', 'hotel/popup-pushstick.png', 'hotel/popup-sink.png'])
             .settings({
-              center: true,
+              position: 'fullscreen',
+              style: null,
               tintBackground: true,
-              fadeIn: false,
-              fadeOut: false
-            })
-            .show()">
-
-    <img src="all/button-target.png" class="button" style="top: 300px; left: 900px; width: 150px; height: auto;"
-      onclick="popup('text-multi')
-            .text(['This is a multi-step text popup.', 'Click to see the next message.', 'Final message in the sequence.'])
-            .settings({
-              center: false,
-              style: 'top: 300px; left: 900px; width: 300px; font-size: 18px;',
-              tintBackground: true,
-              fadeIn: false,
-              fadeOut: false
-            })
-            .show()">
-
-    <img src="all/button-target.png" class="button" style="top: 400px; left: 1100px; width: 150px; height: auto;"
-      onclick="popup('text-no-tint')
-            .text('This popup has no background tint and fades in and out.')
-            .settings({
-              center: true,
-              tintBackground: false,
               fadeIn: true,
-              fadeOut: true
+              fadeOut: true,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('Multi-image fullscreen popup dismissed'); }
             })
             .show()">
 
-    <img src="all/button-target.png" class="button" style="top: 500px; left: 1300px; width: 150px; height: auto;"
-      onclick="popup('text-styled')
-            .text('This popup has custom styling applied.')
+    <!-- Row 3: Video Popup Buttons -->
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 200px; width: 150px; height: auto;"
+      onclick="popup('video-basic')
+            .video('test.mp4', false, false, true, null) // video, delay, loop, autoplay, dismissOnEnd
             .settings({
-              center: true,
-              style: 'color: #ff5733; font-size: 24px; text-align: center; font-family: Arial, sans-serif;',
+              position: 'center',
+              style: null,
               tintBackground: true,
               fadeIn: false,
-              fadeOut: false
+              fadeOut: false,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('Basic video popup dismissed'); }
             })
             .show()">
 
-    <img src="all/button-target.png" class="button" style="top: 600px; left: 900px; width: 150px; height: auto;"
-      onclick="popup('text-non-takeover')
-            .text('This is a non-takeover popup that can be displayed alongside other popups.')
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 400px; width: 150px; height: auto;"
+      onclick="popup('video-loop')
+            .video('test.mp4', false, true, true, null) // video, delay, loop, autoplay, dismissOnEnd
             .settings({
-              center: false,
-              style: 'top: 600px; left: 900px; width: 250px; background: rgba(0,0,0,0.8);',
+              position: 'center',
+              style: null,
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('Looping video popup dismissed'); }
+            })
+            .show()">
+
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 600px; width: 150px; height: auto;"
+      onclick="popup('video-no-tint')
+            .video('test.mp4', false, false, true, null) // video, delay, loop, autoplay, dismissOnEnd
+            .settings({
+              position: 'center',
+              style: null,
               tintBackground: false,
               fadeIn: false,
-              fadeOut: false
+              fadeOut: false,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('No-tint video popup dismissed'); }
             })
             .show()">
 
-    <!-- Video popup example -->
-    <img src="all/button-target.png" class="button" style="top: 700px; left: 700px; width: 150px; height: auto;"
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 800px; width: 150px; height: auto;"
+      onclick="popup('video-fade')
+            .video('test.mp4', false, false, true, null) // video, delay, loop, autoplay, dismissOnEnd
+            .settings({
+              position: 'center',
+              style: null,
+              tintBackground: true,
+              fadeIn: true,
+              fadeOut: true,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('Fading video popup dismissed'); }
+            })
+            .show()">
+
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 1000px; width: 150px; height: auto;"
+      onclick="popup('video-styled')
+            .video('test.mp4', false, false, true, null) // video, delay, loop, autoplay, dismissOnEnd
+            .settings({
+              position: 'center',
+              style: 'border: 5px solid #3498db; border-radius: 15px; padding: 10px;',
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false,
+              dismissOnBackgroundClick: true,
+              onDismiss: function() { console.log('Styled video popup dismissed'); }
+            })
+            .show()">
+
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 1200px; width: 150px; height: auto;"
       onclick="popup('video-example')
-            .video('hotel/animation-hotel-background2.mp4', false, true, true)
+            .video('test.mp4', true, true, true, function() { console.log('Video ended callback'); }) // video, delay, loop, autoplay, dismissOnEnd
             .settings({
-              center: true,
+              position: 'center',
+              style: null,
               tintBackground: true,
               fadeIn: true,
-              fadeOut: true
+              fadeOut: true,
+              dismissOnBackgroundClick: false, // Don't dismiss on background click
+              onDismiss: function() { console.log('Example video popup dismissed'); }
             })
             .show()">
 
@@ -164,7 +298,7 @@
     <script>
       // This will show as an intro video when the page loads
       // popup('intro-video')
-      //   .video('hotel/animation-hotel-background2.mp4')
+      //   .video('test.mp4')
       //   .settings({
       //     center: true,
       //     tintBackground: true,
@@ -173,17 +307,6 @@
       //   })
       //   .showAsIntro();
     </script>
-
-    <img src="all/button-target.png" class="button" style="top: 300px; left: 600px; width: 150px; height: auto;"
-      onclick="popup('text-fade')
-            .text(['This popup fades in and out.', 'It also has multiple steps.', 'Click to advance to the next message.'])
-            .settings({
-              center: true,
-              tintBackground: true,
-              fadeIn: true,
-              fadeOut: true
-            })
-            .show()">
 
     <button class="button button-back" onclick="fadeToScene('rfo-interactive.html')"></button>
     <button class="button button-next" onclick="fadeToScene('ceremony-designer-interactive.html')"></button>

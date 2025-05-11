@@ -29,7 +29,7 @@ function createVideoPopup(popupInstance) {
     // Create video element
     const video = document.createElement('video');
     video.src = videos[0]; // Start with first video
-    video.controls = true;
+    video.controls = false; // No controls needed
     video.autoplay = autoplay;
     
     container.appendChild(video);
@@ -64,18 +64,16 @@ function createVideoPopup(popupInstance) {
     // Add event listener for video end
     video.addEventListener('ended', handleVideoEnd);
     
-    // Add click handler for container (not video)
-    container.onclick = function(e) {
-      // Only handle clicks directly on the container, not on the video
-      if (e.target === container) {
-        return handleVideoEnd();
-      }
-      return false; // Don't dismiss if clicking on the video itself
-    };
-    
     // Add a method to check if there are more steps
     container.hasMoreSteps = function() {
-      return currentStep < videos.length - 1 || endAction === 'loop';
+      // Only consider multiple videos as steps, not looping
+      return currentStep < videos.length - 1;
+    };
+    
+    // Add a method to advance to the next step
+    container.advanceToNextStep = function() {
+      // Advance to the next video
+      return handleVideoEnd();
     };
     
     // Return the container

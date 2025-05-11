@@ -2,3 +2,6 @@
 - stick to html, css, and js unless specifically asked to do otherwise
 - keep things simple, clean, readable, and maintainable
 - keep existing style and do not make major changes without double checking and asking
+- this is an html css js project no server needed
+- popup.js has all the logic for showing, dismissing, clicking, positioning popups
+- popup-text/image/video.js is should only contain the logic for creating the content for the popup, and no nothing about positioning or popup logic
