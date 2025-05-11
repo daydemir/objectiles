@@ -155,22 +155,23 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null, d
       
       // Handle clicks
       coverEl.onclick = (e) => {
-        if (typeof content.nextSlide === 'function') {
-          const dismissed = content.nextSlide(() => dismiss());
-          if (!dismissed) {
-            coverEl.innerHTML = content.html();
-            // Always apply custom style to .text-content after setting content
-            if (style && (style.includes(':') || style.includes(';'))) {
-              const textContent = coverEl.querySelector('.text-content');
-              if (textContent) textContent.style.cssText += style;
-            }
-            wireVideoEndHandler();
-          }
-        } else {
-          dismiss();
-        }
-        e.stopPropagation();
-      };
+  if (typeof content.nextSlide === 'function') {
+    const dismissed = content.nextSlide(() => dismiss());
+    if (dismissed) {
+      coverEl.innerHTML = content.html();
+      // Always apply custom style to .text-content after setting content
+      if (style && (style.includes(':') || style.includes(';'))) {
+        const textContent = coverEl.querySelector('.text-content');
+        if (textContent) textContent.style.cssText += style;
+      }
+      wireVideoEndHandler();
+    }
+    // If not dismissed (e.g. video skippable: false), do nothing (no re-render)
+  } else {
+    dismiss();
+  }
+  e.stopPropagation();
+};
 
 
 

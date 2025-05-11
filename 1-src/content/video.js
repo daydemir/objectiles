@@ -11,7 +11,8 @@ function video({
     videos,
     loop = true,
     autoplay = true,
-    dismissOnEnd = false
+    dismissOnEnd = false,
+    skippable = true
 } = {}) {
     if (!Array.isArray(videos) || videos.length === 0 || !videos.every(v => typeof v === 'string')) {
         throw new Error('Video content requires a non-empty array of video URLs');
@@ -29,12 +30,15 @@ function video({
             <source src="${videos[currentIndex]}" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-        </div>
-      `;
+        </div>`;
         },
-        nextSlide: function(onFinish, eventType) {
+        nextSlide: function (onFinish, eventType) {
+            if (!skippable && eventType !== 'ended') {
+                // Not skippable, ignore click/advance except on ended
+                return false;
+            }
             const atLast = currentIndex === videos.length - 1;
-            console.log('[video.js] nextSlide called', {currentIndex, eventType, atLast});
+            console.log('[video.js] nextSlide called', { currentIndex, eventType, atLast, skippable });
             if (atLast) {
                 if (eventType === 'ended' && typeof this._onLastVideoEnd === 'function') {
                     console.log('[video.js] Calling onLastVideoEnd callback');
@@ -50,7 +54,7 @@ function video({
                 return false;
             }
         },
-        onLastVideoEnd: function(cb) {
+        onLastVideoEnd: function (cb) {
             console.log('[video.js] onLastVideoEnd callback set');
             this._onLastVideoEnd = cb;
         }

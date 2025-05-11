@@ -31,6 +31,18 @@
 
 <body>
 
+  <script>
+    cover({
+      id: 'video-cover',
+      content: video({ videos: ['test.mp4', 'test2.mp4'], loop: false, autoplay: true, skippable: true }),
+      fadeIn: false,
+      fadeOut: true,
+      onDismiss: function () { console.log('Video cover dismissed'); },
+      // onDismiss: function () { fadeToScene('ceremony-designer-interactive.html'); },
+      dismissOnVideoEnd: true
+    }).makeIntro();
+  </script>
+
   <div class="container">
 
     <!-- Row 1: Text Cover Buttons -->
@@ -140,7 +152,7 @@
     <img src="all/button-target.png" class="button" style="top: 600px; left: 200px; width: 150px; height: auto;"
       onclick="cover({
               id: 'video-basic-cover',
-              content: video({ videos: ['test.mp4', 'test2.mp4'], loop: false, autoplay: true }),
+              content: video({ videos: ['test.mp4', 'test2.mp4'], loop: false, autoplay: true, skippable: false }),
               fadeIn: true, 
               fadeOut: true,
               onDismiss: function() { console.log('Basic video cover dismissed'); },
@@ -150,7 +162,7 @@
     <img src="all/button-target.png" class="button" style="top: 600px; left: 400px; width: 150px; height: auto;"
       onclick="cover({
               id: 'video-loop-cover',
-              content: video({ videos: ['test.mp4'], loop: true, autoplay: true }),
+              content: video({ videos: ['test.mp4'], loop: true, autoplay: true, skippable: true }),
               fadeIn: false, 
               fadeOut: false,
               onDismiss: function() { console.log('Looping video cover dismissed'); },
@@ -160,7 +172,7 @@
     <img src="all/button-target.png" class="button" style="top: 600px; left: 600px; width: 150px; height: auto;"
       onclick="cover({
               id: 'video-no-fade-cover',
-              content: video({ videos: ['test.mp4'], loop: false, autoplay: true }),
+              content: video({ videos: ['test.mp4'], loop: false, autoplay: true, skippable: false }),
               fadeIn: true, 
               fadeOut: true,
               onDismiss: function() { console.log('No-fade video cover dismissed'); },
@@ -170,7 +182,7 @@
     <img src="all/button-target.png" class="button" style="top: 600px; left: 800px; width: 150px; height: auto;"
       onclick="cover({
               id: 'video-delay-cover',
-              content: video({ videos: ['test.mp4', 'test2.mp4'], loop: false, autoplay: true }),
+              content: video({ videos: ['test.mp4', 'test2.mp4'], loop: false, autoplay: true, skippable: true }),
               fadeIn: true, 
               fadeOut: true,
               onDismiss: function() { console.log('Delayed video cover dismissed'); },
@@ -180,7 +192,7 @@
     <img id="btn-video-auto-dismiss-cover" src="all/button-target.png" class="button"
       style="top: 600px; left: 1200px; width: 150px; height: auto;" onclick="cover({
               id: 'video-auto-dismiss-cover',
-              content: video({ videos: ['test.mp4', 'test2.mp4', 'test3.mp4'], loop: false, autoplay: true }),
+              content: video({ videos: ['test.mp4', 'test2.mp4', 'test3.mp4'], loop: false, autoplay: true, skippable: false }),
               fadeIn: true,
               fadeOut: false,
               onDismiss: function() { 

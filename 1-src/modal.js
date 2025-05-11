@@ -1,7 +1,7 @@
 // Modal popup (centered, takeover)
-// API: modal({id, content, fadeIn, fadeOut, tintBackground, dismissOnBackgroundClick, style, onDismiss}).show()
+// API: modal({id, content, fadeIn, fadeOut, tintBackground, style, onDismiss}).show()
 
-function modal({ id, content, fadeIn = true, fadeOut = true, tintBackground = false, dismissOnBackgroundClick = true, style = '', onDismiss = null } = {}) {
+function modal({ id, content, fadeIn = true, fadeOut = true, tintBackground = false, style = '', onDismiss = null } = {}) {
   if (!id || !content) throw new Error('modal requires id and content');
   let modalEl = document.getElementById(id);
   if (!modalEl) {
@@ -43,7 +43,7 @@ function modal({ id, content, fadeIn = true, fadeOut = true, tintBackground = fa
       }
       modalEl.innerHTML = html;
       overlayEl.style.display = tintBackground ? 'block' : 'none';
-      overlayEl.onclick = (dismissOnBackgroundClick ? dismiss : null);
+      overlayEl.onclick = dismiss;
       modalEl.onclick = (e) => { dismiss(); e.stopPropagation(); };
       modalEl.addEventListener('dismiss', dismiss);
       if (fadeIn) {
@@ -82,8 +82,8 @@ function modal({ id, content, fadeIn = true, fadeOut = true, tintBackground = fa
         };
       }
       // Fix dismissOnBackgroundClick
-      // Only dismiss on overlay click if dismissOnBackgroundClick is true
-      overlayEl.onclick = dismissOnBackgroundClick ? fadeOutDismiss : function(e) { e.stopPropagation(); };
+      // Always dismiss on overlay click
+      overlayEl.onclick = fadeOutDismiss;
       // --- Multi-step support for text and image ---
       // If content has nextSlide, clicking modal advances or dismisses
       let isImage = false;
