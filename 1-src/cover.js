@@ -136,7 +136,8 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null, d
             if (!isVisible) return;
             console.log('[cover.js] videoEl.onended fired');
             const dismissedByEnd = content.nextSlide(() => dismiss(), 'ended');
-            if (!dismissedByEnd && isVisible) {
+            if (dismissedByEnd && isVisible) {
+              // If nextSlide advanced to next video, re-render and start playback
               coverEl.innerHTML = content.html();
               if (style && (style.includes(':') || style.includes(';'))) {
                 const textContent = coverEl.querySelector('.text-content');
@@ -147,6 +148,7 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null, d
               nextVideoEl && nextVideoEl.load();
               nextVideoEl && nextVideoEl.play();
             }
+            // If not dismissedByEnd, we are at last video: do not re-render, let onLastVideoEnd/dismiss handle
           };
           videoEl.load();
           videoEl.play();

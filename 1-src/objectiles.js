@@ -28,19 +28,21 @@ function loadScript(url, callback) {
 // Load all CSS files
 loadCSS('1-src/main.css');
 loadCSS('1-src/popup.css');
-loadCSS('1-src/popup-text.css');
-loadCSS('1-src/popup-image.css');
-loadCSS('1-src/popup-video.css');
+loadCSS('1-src/cover.css');
+loadCSS('1-src/modal.css');
+loadCSS('1-src/content/text.css');
+loadCSS('1-src/content/image.css');
+loadCSS('1-src/content/video.css');
 
 // Load JS files in the correct order (respecting dependencies)
-// First load core files
-loadScript('1-src/popup.js', function () {
-  // After popup.js is loaded, load the content-specific modules
-  loadScript('1-src/popup-text.js');
-  loadScript('1-src/popup-image.js');
-  loadScript('1-src/popup-video.js');
-
-  // Then load other utilities
-  loadScript('1-src/fade.js');
-  loadScript('1-src/layout.js');
-});
+const scripts = [
+  '1-src/popup.js',
+  '1-src/cover.js',
+  '1-src/modal.js',
+  '1-src/content/text.js',
+  '1-src/content/image.js',
+  '1-src/content/video.js',
+  '1-src/layout.js',
+  '1-src/fade.js'
+];
+scripts.forEach(src => loadScript(src));

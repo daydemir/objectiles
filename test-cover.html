@@ -9,12 +9,14 @@
   <link rel="stylesheet" href="1-src/main.css">
   <link rel="stylesheet" href="1-src/popup.css">
   <link rel="stylesheet" href="1-src/cover.css">
+  <link rel="stylesheet" href="1-src/modal.css">
   <link rel="stylesheet" href="1-src/content/text.css">
   <link rel="stylesheet" href="1-src/content/image.css">
   <link rel="stylesheet" href="1-src/content/video.css">
 
   <!-- Content and display scripts - order matters! -->
   <script src="1-src/popup.js"></script>
+  <script src="1-src/modal.js"></script>
   <script src="1-src/cover.js"></script>
   <script src="1-src/content/text.js"></script>
   <script src="1-src/content/image.js"></script>
@@ -34,9 +36,9 @@
   <script>
     cover({
       id: 'video-cover',
-      content: video({ videos: ['test.mp4', 'test2.mp4'], loop: false, autoplay: true, skippable: true }),
+      content: video({ videos: ['test.mp4', 'test2.mp4'], loop: false, autoplay: true, skippable: false }),
       fadeIn: false,
-      fadeOut: true,
+      fadeOut: false,
       onDismiss: function () { console.log('Video cover dismissed'); },
       // onDismiss: function () { fadeToScene('ceremony-designer-interactive.html'); },
       dismissOnVideoEnd: true
@@ -44,7 +46,6 @@
   </script>
 
   <div class="container">
-
     <!-- Row 1: Text Cover Buttons -->
     <img src="all/button-target.png" class="button" style="top: 200px; left: 200px; width: 150px; height: auto;"
       onclick="cover({

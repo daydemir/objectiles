@@ -51,7 +51,7 @@ function video({
                 return false;
             } else {
                 currentIndex++;
-                return false;
+                return true; // Advance to next video on click
             }
         },
         onLastVideoEnd: function (cb) {
