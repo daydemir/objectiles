@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Cover Interactive Test</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Direct imports for better reliability -->
+  <link rel="stylesheet" href="1-src/main.css">
+  <link rel="stylesheet" href="1-src/popup.css">
+  <link rel="stylesheet" href="1-src/cover.css">
+  <link rel="stylesheet" href="1-src/content/text.css">
+  <link rel="stylesheet" href="1-src/content/image.css">
+  <link rel="stylesheet" href="1-src/content/video.css">
+
+  <!-- Content and display scripts - order matters! -->
+  <script src="1-src/popup.js"></script>
+  <script src="1-src/cover.js"></script>
+  <script src="1-src/content/text.js"></script>
+  <script src="1-src/content/image.js"></script>
+  <script src="1-src/content/video.js"></script>
+  <script src="1-src/layout.js"></script>
+  <script src="1-src/fade.js"></script>
+
+  <style>
+    .container {
+      background: url('hotel/bgd-hotel.png') 100% 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- Row 1: Text Cover Buttons -->
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 200px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'text-basic-cover',
+              content: text({ texts: ['This is a basic text cover with simple content.'] }),
+              fadeIn: true, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Basic text cover dismissed'); }
+            }).showCover()">
+
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 400px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'text-multi-cover',
+              content: text({ texts: ['This is a multi-step text cover.', 'Click to see the next message.', 'Final message in the sequence.'] }),
+              fadeIn: false, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Multi-step text cover dismissed'); }
+            }).showCover()">
+
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 600px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'text-no-fade-cover',
+              content: text({ texts: ['This cover has no fade effects.'] }),
+              fadeIn: false, 
+              fadeOut: false,
+              onDismiss: function() { console.log('No-fade text cover dismissed'); }
+            }).showCover()">
+
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 800px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'text-styled-cover',
+              content: text({ texts: ['This cover has custom styling applied with orange text and text shadow.'] }),
+              fadeIn: true, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Styled text cover dismissed'); }
+            }).showCover('color: #ff5733; font-size: 4vw; font-family: Arial, sans-serif; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);')">
+
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 1000px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'text-long-cover',
+              content: text({ texts: ['This is a cover with longer text content that demonstrates how the content wraps within the cover container. The styling will automatically adjust to accommodate the content.'] }),
+              fadeIn: true, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Long text cover dismissed'); }
+            }).showCover()">
+
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 1200px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'text-intro-cover',
+              content: text({ texts: ['This is a cover example.', 'It can be used as an intro.', 'Click to dismiss.'] }),
+              fadeIn: true, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Text intro cover dismissed'); }
+            }).makeIntro()">
+
+    <!-- Row 2: Image Cover Buttons -->
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 200px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'image-counter-cover',
+              content: image({ images: ['hotel/popup-counter.png'] }),
+              fadeIn: true, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Counter image cover dismissed'); }
+            }).showCover()">
+
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 400px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'image-triangle-cover',
+              content: image({ images: ['hotel/popup-triangle.png'] }),
+              fadeIn: false, 
+              fadeOut: false,
+              onDismiss: function() { console.log('Triangle image cover dismissed'); }
+            }).showCover()">
+
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 600px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'image-pushstick-cover',
+              content: image({ images: ['hotel/popup-pushstick.png'] }),
+              fadeIn: true, 
+              fadeOut: false,
+              onDismiss: function() { console.log('Pushstick image cover dismissed'); }
+            }).showCover()">
+
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 800px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'image-sink-cover',
+              content: image({ images: ['hotel/popup-sink.png'] }),
+              fadeIn: false, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Sink image cover dismissed'); }
+            }).showCover()">
+
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 1000px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'image-skylight-cover',
+              content: image({ images: ['hotel/popup-skylight.png'] }),
+              fadeIn: true, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Skylight image cover dismissed'); }
+            }).showCover('border: 8px solid #fff; box-shadow: 0 0 20px rgba(0, 0, 0, 0.8); object-fit: contain; width: auto; height: auto; max-width: 90%; max-height: 90%;')">
+
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 1200px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'multi-image-cover',
+              content: image({ images: ['hotel/popup-counter.png', 'hotel/popup-triangle.png', 'hotel/popup-pushstick.png', 'hotel/popup-sink.png'] }),
+              fadeIn: true, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Multi-image cover dismissed'); }
+            }).showCover()">
+
+    <!-- Row 3: Video Cover Buttons -->
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 200px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'video-basic-cover',
+              content: video({ video: 'test.mp4', delay: false, loop: false, autoplay: true, dismissOnEnd: false }),
+              fadeIn: true, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Basic video cover dismissed'); }
+            }).showCover()">
+
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 400px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'video-loop-cover',
+              content: video({ video: 'test.mp4', delay: false, loop: true, autoplay: true, dismissOnEnd: false }),
+              fadeIn: true, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Looping video cover dismissed'); }
+            }).showCover()">
+
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 600px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'video-no-fade-cover',
+              content: video({ video: 'test.mp4', delay: false, loop: false, autoplay: true, dismissOnEnd: false }),
+              fadeIn: false, 
+              fadeOut: false,
+              onDismiss: function() { console.log('No-fade video cover dismissed'); }
+            }).showCover()">
+
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 800px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'video-delay-cover',
+              content: video({ video: 'test.mp4', delay: true, loop: false, autoplay: true, dismissOnEnd: false }),
+              fadeIn: true, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Delayed video cover dismissed'); }
+            }).showCover()">
+
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 1000px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'video-styled-cover',
+              content: video({ video: 'test.mp4', delay: false, loop: false, autoplay: true, dismissOnEnd: false }),
+              fadeIn: true, 
+              fadeOut: true,
+              onDismiss: function() { console.log('Styled video cover dismissed'); }
+            }).showCover('border: 5px solid #3498db; border-radius: 15px; padding: 10px; max-width: 90%; max-height: 90%;')">
+
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 1200px; width: 150px; height: auto;"
+      onclick="cover({
+              id: 'video-auto-dismiss-cover',
+              content: video({ video: 'test.mp4', delay: false, loop: false, autoplay: true, dismissOnEnd: true }),
+              fadeIn: true,
+              fadeOut: true,
+              onDismiss: function() { console.log('Auto-dismiss video cover dismissed'); }
+            }).showCover()">
+
+    <button class="button button-back" onclick="fadeToScene('rfo-interactive.html')"></button>
+    <button class="button button-next" onclick="fadeToScene('ceremony-designer-interactive.html')"></button>
+  </div>
+
+</body>
+
+</html>
