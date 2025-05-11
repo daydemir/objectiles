@@ -35,9 +35,28 @@ function popup({ id, content, fadeIn = true, fadeOut = true, dismissOnBackground
     show() {
       popupEl.className = 'popup placed';
       popupEl.style.cssText = '';
-      if (style) popupEl.style.cssText += style;
+      // Split style string into positional (for popupEl) and non-positional (for content)
+      function splitStyles(style) {
+        const positional = ['top','left','right','bottom','width','height','min-width','min-height','max-width','max-height','position'];
+        let popupStyles = '', contentStyles = '';
+        if (!style) return { popupStyles, contentStyles };
+        style.split(';').forEach(rule => {
+          const [prop, val] = rule.split(':').map(s => s && s.trim());
+          if (prop && val) {
+            if (positional.some(p => prop.startsWith(p))) {
+              popupStyles += `${prop}: ${val};`;
+            } else {
+              contentStyles += `${prop}: ${val};`;
+            }
+          }
+        });
+        return { popupStyles, contentStyles };
+      }
+      const { popupStyles, contentStyles } = splitStyles(style);
+      if (popupStyles) popupEl.style.cssText += popupStyles;
       popupEl.style.position = 'absolute';
       popupEl.innerHTML = content.html();
+      applyCustomStyle();
       popupEl.style.opacity = fadeIn ? 0 : 1;
       popupEl.style.display = 'block';
       // Remove any previous document click listener
@@ -53,11 +72,19 @@ function popup({ id, content, fadeIn = true, fadeOut = true, dismissOnBackground
         };
         setTimeout(() => document.addEventListener('mousedown', popupEl._backgroundListener), 0);
       }
+      // Helper to apply inline style to .text-content or .image-container
+      function applyCustomStyle() {
+        if (contentStyles) {
+          let el = popupEl.querySelector('.text-content') || popupEl.querySelector('.image-container');
+          if (el) el.style.cssText += contentStyles;
+        }
+      }
       // Handle click on popup: advance slide if possible, else dismiss
       popupEl.onclick = (e) => {
         if (typeof content.nextSlide === 'function') {
           content.nextSlide(() => dismiss());
           popupEl.innerHTML = content.html();
+          applyCustomStyle();
         } else {
           dismiss();
         }
