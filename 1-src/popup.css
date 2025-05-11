@@ -1,130 +1,14 @@
-/* ============================
-   POPUP CSS - MAIN STRUCTURE
-   ============================ */
-
-/* Z-index hierarchy:
-   - popup base: 1000
-   - popup.centered: 1001
-   - popup content: 1002
-*/
-
-
-/* Base popup styles */
-.popup {
-  display: none;
-  background: transparent;
-  color: rgb(255, 242, 97);
-  z-index: 1000;
-  cursor: pointer;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: auto;
-}
-
-.popup.show {
-  display: block;
-}
-
-/* Fade transition styles for popup appearance/disappearance */
-.fade-transition {
-  transition: opacity 0.3s ease-in-out;
-}
-
-/* Initial state for fade-in elements */
-.popup.fade-transition {
-  /* Default state is visible (for fade-out) */
-  opacity: 1;
-}
-
-/* When explicitly set to 0, it will trigger the transition */
-.popup.fade-transition[style*="opacity: 0"] {
-  /* This ensures the transition happens when opacity is changed */
-  opacity: 0;
-}
-
-/* Centered popup mode */
-.popup.centered {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1001;
-  background: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* Placed popup mode */
+/* Minimal placed popup CSS for popup.js */
 .popup.placed {
   position: absolute;
-  /* All placement, width, etc. is controlled by the inline style */
-}
-
-
-/* ============================
-   POPUP CONTENT CONTAINERS
-   ============================ */
-
-/* Popup inner container */
-.popup-inner {
   background: rgba(0, 0, 0, 0.6);
-  cursor: pointer;
+  color: #fff;
+  z-index: 1001;
   padding: 1vw 2vw;
+  display: block;
+  min-width: 100px;
   max-width: 90vw;
-  width: fit-content;
-  min-width: 0;
-  margin: 0 auto;
   pointer-events: auto;
-  z-index: 1002;
-  user-select: none;
-}
-
-
-/* Centered popups get a default inner container */
-.popup.centered > .popup-inner {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 2vw 3vw;
-  box-sizing: border-box;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  width: fit-content;
-  max-width: 90vw;
-  max-height: 90vh;
-  margin: 0 auto;
-}
-
-/* Close button for non-takeover popups */
-.popup-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
-  font-size: 20px;
-  z-index: 1003;
+  transition: opacity 0.2s linear;
 }
-
-.popup-close:hover {
-  background: rgba(0, 0, 0, 0.8);
-}
-
-/* Content-specific styles have been moved to:
-   - popup-text.css
-   - popup-image.css
-   - popup-video.css
-*/
-
-/* Legacy styles removed - using new popup API */

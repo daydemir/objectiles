@@ -47,9 +47,8 @@
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('Basic text popup dismissed'); },
-              dismissOnBackgroundClick: true,
-              style: ''
-            }).show()">
+              dismissOnVideoEnd: false
+            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null, dismissOnBackgroundClick: true, tintBackground: false })">
 
     <img src="all/button-target.png" class="button" style="top: 200px; left: 400px; width: 150px; height: auto;"
       onclick="popup({
@@ -58,9 +57,8 @@
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('Multi-step text popup dismissed'); },
-              dismissOnBackgroundClick: true,
-              style: 'top: 300px; left: 400px; width: 300px; font-size: 18px;'
-            }).show()">
+              dismissOnVideoEnd: false
+            }).showPlaced({   style: 'top: 300px; left: 400px; width: 300px; font-size: 18px;' , dismissOnBackgroundClick: true})">
 
     <img src="all/button-target.png" class="button" style="top: 200px; left: 600px; width: 150px; height: auto;"
       onclick="popup({
@@ -69,9 +67,8 @@
               fadeIn: true,
               fadeOut: true,
               onDismiss: function() { console.log('No-tint text popup dismissed'); },
-              dismissOnBackgroundClick: true,
-              style: ''
-            }).show()">
+              dismissOnVideoEnd: false
+            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null , tintBackground: false, dismissOnBackgroundClick: true})">
 
     <img src="all/button-target.png" class="button" style="top: 200px; left: 800px; width: 150px; height: auto;"
       onclick="popup({
@@ -80,9 +77,8 @@
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('Styled text popup dismissed'); },
-              dismissOnBackgroundClick: true,
-              style: 'color: #ff5733; font-size: 24px; font-family: Arial, sans-serif;'
-            }).show()">
+              dismissOnVideoEnd: false
+            }).showCentered({ topMargin: 0, leftMargin: 0,   style: 'color: #ff5733; font-size: 24px; font-family: Arial, sans-serif;' , tintBackground: true, dismissOnBackgroundClick: true})">
 
     <img src="all/button-target.png" class="button" style="top: 200px; left: 1000px; width: 150px; height: auto;"
       onclick="popup({
@@ -91,9 +87,8 @@
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('Non-takeover text popup dismissed'); },
-              dismissOnBackgroundClick: false,
-              style: 'top: 300px; left: 1000px; width: 250px;'
-            }).show()">
+              dismissOnVideoEnd: false
+            }).showPlaced({ style: 'top: 300px; left: 1000px; width: 250px;' , dismissOnBackgroundClick: false})">
 
     <img src="all/button-target.png" class="button" style="top: 200px; left: 1200px; width: 150px; height: auto;"
       onclick="popup({
@@ -102,9 +97,8 @@
               fadeIn: true,
               fadeOut: true,
               onDismiss: function() { console.log('Fading text popup dismissed'); },
-              dismissOnBackgroundClick: true,
-              style: ''
-            }).show()">
+              dismissOnVideoEnd: false,
+            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null , dismissOnBackgroundClick: true, tintBackground: false})">
 
 
 
@@ -139,9 +133,8 @@
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('Basic image popup dismissed'); },
-              dismissOnBackgroundClick: true,
-              style: ''
-            }).show()">
+              dismissOnVideoEnd: false,
+            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null })">
 
     <img src="all/button-target.png" class="button" style="top: 400px; left: 400px; width: 150px; height: auto;"
       onclick="popup({
@@ -150,9 +143,8 @@
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('Multi-image popup dismissed'); },
-              dismissOnBackgroundClick: true,
-              style: ''
-            }).show()">
+              dismissOnVideoEnd: false,
+            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null })">
 
     <img src="all/button-target.png" class="button" style="top: 400px; left: 600px; width: 150px; height: auto;"
       onclick="popup({
@@ -161,9 +153,8 @@
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('tint image popup dismissed'); },
-              dismissOnBackgroundClick: true,
-              style: ''
-            }).show()">
+              dismissOnVideoEnd: false,
+            }).showCentered({ topMargin: 0, leftMargin: 0, style: null, tintBackground: true, dismissOnBackgroundClick: true })">
 
     <img src="all/button-target.png" class="button" style="top: 400px; left: 800px; width: 150px; height: auto;"
       onclick="popup({
@@ -172,9 +163,8 @@
               fadeIn: false,
               fadeOut: false,
               onDismiss: function() { console.log('No-tint image popup dismissed'); },
-              dismissOnBackgroundClick: true,
-              style: ''
-            }).show()">
+              dismissOnVideoEnd: false,
+            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null})">
 
     <img src="all/button-target.png" class="button" style="top: 400px; left: 1000px; width: 150px; height: auto;"
       onclick="popup({
@@ -183,9 +173,8 @@
               fadeIn: true,
               fadeOut: true,
               onDismiss: function() { console.log('Fading image popup dismissed'); },
-              dismissOnBackgroundClick: true,
-              style: ''
-            }).show()">
+              dismissOnVideoEnd: false,
+            }).showCentered({ topMargin: 0, leftMargin: 0,   style: null })">
 
     <button class="button button-back" onclick="fadeToScene('rfo-interactive.html')"></button>
     <button class="button button-next" onclick="fadeToScene('ceremony-designer-interactive.html')"></button>
