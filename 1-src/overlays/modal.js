@@ -1,3 +1,32 @@
+/**
+ * Modal API for displaying centered/takeover modals in Objectiles
+ *
+ * Usage:
+ *   modal({
+ *     id: 'modal-id',
+ *     content: modalText({ text: 'Message' }), // or modalImage({ src: 'img.png' })
+ *     fadeIn: true, // (optional)
+ *     fadeOut: true, // (optional)
+ *     tintBackground: false, // (optional) darken background
+ *     style: '', // (optional) inline CSS
+ *     onDismiss: () => {} // (optional)
+ *   }).show();
+ *
+ * Parameters:
+ *   id (string, required): Unique DOM id for the modal element
+ *   content (object, required): Content object with .html() method
+ *   fadeIn (bool, default: true): Fade in animation
+ *   fadeOut (bool, default: true): Fade out animation
+ *   tintBackground (bool, default: false): Darken background overlay
+ *   style (string, optional): Inline CSS for modal
+ *   onDismiss (function, optional): Called when modal is dismissed
+ *
+ * Example:
+ *   modal({
+ *     id: 'alert',
+ *     content: modalText({ text: 'Alert!' })
+ *   }).show();
+ */
 // Modal popup (centered, takeover)
 // API: modal({id, content, fadeIn, fadeOut, tintBackground, style, onDismiss}).show()
 

@@ -1,3 +1,32 @@
+/**
+ * Popup API for showing placed popups in Objectiles
+ *
+ * Usage:
+ *   popup({
+ *     id: 'popup-id',
+ *     content: popupText({ text: 'Hello!' }), // or popupImage({ src: 'img.png' })
+ *     fadeIn: true, // (optional) fade in animation
+ *     fadeOut: true, // (optional) fade out animation
+ *     dismissOnBackgroundClick: true, // (optional) allow dismiss by clicking background
+ *     style: '', // (optional) inline CSS for positioning/size
+ *     onDismiss: () => {} // (optional) callback on dismiss
+ *   }).show();
+ *
+ * Parameters:
+ *   id (string, required): Unique DOM id for the popup element
+ *   content (object, required): Content object with .html() method (see popup-text/image/video.js)
+ *   fadeIn (bool, default: true): Fade in animation
+ *   fadeOut (bool, default: true): Fade out animation
+ *   dismissOnBackgroundClick (bool, default: true): Dismiss when clicking outside
+ *   style (string, optional): Inline CSS for popup position/size
+ *   onDismiss (function, optional): Called when popup is dismissed
+ *
+ * Example:
+ *   popup({
+ *     id: 'hello',
+ *     content: popupText({ text: 'Hello world!' })
+ *   }).show();
+ */
 // Minimal placed popup implementation
 // API: popup({id, content, fadeIn, fadeOut, dismissOnBackgroundClick, style, onDismiss}).show()
 

@@ -1,4 +1,31 @@
 /**
+ * Cover API for displaying full-screen overlays in Objectiles
+ *
+ * Usage:
+ *   cover({
+ *     id: 'cover-id',
+ *     content: coverText({ text: 'Welcome!' }), // or coverImage({ src: 'img.png' })
+ *     fadeIn: true, // (optional)
+ *     fadeOut: true, // (optional)
+ *     onDismiss: () => {}, // (optional)
+ *     dismissOnVideoEnd: false // (optional, for video)
+ *   }).show();
+ *
+ * Parameters:
+ *   id (string, required): Unique DOM id for the cover element
+ *   content (object, required): Content object with .html() method
+ *   fadeIn (bool, default: true): Fade in animation
+ *   fadeOut (bool, default: true): Fade out animation
+ *   onDismiss (function, optional): Called when cover is dismissed
+ *   dismissOnVideoEnd (bool, default: false): Dismiss when video ends (for video covers)
+ *
+ * Example:
+ *   cover({
+ *     id: 'intro',
+ *     content: coverText({ text: 'Welcome!' })
+ *   }).show();
+ */
+/**
  * Cover content creator for objectiles
  * @param {Object} params - Cover parameters
  * @param {string} params.id - Unique identifier for the cover element
