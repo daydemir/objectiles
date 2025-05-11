@@ -4,7 +4,7 @@
  * Usage:
  *   popup({
  *     id: 'popup-id',
- *     content: popupText({ text: 'Hello!' }), // or popupImage({ src: 'img.png' })
+ *     content: text({ texts: ['Hello!'] }), // or image({ images: ['img.png'] })
  *     fadeIn: true, // (optional) fade in animation
  *     fadeOut: true, // (optional) fade out animation
  *     dismissOnBackgroundClick: true, // (optional) allow dismiss by clicking background
@@ -24,7 +24,7 @@
  * Example:
  *   popup({
  *     id: 'hello',
- *     content: popupText({ text: 'Hello world!' })
+ *     content: text({ texts: ['Hello world!'] })
  *   }).show();
  */
 // Minimal placed popup implementation
@@ -67,7 +67,7 @@ function popup({ id, content, fadeIn = true, fadeOut = true, dismissOnBackground
       popupEl.style.cssText = '';
       // Split style string into positional (for popupEl) and non-positional (for content)
       function splitStyles(style) {
-        const positional = ['top','left','right','bottom','width','height','min-width','min-height','max-width','max-height','position'];
+        const positional = ['top', 'left', 'right', 'bottom', 'width', 'height', 'min-width', 'min-height', 'max-width', 'max-height', 'position'];
         let popupStyles = '', contentStyles = '';
         if (!style) return { popupStyles, contentStyles };
         style.split(';').forEach(rule => {
@@ -101,7 +101,7 @@ function popup({ id, content, fadeIn = true, fadeOut = true, dismissOnBackground
         popupEl._backgroundListener = null;
       }
       if (dismissOnBackgroundClick) {
-        popupEl._backgroundListener = function(e) {
+        popupEl._backgroundListener = function (e) {
           if (!popupEl.contains(e.target)) {
             dismiss();
           }

@@ -4,7 +4,7 @@
  * Usage:
  *   cover({
  *     id: 'cover-id',
- *     content: coverText({ text: 'Welcome!' }), // or coverImage({ src: 'img.png' })
+ *     content: text({ texts: ['Welcome!', "Hello!"] }), // or image({ images: ['img.png'] }) or video({ videos: ['video.mp4'] })
  *     fadeIn: true, // (optional)
  *     fadeOut: true, // (optional)
  *     onDismiss: () => {}, // (optional)
@@ -21,8 +21,8 @@
  *
  * Example:
  *   cover({
- *     id: 'intro',
- *     content: coverText({ text: 'Welcome!' })
+ *     id: 'intro', 
+ *     content: text({ texts: ['Welcome!', "Hello!"] })
  *   }).show();
  */
 /**
@@ -64,14 +64,14 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null, d
   // Setup dismissal function
   const dismiss = () => {
     if (!isVisible) return;
-    
+
     const completeDismiss = () => {
       coverEl.style.display = 'none';
       overlayEl.style.display = 'none';
       isVisible = false;
       if (typeof onDismiss === 'function') onDismiss();
     };
-    
+
     if (fadeOut) {
       coverEl.classList.add('cover-fade-out');
       overlayEl.classList.add('cover-fade-out');
@@ -92,7 +92,7 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null, d
   // Set up initial styles
   coverEl.style.display = 'none';
   coverEl.style.transition = 'opacity 0.3s ease';
-  
+
   return {
     /**
      * Display as cover on page load
@@ -120,7 +120,7 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null, d
     showCover(style = '') {
       // Set base class
       coverEl.className = 'cover-container';
-      
+
       // Apply style directly if it contains CSS properties
       if (style && (style.includes(':') || style.includes(';'))) {
         coverEl.style.cssText = style;
@@ -129,7 +129,7 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null, d
       else if (style) {
         style.split(' ').forEach(c => coverEl.classList.add(c));
       }
-      
+
       // Set content
       coverEl.innerHTML = content.html();
       // Always apply custom style to .text-content after setting content
@@ -149,7 +149,7 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null, d
       // Set initial opacity before fade-in
       coverEl.style.opacity = 0;
       overlayEl.style.opacity = 0;
-      
+
       // Show overlay
       overlayEl.style.display = 'block';
 
@@ -181,33 +181,33 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null, d
           videoEl.play();
         }
       }
-      
+
       // Handle clicks
       coverEl.onclick = (e) => {
-  if (typeof content.nextSlide === 'function') {
-    const dismissed = content.nextSlide(() => dismiss());
-    if (dismissed) {
-      coverEl.innerHTML = content.html();
-      // Always apply custom style to .text-content after setting content
-      if (style && (style.includes(':') || style.includes(';'))) {
-        const textContent = coverEl.querySelector('.text-content');
-        if (textContent) textContent.style.cssText += style;
-      }
-      wireVideoEndHandler();
-    }
-    // If not dismissed (e.g. video skippable: false), do nothing (no re-render)
-  } else {
-    dismiss();
-  }
-  e.stopPropagation();
-};
+        if (typeof content.nextSlide === 'function') {
+          const dismissed = content.nextSlide(() => dismiss());
+          if (dismissed) {
+            coverEl.innerHTML = content.html();
+            // Always apply custom style to .text-content after setting content
+            if (style && (style.includes(':') || style.includes(';'))) {
+              const textContent = coverEl.querySelector('.text-content');
+              if (textContent) textContent.style.cssText += style;
+            }
+            wireVideoEndHandler();
+          }
+          // If not dismissed (e.g. video skippable: false), do nothing (no re-render)
+        } else {
+          dismiss();
+        }
+        e.stopPropagation();
+      };
 
 
 
-      
+
       // Set dismiss event listener
       coverEl.addEventListener('dismiss', dismiss);
-      
+
       // Show with fade if enabled
       coverEl.style.display = 'block';
       overlayEl.style.display = 'block';
@@ -230,7 +230,7 @@ function cover({ id, content, fadeIn = true, fadeOut = true, onDismiss = null, d
         coverEl.style.opacity = 1;
         overlayEl.style.opacity = 1;
       }
-      
+
       isVisible = true;
       return this;
     }

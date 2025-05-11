@@ -4,7 +4,7 @@
  * Usage:
  *   modal({
  *     id: 'modal-id',
- *     content: modalText({ text: 'Message' }), // or modalImage({ src: 'img.png' })
+ *     content: text({ texts: ['Message'] }), // or image({ images: ['img.png'] })
  *     fadeIn: true, // (optional)
  *     fadeOut: true, // (optional)
  *     tintBackground: false, // (optional) darken background
@@ -24,7 +24,7 @@
  * Example:
  *   modal({
  *     id: 'alert',
- *     content: modalText({ text: 'Alert!' })
+ *     content: text({ texts: ['Alert!'] })
  *   }).show();
  */
 // Modal popup (centered, takeover)

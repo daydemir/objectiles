@@ -3,12 +3,24 @@
 
 <head>
   <title>Caretaker</title>
+  <!-- Direct imports for better reliability -->
   <link rel="stylesheet" href="1-src/main.css">
-  <link rel="stylesheet" href="1-src/popup.css">
-  <script src="1-src/popup.js"></script>
-  <script src="1-src/fade.js"></script>
+  <link rel="stylesheet" href="1-src/overlays/popup.css">
+  <link rel="stylesheet" href="1-src/overlays/cover.css">
+  <link rel="stylesheet" href="1-src/overlays/modal.css">
+  <link rel="stylesheet" href="1-src/content/text.css">
+  <link rel="stylesheet" href="1-src/content/image.css">
+  <link rel="stylesheet" href="1-src/content/video.css">
+
+  <!-- Content and display scripts - order matters! -->
+  <script src="1-src/overlays/popup.js"></script>
+  <script src="1-src/overlays/modal.js"></script>
+  <script src="1-src/overlays/cover.js"></script>
+  <script src="1-src/content/text.js"></script>
+  <script src="1-src/content/image.js"></script>
+  <script src="1-src/content/video.js"></script>
   <script src="1-src/layout.js"></script>
-  <script src="1-src/video.js"></script>
+  <script src="1-src/fade.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
@@ -18,7 +30,16 @@
 
 <body>
   <script>
-    showIntroVideo('caretaker/animation-caretaker.mp4', 1000, true, true, true, true, 'ceremony-caretaker-interactive.html');
+    cover({
+      id: 'caretaker-intro-cover',
+      content: video({ videos: ['caretaker/animation-caretaker.mp4'], autoplay: true, loop: false, skippable: false }),
+      fadeIn: false,
+      fadeOut: false,
+      dismissOnVideoEnd: true,
+      onDismiss: function () {
+        fadeToScene('ceremony-caretaker-interactive.html');
+      }
+    }).makeIntro();
   </script>
 
 </body>
