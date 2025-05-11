@@ -1,7 +1,7 @@
 // video.js - Video utility functions
 
 /**
- * Shows an intro video using the fluent popup API.
+ * Shows an intro video using the popup API.
  * 
  * @param {string} videoPath - Path to the video file
  * @param {number} delay - Delay in milliseconds before showing the video
@@ -13,30 +13,49 @@
  * @param {string=} endAction - What to do when video ends: 'dismiss' (default) or 'loop'
  */
 function showIntroVideo(videoPath, delay = 0, tintBackground = true, center = true, fullscreen = false, autoplay = true, nextScene = null, endAction = 'dismiss') {
-    // Define dismissOnEnd callback if nextScene is provided
-    let dismissOnEnd = null;
+    // If the popup module isn't loaded yet, wait for it
+    if (!window.popup) {
+        console.error('[showIntroVideo] Error: popup.js not loaded');
+        return;
+    }
+    
+    // Set up the onDismiss callback if nextScene is provided
+    let onDismiss = null;
     if (nextScene) {
-        dismissOnEnd = () => {
-            if (typeof fadeToScene === 'function') {
-                fadeToScene(nextScene);
-            } else {
-                window.location.href = nextScene;
-            }
+        onDismiss = () => {
+            // Direct navigation without additional fade
+            window.location.href = nextScene;
         };
     }
-
-    // Create and configure the popup using the fluent API
-    window.popup('intro-video')
-        .video(videoPath, delay > 0, endAction === 'loop', autoplay, dismissOnEnd)
-        .settings({
-            center: center,
-            style: fullscreen ? 'width: 100%; height: 100%;' : null,
-            fadeIn: true,
-            fadeOut: true,
+    
+    // Use the new popup API
+    if (delay > 0) {
+        setTimeout(() => {
+            window.popup.showVideo({
+                videos: videoPath,
+                name: 'intro-video',
+                fullscreen: fullscreen,
+                tintBackground: tintBackground,
+                takeOverScreen: true,
+                style: center ? null : 'position: absolute; top: 0; left: 0; width: 100%; height: 100%;',
+                fade: true,
+                onDismiss: onDismiss,
+                dismissOnEnd: endAction !== 'loop'
+            });
+        }, delay);
+    } else {
+        window.popup.showVideo({
+            videos: videoPath,
+            name: 'intro-video',
+            fullscreen: fullscreen,
             tintBackground: tintBackground,
-            dismissOnBackgroundClick: true
-        })
-        .showAsIntro(); // Queue to show when page loads
+            takeOverScreen: true,
+            style: center ? null : 'position: absolute; top: 0; left: 0; width: 100%; height: 100%;',
+            fade: true,
+            onDismiss: onDismiss,
+            dismissOnEnd: endAction !== 'loop'
+        });
+    }
 }
 
 // Video utilities for shared functionality
