@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Hotel Interactive</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Direct imports for better reliability -->
+  <link rel="stylesheet" href="1-src/main.css">
+  <link rel="stylesheet" href="1-src/popup.css">
+  <link rel="stylesheet" href="1-src/popup-text.css">
+  <link rel="stylesheet" href="1-src/popup-image.css">
+  <link rel="stylesheet" href="1-src/popup-video.css">
+
+  <!-- Popup scripts - order matters! -->
+  <script src="1-src/popup.js"></script>
+  <script src="1-src/popup-text.js"></script>
+  <script src="1-src/popup-image.js"></script>
+  <script src="1-src/popup-video.js"></script>
+  <script src="1-src/fade.js"></script>
+  <script src="1-src/layout.js"></script>
+
+  <style>
+    .container {
+
+      background: url('hotel/bgd-hotel.png') 100% 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <video autoplay loop muted>
+      <source src="hotel/animation-hotel-background2.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+
+    <img src="all/button-target.png" class="button" style="top: 492px; left: -10px; width: 220px; height: auto;"
+      onclick="popup('counter')
+            .image('hotel/popup-counter.png')
+            .settings({
+              center: true,
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false
+            })
+            .show()">
+    <img src="all/button-target.png" class="button" style="top: 380px; left: 240px; width: 200px; height: auto;"
+      onclick="popup('triangle')
+            .image('hotel/popup-triangle.png')
+            .settings({
+              center: true,
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false
+            })
+            .show()">
+    <img src="all/button-target.png" class="button" style="top: 620px; left: 510px; width: 170px; height: auto;"
+      onclick="popup('pushstick')
+            .image('hotel/popup-pushstick.png')
+            .settings({
+              center: true,
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false
+            })
+            .show()">
+    <img src="all/button-target.png" class="button" style="top: 700px; left: -10px; width: 100px; height: auto;"
+      onclick="popup('sink')
+            .image('hotel/popup-sink.png')
+            .settings({
+              center: true,
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false
+            })
+            .show()">
+    <img src="all/button-target.png" class="button" style="top: 700px; left: 1480px; width: 400px; height: auto;"
+      onclick="popup('skylight')
+            .image('hotel/popup-skylight.png')
+            .settings({
+              center: true,
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false
+            })
+            .show()">
+
+    <!-- Text popup buttons with unique parameter combinations -->
+    <img src="all/button-target.png" class="button" style="top: 200px; left: 700px; width: 150px; height: auto;"
+      onclick="popup('text-basic')
+            .text('This is a basic text popup with default parameters.')
+            .settings({
+              center: true,
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false
+            })
+            .show()">
+
+    <img src="all/button-target.png" class="button" style="top: 300px; left: 900px; width: 150px; height: auto;"
+      onclick="popup('text-multi')
+            .text(['This is a multi-step text popup.', 'Click to see the next message.', 'Final message in the sequence.'])
+            .settings({
+              center: false,
+              style: 'top: 300px; left: 900px; width: 300px; font-size: 18px;',
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false
+            })
+            .show()">
+
+    <img src="all/button-target.png" class="button" style="top: 400px; left: 1100px; width: 150px; height: auto;"
+      onclick="popup('text-no-tint')
+            .text('This popup has no background tint and fades in and out.')
+            .settings({
+              center: true,
+              tintBackground: false,
+              fadeIn: true,
+              fadeOut: true
+            })
+            .show()">
+
+    <img src="all/button-target.png" class="button" style="top: 500px; left: 1300px; width: 150px; height: auto;"
+      onclick="popup('text-styled')
+            .text('This popup has custom styling applied.')
+            .settings({
+              center: true,
+              style: 'color: #ff5733; font-size: 24px; text-align: center; font-family: Arial, sans-serif;',
+              tintBackground: true,
+              fadeIn: false,
+              fadeOut: false
+            })
+            .show()">
+
+    <img src="all/button-target.png" class="button" style="top: 600px; left: 900px; width: 150px; height: auto;"
+      onclick="popup('text-non-takeover')
+            .text('This is a non-takeover popup that can be displayed alongside other popups.')
+            .settings({
+              center: false,
+              style: 'top: 600px; left: 900px; width: 250px; background: rgba(0,0,0,0.8);',
+              tintBackground: false,
+              fadeIn: false,
+              fadeOut: false
+            })
+            .show()">
+
+    <!-- Video popup example -->
+    <img src="all/button-target.png" class="button" style="top: 700px; left: 700px; width: 150px; height: auto;"
+      onclick="popup('video-example')
+            .video('hotel/animation-hotel-background2.mp4', false, true, true)
+            .settings({
+              center: true,
+              tintBackground: true,
+              fadeIn: true,
+              fadeOut: true
+            })
+            .show()">
+
+    <!-- Intro video example (will show when page loads) -->
+    <script>
+      // This will show as an intro video when the page loads
+      // popup('intro-video')
+      //   .video('hotel/animation-hotel-background2.mp4')
+      //   .settings({
+      //     center: true,
+      //     tintBackground: true,
+      //     fadeIn: true,
+      //     fadeOut: true
+      //   })
+      //   .showAsIntro();
+    </script>
+
+    <img src="all/button-target.png" class="button" style="top: 300px; left: 600px; width: 150px; height: auto;"
+      onclick="popup('text-fade')
+            .text(['This popup fades in and out.', 'It also has multiple steps.', 'Click to advance to the next message.'])
+            .settings({
+              center: true,
+              tintBackground: true,
+              fadeIn: true,
+              fadeOut: true
+            })
+            .show()">
+
+    <button class="button button-back" onclick="fadeToScene('rfo-interactive.html')"></button>
+    <button class="button button-next" onclick="fadeToScene('ceremony-designer-interactive.html')"></button>
+  </div>
+
+</body>
+
+</html>

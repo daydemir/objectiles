@@ -1,0 +1,55 @@
+/* ============================
+   IMAGE POPUP STYLES
+   ============================ */
+
+/* Image container styles */
+.image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image styles */
+.popup img {
+  max-width: 90vw;
+  max-height: 90vh;
+  height: auto;
+  width: auto;
+  border: none;
+  display: block;
+  margin: 0 auto;
+  background: transparent;
+}
+
+.popup.centered img {
+  max-width: 80vw;
+  max-height: 80vh;
+  height: auto;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+  background: transparent;
+  box-shadow: none;
+}
+
+.popup.fullscreen img {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  object-fit: cover;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+.popup-inner img {
+  max-width: 80vw;
+  max-height: 80vh;
+  height: auto;
+  border: none;
+}

@@ -18,7 +18,7 @@ function showIntroVideo(videoPath, delay = 0, tintBackground = true, center = tr
         console.error('[showIntroVideo] Error: popup.js not loaded');
         return;
     }
-    
+
     // Set up the onDismiss callback if nextScene is provided
     let onDismiss = null;
     if (nextScene) {
@@ -27,7 +27,7 @@ function showIntroVideo(videoPath, delay = 0, tintBackground = true, center = tr
             window.location.href = nextScene;
         };
     }
-    
+
     // Use the new popup API
     if (delay > 0) {
         setTimeout(() => {
@@ -73,7 +73,7 @@ window.videoUtils = {
      * @param {Function} options.onFadeOut - Callback when video fades out
      * @returns {HTMLVideoElement} The created video element
      */
-    createSharedVideoElement: function(options) {
+    createSharedVideoElement: function (options) {
         const {
             src,
             fadeDuration = 0,
@@ -91,20 +91,20 @@ window.videoUtils = {
         video.muted = muted;
         video.playsinline = true;
         video.setAttribute('playsinline', '');
-        
+
         // Simply set the loop attribute based on the loop parameter
         video.loop = loop;
-        
+
         // Don't show controls for consistent styling with intro videos
         video.controls = false;
-        
+
         // Handle fade effect if specified
         if (typeof onFadeOut === 'function' && fadeDuration > 0 && !loop) {
-            video.addEventListener('ended', function() {
+            video.addEventListener('ended', function () {
                 onFadeOut(video, fadeDuration);
             });
         }
-        
+
         return video;
     }
 }

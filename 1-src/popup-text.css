@@ -1,0 +1,53 @@
+/* ============================
+   TEXT POPUP STYLES
+   ============================ */
+
+/* Text content styles */
+.text-content {
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+  width: 80%;
+  max-width: 1000px;
+  font-size: 2.5vw;
+  font-family: 'HomeVideo', sans-serif;
+  color: rgb(255, 242, 97);
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Text popup inner container */
+.popup-inner {
+  background: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  padding: 2vw 3vw;
+  max-width: 90vw;
+  min-width: 200px;
+  margin: 0 auto;
+  color: rgb(255, 242, 97);
+  font-family: 'HomeVideo', sans-serif;
+  font-size: 2.5vw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  z-index: 1002;
+  user-select: none;
+}
+
+/* Centered popups get a default inner container */
+.popup.centered > .popup-inner {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2vw 3vw;
+  margin: 4vw auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1002;
+}

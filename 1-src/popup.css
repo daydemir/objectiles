@@ -1,113 +1,17 @@
-/* .popup is the base class for all popups */
+/* ============================
+   POPUP CSS - MAIN STRUCTURE
+   ============================ */
 
-/* Fullscreen popup mode for images */
-.popup.fullscreen {
-  width: 100vw !important;
-  height: 100vh !important;
-  left: 0 !important;
-  top: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background: rgba(0, 0, 0, 0.6) !important;
-  z-index: 2005 !important;
-}
+/* Z-index hierarchy:
+   - tint-background: 999
+   - popup base: 1000
+   - popup.centered: 1001
+   - popup content: 1002
+   - popup.fullscreen: 1005
+*/
 
-.popup.fullscreen img {
-  width: 100vw !important;
-  height: 100vh !important;
-  max-width: 100vw !important;
-  max-height: 100vh !important;
-  object-fit: cover !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
-/* Base popup styles */
-.popup {
-  display: none;
-  background: transparent;
-  color: rgb(255, 242, 97);
-  z-index: 2000 !important;
-  cursor: pointer;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: auto;
-}
-
-/* Centered popup mode (default if no style param) */
-.popup.centered {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2001 !important;
-  background: none;
-  pointer-events: auto;
-}
-
-/* Centered popups get a default inner container if not precision-placed */
-.popup.centered>.popup-inner,
-.popup.centered>img {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 2vw 3vw;
-  margin: 4vw auto;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  max-width: 90vw;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 2002 !important;
-}
-
-/* Centered images in popups */
-.popup.centered img {
-  max-width: 80vw;
-  max-height: 80vh;
-  height: auto;
-  width: auto;
-  margin: 0 auto;
-  display: block;
-  background: transparent;
-  box-shadow: none;
-}
-
-/* Precision-placed popup mode (uses style param, matches .button in main.css) */
-.popup.precision-placed {
-  position: absolute;
-  /* All other placement, width, etc. is controlled by the inline style. */
-}
-
-.popup.show {
-  display: block;
-}
-
-.popup img {
-  max-width: 90vw;
-  max-height: 90vh;
-  height: auto;
-  width: auto;
-  border: none;
-  display: block;
-  margin: 0 auto;
-  background: transparent;
-}
-
-.fade-overlay {
+/* Base background tint overlay styles */
+.tint-background {
   position: fixed;
   top: 0;
   left: 0;
@@ -120,22 +24,95 @@
   z-index: 999;
 }
 
-.fade-overlay.show {
+.tint-background.show {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* Popup inner container for tintBackground: false */
+/* Base popup styles */
+.popup {
+  display: none;
+  background: transparent;
+  color: rgb(255, 242, 97);
+  z-index: 1000;
+  cursor: pointer;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: auto;
+}
+
+.popup.show {
+  display: block;
+}
+
+/* Fade transition styles for popup appearance/disappearance */
+.fade-transition {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Initial state for fade-in elements */
+.popup.fade-transition {
+  /* Default state is visible (for fade-out) */
+  opacity: 1;
+}
+
+/* When explicitly set to 0, it will trigger the transition */
+.popup.fade-transition[style*="opacity: 0"] {
+  /* This ensures the transition happens when opacity is changed */
+  opacity: 0;
+}
+
+/* Centered popup mode (default if no style param) */
+.popup.centered {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  background: none;
+}
+
+/* Precision-placed popup mode (uses style param) */
+.popup.precision-placed {
+  position: absolute;
+  /* All other placement, width, etc. is controlled by the inline style */
+}
+
+/* Fullscreen popup mode */
+.popup.fullscreen {
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1005;
+}
+
+/* ============================
+   POPUP CONTENT CONTAINERS
+   ============================ */
+
+/* Popup inner container */
 .popup-inner {
   background: rgba(0, 0, 0, 0.6);
-  /* same as .fade-overlay */
   cursor: pointer;
   padding: 2vw 3vw;
   max-width: 90vw;
   min-width: 200px;
   margin: 0 auto;
   color: rgb(255, 242, 97);
-  /* same yellow as .modal and .popup */
   font-family: 'HomeVideo', sans-serif;
   font-size: 2.5vw;
   text-align: center;
@@ -144,58 +121,52 @@
   align-items: center;
   justify-content: center;
   pointer-events: auto;
-  z-index: 2002 !important;
+  z-index: 1002;
   user-select: none;
 }
 
-
-.popup-inner img {
-  max-width: 80vw;
-  max-height: 80vh;
-  height: auto;
-  border: none;
+/* Centered popups get a default inner container */
+.popup.centered > .popup-inner,
+.popup.centered > img {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2vw 3vw;
+  margin: 4vw auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1002;
 }
 
-/* Modal styles (migrated from modal.css) */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: transparent;
-  color: rgb(255, 242, 97);
-  filter: drop-shadow(1px 1px 1px rgb(0, 0, 0));
-  z-index: 1100;
+/* Close button for non-takeover popups */
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 1003;
 }
 
-.modal.show {
-  display: flex !important;
+.popup-close:hover {
+  background: rgba(0, 0, 0, 0.8);
 }
 
+/* Content-specific styles have been moved to:
+   - popup-text.css
+   - popup-image.css
+   - popup-video.css
+*/
 
-.modal-content {
-  position: relative;
-  margin: 0 auto;
-  text-align: center;
-  width: 80%;
-  max-width: 1000px;
-  font-size: 2.5vw;
-  font-family: 'HomeVideo';
-  color: rgb(255, 242, 97);
-  background: transparent;
-  box-shadow: none;
-}
-
-.modal.alt-style {
-  background-color: rgba(224, 224, 224, 0.158);
-}
-
-.modal.alt-style .modal-content {
-  font-family: 'HomeVideo';
-  color: rgb(255, 242, 97);
-}
+/* Legacy styles removed - using new popup API */
